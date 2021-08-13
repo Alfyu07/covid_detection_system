@@ -20,8 +20,8 @@ class _SigninPageState extends State<SigninPage> {
                 clipper: SignInClipper(),
                 child: Container(
                   height: 300,
-                  decoration: BoxDecoration(
-                    color: lighGreenColor,
+                  decoration: const BoxDecoration(
+                    color: primaryColor,
                     image: DecorationImage(
                       image: AssetImage(
                         'assets/person_fighting_with_virus.png.png',
@@ -31,8 +31,8 @@ class _SigninPageState extends State<SigninPage> {
                 ),
               ),
             ),
-            SizedBox(height: 64),
-            Text(
+            const SizedBox(height: 64),
+            const Text(
               'Sign In',
               style: TextStyle(
                 color: primaryColor,
@@ -40,55 +40,57 @@ class _SigninPageState extends State<SigninPage> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'Please enter your access code',
               style: TextStyle(
-                color: greyColor,
+                color: blueGreyColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 48),
+            const SizedBox(height: 48),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 56,
               child: TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Access code',
-                  hintStyle: TextStyle(
-                    color: lightGreyColor,
+                  hintStyle: const TextStyle(
+                    color: blueGreyColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: lightGreyColor),
+                    borderSide:
+                        const BorderSide(width: 2, color: blueGreyColor),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: greenColor),
+                    borderSide:
+                        const BorderSide(width: 2, color: secondaryColor),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             Container(
               width: double.infinity,
               height: 56,
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text(
+                style: ElevatedButton.styleFrom(primary: primaryColor),
+                child: const Text(
                   'Sign In',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                style: ElevatedButton.styleFrom(primary: darkGreenColor),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 64,
             ),
           ],
