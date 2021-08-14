@@ -15,20 +15,13 @@ class _SigninPageState extends State<SigninPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SafeArea(
-              child: ClipPath(
-                clipper: SignInClipper(),
-                child: Container(
-                  height: 300,
-                  decoration: const BoxDecoration(
-                    color: primaryColor,
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/person_fighting_with_virus.png.png',
-                      ),
-                    ),
-                  ),
-                ),
+            ClipPath(
+              clipper: SignInClipper(),
+              child: Container(
+                height: 320,
+                padding: const EdgeInsets.only(bottom: 16),
+                color: primaryColor,
+                child: Image.asset('assets/person_fighting_with_virus.png.png'),
               ),
             ),
             const SizedBox(height: 64),
@@ -51,27 +44,27 @@ class _SigninPageState extends State<SigninPage> {
             ),
             const SizedBox(height: 48),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               height: 56,
               child: TextFormField(
                 decoration: InputDecoration(
-                  hintText: 'Access code',
-                  hintStyle: const TextStyle(
-                    color: blueGreyColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(width: 2, color: blueGreyColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(width: 2, color: secondaryColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+                    hintText: 'Access code',
+                    hintStyle: const TextStyle(
+                      color: blueGreyColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 2, color: blueGreyColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 2, color: secondaryColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: const EdgeInsets.only(left: 16)),
               ),
             ),
             const SizedBox(
@@ -80,10 +73,17 @@ class _SigninPageState extends State<SigninPage> {
             Container(
               width: double.infinity,
               height: 56,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: ElevatedButton(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(primary: primaryColor),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    primary: primaryColor),
                 child: const Text(
                   'Sign In',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
