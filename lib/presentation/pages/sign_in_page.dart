@@ -21,7 +21,8 @@ class _SigninPageState extends State<SigninPage> {
                 height: 320,
                 padding: const EdgeInsets.only(bottom: 16),
                 color: primaryColor,
-                child: Image.asset('assets/person_fighting_with_virus.png.png'),
+                child:
+                    Image.asset('assets/images/person_fighting_with_virus.png'),
               ),
             ),
             const SizedBox(height: 64),
@@ -44,7 +45,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             const SizedBox(height: 48),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: edge),
               height: 56,
               child: TextFormField(
                 decoration: InputDecoration(
@@ -76,7 +77,7 @@ class _SigninPageState extends State<SigninPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: edge),
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(

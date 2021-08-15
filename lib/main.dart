@@ -1,5 +1,7 @@
+import 'package:covid_detection_system/business_logic/cubits/bottomnav_cubit.dart';
 import 'package:covid_detection_system/presentation/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -16,7 +18,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: const SigninPage(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<BottomNavCubit>(
+            create: (BuildContext context) => BottomNavCubit(),
+          ),
+        ],
+        child: const MainPage(),
+      ),
     );
   }
 }
