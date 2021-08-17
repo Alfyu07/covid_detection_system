@@ -12,8 +12,8 @@ class _MainPageState extends State<MainPage> {
   late PageController pageController;
 
   final _pageNavigation = [
-    const Center(child: Text('Home')),
-    const Center(child: Text('Add')),
+    const HomePage(),
+    Container(),
     const Center(child: Text('Settings')),
   ];
 
@@ -51,19 +51,19 @@ class _MainPageState extends State<MainPage> {
             onTap: onChangeBottomNav,
             items: [
               BottomNavigationBarItem(
-                label: 'Home',
+                label: '',
                 icon: index == 0
                     ? Image.asset('assets/home_active.png', width: edge)
                     : Image.asset('assets/home.png', width: edge),
               ),
               BottomNavigationBarItem(
-                label: 'Add',
+                label: '',
                 icon: index == 1
                     ? Image.asset('assets/add_active.png', width: edge)
                     : Image.asset('assets/add.png', width: edge),
               ),
               BottomNavigationBarItem(
-                label: 'Setting',
+                label: '',
                 icon: index == 2
                     ? Image.asset('assets/setting_active.png', width: edge)
                     : Image.asset('assets/setting.png', width: edge),

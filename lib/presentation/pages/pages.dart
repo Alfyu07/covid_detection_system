@@ -6,3 +6,4 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'sign_in_page.dart';
 part 'main_page.dart';
+part 'home_page.dart';
