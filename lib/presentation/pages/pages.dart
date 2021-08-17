@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid_detection_system/business_logic/cubits/bottomnav_cubit.dart';
 import 'package:covid_detection_system/shared/shared.dart';
 import 'package:covid_detection_system/presentation/widgets/widgets.dart';

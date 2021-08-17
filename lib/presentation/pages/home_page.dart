@@ -34,11 +34,26 @@ class HomePage extends StatelessWidget {
                 style: lightFont.copyWith(fontSize: 14),
               ),
               const SizedBox(height: edge),
-              const CarouselItem(
-                image: AssetImage('assets/banner 1.png'),
-                title: 'Wear a mask - saves life',
-                subtitle:
-                    'Did you know that wearing a mask can actually saves life?',
+              CarouselSlider(
+                items: const [
+                  CarouselItem(
+                    image: AssetImage('assets/banner 1.png'),
+                    title: 'Wear a mask - saves life',
+                    subtitle:
+                        'Did you know that wearing a mask can actually saves life?',
+                  ),
+                  CarouselItem(
+                    image: AssetImage('assets/banner 1.png'),
+                    title: 'Wear a mask - saves life',
+                    subtitle:
+                        'Did you know that wearing a mask can actually saves life?',
+                  )
+                ],
+                options: CarouselOptions(
+                  height: 130,
+                  viewportFraction: 1,
+                  enlargeCenterPage: true,
+                ),
               )
             ],
           ),

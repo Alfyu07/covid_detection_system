@@ -28,10 +28,10 @@ class CarouselItem extends StatelessWidget {
             Container(
               width: 75,
               height: 75,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/banner 1.png'),
+                  image: image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -44,7 +44,6 @@ class CarouselItem extends StatelessWidget {
                   child: Text(
                     title,
                     style: whiteMediumFont.copyWith(fontSize: 16),
-                    maxLines: 2,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -52,7 +51,11 @@ class CarouselItem extends StatelessWidget {
                   width: 200,
                   child: Text(
                     subtitle,
-                    style: whiteLightFont.copyWith(fontSize: 12),
+                    style: whiteLightFont.copyWith(
+                      fontSize: 12,
+                      letterSpacing: -0.24,
+                      height: 1.8,
+                    ),
                     maxLines: 2,
                   ),
                 )
