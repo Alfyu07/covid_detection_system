@@ -23,6 +23,7 @@ class CarouselItem extends StatelessWidget {
         padding:
             const EdgeInsets.only(top: 13.0, left: 14, right: 14, bottom: 22),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
