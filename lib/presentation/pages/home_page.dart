@@ -40,13 +40,13 @@ class HomePage extends StatelessWidget {
                     image: AssetImage('assets/banner 1.png'),
                     title: 'Wear a mask - saves life',
                     subtitle:
-                        'Did you know that wearing a mask can actually saves life?',
+                        'Did you know that wearing a maskcan actually saves life?',
                   ),
                   CarouselItem(
                     image: AssetImage('assets/banner 2.png'),
                     title: 'Wear a mask - saves life',
                     subtitle:
-                        'Did you know that wearing a mask can actually saves life?',
+                        'Did you know that wearing a maskcan actually saves life?',
                   )
                 ],
                 options: CarouselOptions(
