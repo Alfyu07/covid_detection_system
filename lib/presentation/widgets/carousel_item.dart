@@ -18,10 +18,9 @@ class CarouselItem extends StatelessWidget {
         color: primaryColor,
         borderRadius: BorderRadius.circular(12),
       ),
-      height: 110,
+      height: 80,
       child: Padding(
-        padding:
-            const EdgeInsets.only(top: 13.0, left: 14, right: 14, bottom: 22),
+        padding: const EdgeInsets.only(top: 13.0, left: 14, right: 14),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

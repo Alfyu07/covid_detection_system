@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
         body: BlocBuilder<BottomNavCubit, int>(
           builder: (context, state) {
             return Stack(
-              children: [buildBottomNavbar(state), _buildBody(state)],
+              children: [_buildBody(state), buildBottomNavbar(state)],
             );
           },
         ));

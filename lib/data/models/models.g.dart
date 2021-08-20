@@ -8,12 +8,13 @@ part of 'models.dart';
 
 Diagnosis _$DiagnosisFromJson(Map<String, dynamic> json) {
   return Diagnosis(
-    id: json['id'] as int,
+    id: json['id'] as String,
     imgUrl: json['imgUrl'] as String?,
     result: json['result'] as String?,
     covid: (json['covid'] as num?)?.toDouble(),
     pneumonia: (json['pneumonia'] as num?)?.toDouble(),
     normal: (json['normal'] as num?)?.toDouble(),
+    date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
   );
 }
 
@@ -24,9 +25,9 @@ Map<String, dynamic> _$DiagnosisToJson(Diagnosis instance) => <String, dynamic>{
       'covid': instance.covid,
       'pneumonia': instance.pneumonia,
       'normal': instance.normal,
+      'date': instance.date?.toIso8601String(),
     };
 
-//!User
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
     id: json['id'] as int,
