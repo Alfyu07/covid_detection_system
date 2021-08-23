@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 16),
             buildSort(),
             const SizedBox(height: 16),
-            buildDiagnoseList(),
+            buildDiagnoseList(context),
             const SizedBox(height: 16),
             //! Disease
             Padding(
@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildDiagnoseList() {
+  Widget buildDiagnoseList(BuildContext context) {
     return FutureBuilder<List<Diagnosis>>(
       future: Api.readDiagnoses(),
       builder: (context, snapshot) {

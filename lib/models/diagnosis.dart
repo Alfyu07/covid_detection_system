@@ -8,6 +8,7 @@ class Diagnosis extends Equatable {
   final double? covid;
   final double? pneumonia;
   final double? normal;
+  final bool? isCorrected;
   final DateTime? date;
 
   const Diagnosis({
@@ -18,6 +19,7 @@ class Diagnosis extends Equatable {
     this.pneumonia,
     this.normal,
     this.date,
+    this.isCorrected = false,
   });
 
   factory Diagnosis.fromJson(Map<String, dynamic> json) =>

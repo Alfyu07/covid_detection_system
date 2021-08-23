@@ -23,13 +23,13 @@ class DetailPage extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child:
-                          Image.asset('assets/arrow_back_black.png', width: 24),
+                          Image.asset('assets/arrow_back_black.png', width: 26),
                     ),
                     Text(
                       'Diagnostic Result',
                       style: mediumFont.copyWith(fontSize: 16),
                     ),
-                    const SizedBox(width: edge),
+                    const SizedBox(width: 26),
                   ],
                 ),
                 const SizedBox(height: 32),
@@ -41,87 +41,169 @@ class DetailPage extends StatelessWidget {
                 const SizedBox(height: edge),
                 buildReport(),
                 const SizedBox(height: 32),
-                Text(
-                  'Prediction Details',
-                  style: mediumFont.copyWith(fontSize: 18),
+                buildPredictionDetails(),
+                const SizedBox(height: 32),
+                // * Selected Image
+                InkWell(
+                  onTap: () {
+                    final bool visibility =
+                        Provider.of<DetailProvider>(context, listen: false)
+                            .isImgVisible;
+                    Provider.of<DetailProvider>(context, listen: false)
+                        .setImgVisibility(!visibility);
+                  },
+                  child: SizedBox(
+                    height: 32,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Selected Image', style: mediumFont),
+                        Consumer<DetailProvider>(
+                          builder: (context, detailProvider, _) => Image.asset(
+                            detailProvider.isImgVisible
+                                ? 'assets/arrow_up.png'
+                                : 'assets/arrow_down.png',
+                            width: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 70,
-                      child: Text(
-                        'Covid 19',
-                        style: lightFont.copyWith(fontSize: 12),
+                Consumer<DetailProvider>(
+                  builder: (context, detailProvider, _) => AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: double.infinity,
+                    height: detailProvider.isImgVisible ? 160 : 0,
+                    child: Center(
+                      child: Container(
+                        width: 200,
+                        height: 160,
+                        decoration: BoxDecoration(
+                          color: ghostWhiteColor,
+                          borderRadius: BorderRadius.circular(12),
+                          image: DecorationImage(
+                            image: NetworkImage(diagnosis.imgUrl ?? ""),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
-                    ProgressBar(
-                      value: diagnosis.covid ?? 0,
-                      color: redColor,
-                    ),
-                    SizedBox(
-                      width: 23,
-                      child: Text(
-                        '${((diagnosis.covid ?? 0) * 100).round()}%',
-                        style: lightFont.copyWith(fontSize: 12),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 70,
-                      child: Text(
-                        'Pneumonia',
-                        style: lightFont.copyWith(fontSize: 12),
-                      ),
-                    ),
-                    ProgressBar(
-                      value: diagnosis.pneumonia ?? 0,
-                      color: yellowColor,
-                    ),
-                    SizedBox(
-                      width: 23,
-                      child: Text(
-                        '${((diagnosis.pneumonia ?? 0) * 100).round()}%',
-                        style: lightFont.copyWith(fontSize: 12),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 70,
-                      child: Text(
-                        'Normal',
-                        style: lightFont.copyWith(fontSize: 12),
-                      ),
-                    ),
-                    ProgressBar(
-                      value: diagnosis.normal ?? 0,
-                      color: greenColor,
-                    ),
-                    SizedBox(
-                      width: 23,
-                      child: Text(
-                        '${((diagnosis.normal ?? 0) * 100).round()}%',
-                        style: lightFont.copyWith(fontSize: 12),
-                      ),
-                    ),
-                  ],
-                ),
+                const SizedBox(height: 24),
+                if (diagnosis.isCorrected!)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Corrected Result', style: mediumFont),
+                      const SizedBox(height: 16),
+                      CorrectedType(result: diagnosis.result!),
+                    ],
+                  )
+                else
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Is this diagnosis correct?', style: regularFont),
+                      const SizedBox(height: 24),
+                      ButtonPrimary(text: "True", onPressed: () {}),
+                      const SizedBox(height: 16),
+                      ButtonSecondary(text: "False", onPressed: () {}),
+                    ],
+                  ),
+
+                const SizedBox(height: 32),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildPredictionDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Prediction Details',
+          style: mediumFont.copyWith(fontSize: 18),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 70,
+              child: Text(
+                'Covid 19',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+            ProgressBar(
+              value: diagnosis.covid ?? 0,
+              color: redColor,
+            ),
+            SizedBox(
+              width: 23,
+              child: Text(
+                '${((diagnosis.covid ?? 0) * 100).round()}%',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 70,
+              child: Text(
+                'Pneumonia',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+            ProgressBar(
+              value: diagnosis.pneumonia ?? 0,
+              color: yellowColor,
+            ),
+            SizedBox(
+              width: 23,
+              child: Text(
+                '${((diagnosis.pneumonia ?? 0) * 100).round()}%',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 70,
+              child: Text(
+                'Normal',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+            ProgressBar(
+              value: diagnosis.normal ?? 0,
+              color: greenColor,
+            ),
+            SizedBox(
+              width: 23,
+              child: Text(
+                '${((diagnosis.normal ?? 0) * 100).round()}%',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

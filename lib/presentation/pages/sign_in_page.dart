@@ -21,8 +21,7 @@ class _SigninPageState extends State<SigninPage> {
                 height: 320,
                 padding: const EdgeInsets.only(bottom: 16),
                 color: primaryColor,
-                child:
-                    Image.asset('assets/images/person_fighting_with_virus.png'),
+                child: Image.asset('assets/person_fighting_with_virus.png'),
               ),
             ),
             const SizedBox(height: 64),
@@ -71,24 +70,18 @@ class _SigninPageState extends State<SigninPage> {
             const SizedBox(
               height: 32,
             ),
-            Container(
-              width: double.infinity,
-              height: 56,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: edge),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              child: ButtonPrimary(
+                onPressed: () {
+                  //TODO : implement login
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const MainPage(),
                     ),
-                    primary: primaryColor),
-                child: const Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
+                  );
+                },
+                text: "Sign In",
               ),
             ),
             const SizedBox(
