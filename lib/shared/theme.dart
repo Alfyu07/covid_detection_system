@@ -14,6 +14,8 @@ const Color greenColor = Color(0xff01CE59);
 
 TextStyle mediumFont =
     const TextStyle(fontWeight: FontWeight.w500, color: blackColor);
+TextStyle boldFont =
+    const TextStyle(fontWeight: FontWeight.w600, color: blackColor);
 TextStyle regularFont =
     const TextStyle(fontWeight: FontWeight.w400, color: blackColor);
 TextStyle lightFont =
