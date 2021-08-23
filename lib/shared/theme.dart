@@ -11,6 +11,7 @@ const Color ghostWhiteColor = Color(0xffF1F2F8);
 const Color blueGreyColor = Color(0xff989ECD);
 const Color redColor = Color(0xffFF5C83);
 const Color greenColor = Color(0xff01CE59);
+const Color yellowColor = Color(0xffFCEA4D);
 
 TextStyle mediumFont =
     const TextStyle(fontWeight: FontWeight.w500, color: blackColor);

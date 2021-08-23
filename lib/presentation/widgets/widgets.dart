@@ -10,3 +10,4 @@ part 'sign_in_clipper.dart';
 part 'carousel_item.dart';
 part 'diagnosis_card.dart';
 part 'disease_card.dart';
+part 'progress_bar.dart';
