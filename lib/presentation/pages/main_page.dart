@@ -26,14 +26,16 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: BlocBuilder<BottomNavCubit, int>(
-          builder: (context, state) {
-            return Stack(
-              children: [_buildBody(state), buildBottomNavbar(state)],
-            );
-          },
-        ));
+      backgroundColor: Colors.white,
+      body: Consumer<BottomNavProvider>(
+        builder: (context, bottomNavProvider, _) => Stack(
+          children: [
+            _buildBody(bottomNavProvider.index),
+            buildBottomNavbar(bottomNavProvider.index)
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildBottomNavbar(int index) {
@@ -81,76 +83,83 @@ class _MainPageState extends State<MainPage> {
   void onChangeBottomNav(int index) {
     if (index == 1) {
       showModalBottomSheet(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        barrierColor: blackColor.withOpacity(0.2),
+        context: context,
+        builder: (BuildContext context) => ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
           ),
-          barrierColor: blackColor.withOpacity(0.2),
-          context: context,
-          builder: (BuildContext context) => ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(28),
-                topRight: Radius.circular(28),
-              ),
-              child: buildSheet()));
+          child: buildSheet(),
+        ),
+      );
       return;
     }
-    context.read<BottomNavCubit>().updateIndex(index);
+    Provider.of<BottomNavProvider>(context, listen: false).setIndex(index);
   }
 
-  Widget buildSheet() => Column(mainAxisSize: MainAxisSize.min, children: [
-        const SizedBox(height: 16),
-        Center(
-          child: Container(
-            height: 4,
-            width: 36,
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                color: Color(0xffBABEDE)),
+  Widget buildSheet() => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 16),
+          Center(
+            child: Container(
+              height: 4,
+              width: 36,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  color: Color(0xffBABEDE)),
+            ),
           ),
-        ),
-        const SizedBox(height: edge),
-        const Text(
-          'Image Source',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: edge),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/gallery.png',
-                    width: 64,
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Gallery',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                  )
-                ],
+          const SizedBox(height: edge),
+          const Text(
+            'Image Source',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: edge),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/gallery.png',
+                      width: 64,
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Gallery',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    )
+                  ],
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/camera.png',
-                    width: 64,
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Camera',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-                  )
-                ],
+              GestureDetector(
+                onTap: () {},
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/camera.png',
+                      width: 64,
+                    ),
+                    const SizedBox(height: 4),
+                    const Text(
+                      'Camera',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: edge),
-      ]);
+            ],
+          ),
+          const SizedBox(height: edge),
+        ],
+      );
 }

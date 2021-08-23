@@ -92,26 +92,54 @@ class HomePage extends StatelessWidget {
           height: 110,
           viewportFraction: 1,
           enlargeCenterPage: true,
+          autoPlay: true,
         ),
       ),
     );
   }
 
   Widget buildDiagnoseList() {
-    return Container(
-      height: 286,
-      color: whiteColor,
-      child: ListView.builder(
-        itemCount: diagnoses.length,
-        itemBuilder: (BuildContext context, int index) => GestureDetector(
-          onTap: () {
-            // TODO Navigate to details
-          },
-          child: DiagnosisCard(
-            diagnosis: diagnoses[index],
-          ),
-        ),
-      ),
+    return FutureBuilder<List<Diagnosis>>(
+      future: Api.readDiagnoses(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Container(
+              height: 100,
+              padding: const EdgeInsets.symmetric(horizontal: edge),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(color: primaryColor),
+                ],
+              ),
+            );
+          default:
+            if (snapshot.hasData && snapshot.data != null) {
+              return Column(
+                children: snapshot.data!
+                    .map((e) => DiagnosisCard(diagnosis: e))
+                    .toList(),
+              );
+            } else {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.symmetric(horizontal: edge),
+                height: 80,
+                child: Center(
+                  child: Text(
+                    'No Data',
+                    style: mediumFont.copyWith(fontSize: 16),
+                  ),
+                ),
+              );
+            }
+        }
+
+        // Column(
+        //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
+        // ),
+      },
     );
   }
 

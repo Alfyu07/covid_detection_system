@@ -60,4 +60,34 @@ final List<Diagnosis> diagnoses = [
         'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
     date: DateTime.now(),
   ),
+  Diagnosis(
+    id: "2xjalkdhcd",
+    covid: 0.02,
+    pneumonia: 0.92,
+    normal: 0.06,
+    result: 'Pneumonia',
+    imgUrl:
+        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+    date: DateTime.now(),
+  ),
+  Diagnosis(
+    id: "2xjalkdhcd",
+    covid: 0.02,
+    pneumonia: 0.92,
+    normal: 0.06,
+    result: 'Pneumonia',
+    imgUrl:
+        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+    date: DateTime.now(),
+  ),
+  Diagnosis(
+    id: "2xjalkdhcd",
+    covid: 0.02,
+    pneumonia: 0.92,
+    normal: 0.06,
+    result: 'Pneumonia',
+    imgUrl:
+        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+    date: DateTime.now(),
+  ),
 ];

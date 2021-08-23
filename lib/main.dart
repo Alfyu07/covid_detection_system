@@ -1,8 +1,8 @@
-import 'package:covid_detection_system/business_logic/cubits/bottomnav_cubit.dart';
 import 'package:covid_detection_system/presentation/pages/pages.dart';
+import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: MultiBlocProvider(
+      home: MultiProvider(
         providers: [
-          BlocProvider<BottomNavCubit>(
-            create: (BuildContext context) => BottomNavCubit(),
+          ChangeNotifierProvider<BottomNavProvider>(
+            create: (BuildContext context) => BottomNavProvider(),
           ),
         ],
         child: const MainPage(),
