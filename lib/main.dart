@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<BottomNavProvider>(
           create: (BuildContext context) => BottomNavProvider(),
         ),
+        ChangeNotifierProvider<SortProvider>(
+          create: (BuildContext context) => SortProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Covid Detection',

@@ -14,3 +14,4 @@ part 'progress_bar.dart';
 part 'corrected_type.dart';
 part 'btn_primary.dart';
 part 'btn_secondary.dart';
+part 'sort_item.dart';

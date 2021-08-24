@@ -148,57 +148,23 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: edge),
       child: SizedBox(
         height: 28,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            Container(
-              height: 28,
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: primaryColor,
-              ),
-              child: Text('Terbaru',
-                  style: whiteMediumFont.copyWith(fontSize: 12)),
-            ),
-            Container(
-              height: 28,
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              decoration: BoxDecoration(
-                  border: Border.all(color: primaryColor, width: 1.5),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Text(
-                'Covid 19',
-                style: mediumFont.copyWith(fontSize: 12, color: primaryColor),
-              ),
-            ),
-            Container(
-              height: 28,
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              decoration: BoxDecoration(
-                  border: Border.all(color: primaryColor, width: 1.5),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Text(
-                'Pneumonia',
-                style: mediumFont.copyWith(fontSize: 12, color: primaryColor),
-              ),
-            ),
-            Container(
-              height: 28,
-              margin: const EdgeInsets.only(right: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              decoration: BoxDecoration(
-                  border: Border.all(color: primaryColor, width: 1.5),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Text(
-                'Normal',
-                style: mediumFont.copyWith(fontSize: 12, color: primaryColor),
-              ),
-            ),
-          ],
+        child: Consumer<SortProvider>(
+          builder: (context, sortProvider, _) => ListView(
+            scrollDirection: Axis.horizontal,
+            children: sortProvider.sortBy
+                .map(
+                  (e) => InkWell(
+                    onTap: () =>
+                        sortProvider.setIndex(sortProvider.sortBy.indexOf(e)),
+                    child: SortItem(
+                      title: e,
+                      isActive:
+                          sortProvider.index == sortProvider.sortBy.indexOf(e),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ),
     );

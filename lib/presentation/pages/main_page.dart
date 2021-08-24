@@ -14,7 +14,7 @@ class _MainPageState extends State<MainPage> {
   final _pageNavigation = [
     const HomePage(),
     Container(),
-    const Center(child: Text('Settings')),
+    const SettingPage(),
   ];
 
   @override
