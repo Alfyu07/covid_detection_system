@@ -5,6 +5,12 @@ class DiagnoseProvider with ChangeNotifier {
   List<Diagnosis> _diagnoses = [];
 
   List<Diagnosis> get diagnoses => _diagnoses;
+  List<Diagnosis> get covidDiagnoses =>
+      _diagnoses.where((element) => element.result == "Covid 19").toList();
+  List<Diagnosis> get pneumoniaDiagnoses =>
+      _diagnoses.where((element) => element.result == "Pneumonia").toList();
+  List<Diagnosis> get normalDiagnoses =>
+      _diagnoses.where((element) => element.result == "Normal").toList();
 
   void setDiagnoses(List<Diagnosis> diagnoses) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {

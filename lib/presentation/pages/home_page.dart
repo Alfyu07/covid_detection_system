@@ -116,8 +116,18 @@ class HomePage extends StatelessWidget {
             );
           default:
             if (snapshot.hasData && snapshot.data != null) {
+              final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
+              final sortProvider = Provider.of<SortProvider>(context);
+              final diagnoses = snapshot.data;
+              diagnoseProvider.setDiagnoses(diagnoses ?? []);
               return Column(
-                children: snapshot.data!
+                children: ((sortProvider.index == 0)
+                        ? diagnoseProvider.diagnoses
+                        : (sortProvider.index == 1)
+                            ? diagnoseProvider.covidDiagnoses
+                            : (sortProvider.index == 2)
+                                ? diagnoseProvider.pneumoniaDiagnoses
+                                : diagnoseProvider.normalDiagnoses)
                     .map((e) => DiagnosisCard(diagnosis: e))
                     .toList(),
               );
@@ -144,27 +154,28 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildSort() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: edge),
-      child: SizedBox(
-        height: 28,
-        child: Consumer<SortProvider>(
-          builder: (context, sortProvider, _) => ListView(
-            scrollDirection: Axis.horizontal,
-            children: sortProvider.sortBy
-                .map(
-                  (e) => InkWell(
-                    onTap: () =>
-                        sortProvider.setIndex(sortProvider.sortBy.indexOf(e)),
+    return SizedBox(
+      height: 28,
+      child: Consumer<SortProvider>(
+        builder: (context, sortProvider, _) => ListView(
+          scrollDirection: Axis.horizontal,
+          children: sortProvider.sortBy
+              .map(
+                (e) => InkWell(
+                  onTap: () =>
+                      sortProvider.setIndex(sortProvider.sortBy.indexOf(e)),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: e == sortProvider.sortBy.first ? 24 : 0),
                     child: SortItem(
                       title: e,
                       isActive:
                           sortProvider.index == sortProvider.sortBy.indexOf(e),
                     ),
                   ),
-                )
-                .toList(),
-          ),
+                ),
+              )
+              .toList(),
         ),
       ),
     );
