@@ -27,7 +27,6 @@ class Diagnosis extends Equatable {
 
   Map<String, dynamic> toJson() => _$DiagnosisToJson(this);
   @override
-  // TODO: implement props
   List<Object?> get props => [id, imgUrl, result, covid, pneumonia, normal];
 }
 

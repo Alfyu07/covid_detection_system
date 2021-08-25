@@ -36,38 +36,49 @@ class SettingPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    Image.asset(
-                      'assets/ai_model.png',
-                      width: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    Text('Classification Model', style: regularFont),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Text('KNN', style: regularFont),
-                        const SizedBox(width: 8),
-                        Image.asset('assets/arrow_right.png', width: 24),
-                      ],
-                    )
-                  ],
+                InkWell(
+                  onTap: () => _showSelectModelDialog(context),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      Image.asset(
+                        'assets/ai_model.png',
+                        width: 24,
+                      ),
+                      const SizedBox(width: 8),
+                      Text('Classification Model', style: regularFont),
+                      const Spacer(),
+                      Consumer<AiModelProvider>(
+                        builder: (context, modelProvider, _) => Row(
+                          children: [
+                            Text(
+                              modelProvider.selectedValue ?? "",
+                              style: regularFont,
+                            ),
+                            const SizedBox(width: 8),
+                            Image.asset('assets/arrow_right.png', width: 24),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    Image.asset(
-                      'assets/reset.png',
-                      width: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    Text('Reset Model to Default', style: regularFont),
-                    const Spacer(),
-                    Image.asset('assets/arrow_right.png', width: 24),
-                  ],
+                InkWell(
+                  onTap: () => _showResetModelDialog(context),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      Image.asset(
+                        'assets/reset.png',
+                        width: 24,
+                      ),
+                      const SizedBox(width: 8),
+                      Text('Reset Model to Default', style: regularFont),
+                      const Spacer(),
+                      Image.asset('assets/arrow_right.png', width: 24),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Container(
@@ -81,19 +92,29 @@ class SettingPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    Text('Reset Password', style: regularFont),
-                  ],
+                InkWell(
+                  onTap: () {
+                    //Todo : Implement reset password
+                  },
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      Text('Reset Password', style: regularFont),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    Text('Logout',
-                        style: regularFont.copyWith(color: redColor)),
-                  ],
+                InkWell(
+                  onTap: () {
+                    //Todo : Implement Logout
+                  },
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 8),
+                      Text('Logout',
+                          style: regularFont.copyWith(color: redColor)),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -102,4 +123,18 @@ class SettingPage extends StatelessWidget {
       ),
     );
   }
+
+  void _showResetModelDialog(BuildContext context) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const ResetDialog();
+        },
+      );
+
+  void _showSelectModelDialog(BuildContext context) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const SelectModelDialog();
+        },
+      );
 }

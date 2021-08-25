@@ -26,6 +26,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SortProvider>(
           create: (BuildContext context) => SortProvider(),
         ),
+        ChangeNotifierProvider<AiModelProvider>(
+          create: (BuildContext context) => AiModelProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Covid Detection',
@@ -33,8 +36,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: GoogleFonts.poppinsTextTheme(),
+          canvasColor: Colors.white,
         ),
-        home: const PreviewPage(),
+        home: const MainPage(),
       ),
     );
   }

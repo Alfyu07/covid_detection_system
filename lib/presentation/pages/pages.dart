@@ -4,7 +4,6 @@ import 'package:covid_detection_system/models/models.dart';
 import 'package:covid_detection_system/providers/providers.dart';
 import 'package:covid_detection_system/shared/shared.dart';
 import 'package:covid_detection_system/presentation/widgets/widgets.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

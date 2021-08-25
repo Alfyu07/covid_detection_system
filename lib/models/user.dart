@@ -12,6 +12,5 @@ class User extends Equatable {
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
   @override
-  // TODO: implement props
   List<Object?> get props => [id, name, imgUrl];
 }

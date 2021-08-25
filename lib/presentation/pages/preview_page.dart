@@ -23,7 +23,10 @@ class PreviewPage extends StatelessWidget {
                 padding: const EdgeInsets.all(edge),
                 child: Row(
                   children: [
-                    Image.asset('assets/arrow_back_white.png', width: 26),
+                    InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Image.asset('assets/arrow_back_white.png',
+                            width: 26)),
                     const Spacer(),
                     Text(
                       'Preview',
