@@ -75,6 +75,10 @@ class _SigninPageState extends State<SigninPage> {
               child: ButtonPrimary(
                 onPressed: () {
                   //TODO : implement login
+                  final navProvider =
+                      Provider.of<BottomNavProvider>(context, listen: false);
+                  navProvider.setIndex(0);
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const MainPage(),

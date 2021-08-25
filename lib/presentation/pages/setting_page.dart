@@ -107,6 +107,12 @@ class SettingPage extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //Todo : Implement Logout
+
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SigninPage()),
+                        (route) => false);
                   },
                   child: Row(
                     children: [

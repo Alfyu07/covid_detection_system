@@ -6,4 +6,10 @@ class Api {
 
     return diagnoses;
   }
+
+  static Future<String> createDiagnose(Diagnosis diagnose) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    return "index";
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:covid_detection_system/presentation/pages/pages.dart';
 import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
+import 'package:covid_detection_system/providers/img_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AiModelProvider>(
           create: (BuildContext context) => AiModelProvider(),
         ),
+        ChangeNotifierProvider<ImgProvider>(
+          create: (BuildContext context) => ImgProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Covid Detection',
@@ -38,7 +42,9 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const MainPage(),
+        home: const MainPage(
+          initialPage: 1,
+        ),
       ),
     );
   }

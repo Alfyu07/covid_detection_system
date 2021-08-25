@@ -5,6 +5,7 @@ class PreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imgProvider = Provider.of<ImgProvider>(context);
     return Scaffold(
       backgroundColor: blackColor,
       body: Stack(
@@ -12,9 +13,7 @@ class PreviewPage extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: Image.network(
-                'https://i.pinimg.com/originals/1c/6d/e5/1c6de51cb0d187c9d5a6e7335163a7c2.jpg',
-                fit: BoxFit.contain),
+            child: Image.file(imgProvider.image!, fit: BoxFit.contain),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -24,7 +23,9 @@ class PreviewPage extends StatelessWidget {
                 child: Row(
                   children: [
                     InkWell(
-                        onTap: () => Navigator.of(context).pop(),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
                         child: Image.asset('assets/arrow_back_white.png',
                             width: 26)),
                     const Spacer(),

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:covid_detection_system/api/api.dart';
 import 'package:covid_detection_system/models/models.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,4 +21,6 @@ class DiagnoseProvider with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  void addDiagnose(Diagnosis diagnose) => Api.createDiagnose(diagnose);
 }

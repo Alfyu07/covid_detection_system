@@ -23,6 +23,21 @@ class _MainPageState extends State<MainPage> {
     pageController = PageController(initialPage: widget.initialPage);
   }
 
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+
+      if (image == null) return;
+
+      final tempImg = File(image.path);
+      Provider.of<ImgProvider>(context, listen: false).setImage(tempImg);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const PreviewPage()));
+    } on PlatformException catch (e) {
+      print('Failed to pick image : $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +139,7 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () => pickImage(ImageSource.gallery),
                 child: Column(
                   children: [
                     Image.asset(
@@ -141,7 +156,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () => pickImage(ImageSource.camera),
                 child: Column(
                   children: [
                     Image.asset(
