@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:covid_detection_system/api/api.dart';
 import 'package:covid_detection_system/models/models.dart';
 import 'package:flutter/widgets.dart';

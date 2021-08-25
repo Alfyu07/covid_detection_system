@@ -20,7 +20,15 @@ class DetailPage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pop();
+                        final navProvider = Provider.of<BottomNavProvider>(
+                            context,
+                            listen: false);
+                        navProvider.setIndex(0);
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const MainPage(),
+                          ),
+                        );
                       },
                       child:
                           Image.asset('assets/arrow_back_black.png', width: 26),

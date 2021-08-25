@@ -3,6 +3,27 @@ part of 'pages.dart';
 class PreviewPage extends StatelessWidget {
   const PreviewPage({Key? key}) : super(key: key);
 
+  static Future cropImage(File? image) async {
+    if (image == null) return;
+    final tempFile = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatio: const CropAspectRatio(ratioX: 9, ratioY: 16),
+      androidUiSettings: androidUiSettings(),
+      iosUiSettings: iosUiSettings(),
+    );
+    if (tempFile == null) return image;
+    return tempFile;
+  }
+
+  static IOSUiSettings iosUiSettings() => const IOSUiSettings();
+  static AndroidUiSettings androidUiSettings() => const AndroidUiSettings(
+        lockAspectRatio: false,
+        hideBottomControls: true,
+        toolbarTitle: 'Crop Image',
+        toolbarColor: Color(0xff767EBC),
+        toolbarWidgetColor: Colors.white,
+      );
+
   @override
   Widget build(BuildContext context) {
     final imgProvider = Provider.of<ImgProvider>(context);
@@ -26,15 +47,35 @@ class PreviewPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).pop();
                         },
-                        child: Image.asset('assets/arrow_back_white.png',
-                            width: 26)),
+                        child: SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: Center(
+                            child: Image.asset('assets/arrow_back_white.png',
+                                width: 24),
+                          ),
+                        )),
                     const Spacer(),
                     Text(
                       'Preview',
                       style: whiteMediumFont.copyWith(fontSize: 16),
                     ),
                     const Spacer(),
-                    Image.asset('assets/crop.png', width: 26),
+                    InkWell(
+                        onTap: () async {
+                          final provider =
+                              Provider.of<ImgProvider>(context, listen: false);
+                          final imgFile = await cropImage(provider.image);
+
+                          provider.setImage(imgFile as File?);
+                        },
+                        child: SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: Center(
+                            child: Image.asset('assets/crop.png', width: 24),
+                          ),
+                        )),
                   ],
                 ),
               ),
@@ -45,7 +86,15 @@ class PreviewPage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(edge),
         child: ButtonPrimary(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => DetailPage(
+                  diagnosis: diagnoses[0],
+                ),
+              ),
+            );
+          },
           text: "Diagnose",
         ),
       ),
