@@ -1,5 +1,6 @@
 import 'package:covid_detection_system/presentation/pages/pages.dart';
 import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
+import 'package:covid_detection_system/providers/correction_dialog_provider.dart';
 import 'package:covid_detection_system/providers/img_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ImgProvider>(
           create: (BuildContext context) => ImgProvider(),
+        ),
+        ChangeNotifierProvider<CorrectionDialogProvider>(
+          create: (BuildContext context) => CorrectionDialogProvider(),
         ),
       ],
       child: MaterialApp(

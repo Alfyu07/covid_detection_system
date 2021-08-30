@@ -26,11 +26,12 @@ class _MainPageState extends State<MainPage> {
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
-
       if (image == null) return;
 
       final tempImg = File(image.path);
+      // ignore: use_build_context_synchronously
       Provider.of<ImgProvider>(context, listen: false).setImage(tempImg);
+      // ignore: use_build_context_synchronously
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const PreviewPage()));
     } on PlatformException catch (e) {

@@ -89,9 +89,7 @@ class PreviewPage extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => DetailPage(
-                  diagnosis: diagnoses[0],
-                ),
+                builder: (context) => const DetailPage(),
               ),
             );
           },

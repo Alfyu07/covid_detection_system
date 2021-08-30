@@ -22,6 +22,26 @@ class Diagnosis extends Equatable {
     this.isCorrected = false,
   });
 
+  Diagnosis copyWith({
+    String? id,
+    String? imgUrl,
+    String? result,
+    double? covid,
+    double? pneumonia,
+    double? normal,
+    bool? isCorrected,
+    DateTime? date,
+  }) =>
+      Diagnosis(
+        id: id ?? this.id,
+        imgUrl: imgUrl ?? this.imgUrl,
+        result: result ?? this.result,
+        covid: covid ?? this.covid,
+        pneumonia: pneumonia ?? this.pneumonia,
+        isCorrected: isCorrected ?? this.isCorrected,
+        date: date ?? this.date,
+      );
+
   factory Diagnosis.fromJson(Map<String, dynamic> json) =>
       _$DiagnosisFromJson(json);
 
@@ -38,7 +58,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.04,
     result: 'Covid 19',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
     isCorrected: true,
   ),
@@ -49,7 +69,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.06,
     result: 'Pneumonia',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
     isCorrected: true,
   ),
@@ -60,7 +80,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.92,
     result: 'Normal',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
   ),
   Diagnosis(
@@ -70,7 +90,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.06,
     result: 'Pneumonia',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
   ),
   Diagnosis(
@@ -80,7 +100,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.06,
     result: 'Pneumonia',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
   ),
   Diagnosis(
@@ -90,7 +110,7 @@ final List<Diagnosis> diagnoses = [
     normal: 0.06,
     result: 'Pneumonia',
     imgUrl:
-        'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
+        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
     date: DateTime.now(),
   ),
 ];

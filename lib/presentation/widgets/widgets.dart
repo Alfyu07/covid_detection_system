@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:covid_detection_system/models/models.dart';
 import 'package:covid_detection_system/presentation/pages/pages.dart';
+import 'package:covid_detection_system/providers/correction_dialog_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:covid_detection_system/shared/shared.dart';
@@ -19,4 +20,6 @@ part 'btn_secondary.dart';
 part 'sort_item.dart';
 part 'reset_dialog.dart';
 part 'select_model_dialog.dart';
+part 'select_disease_dialog.dart';
+
 part 'dropdown_menu.dart';

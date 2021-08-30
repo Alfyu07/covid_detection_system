@@ -1,11 +1,11 @@
 part of 'pages.dart';
 
 class DetailPage extends StatelessWidget {
-  final Diagnosis diagnosis;
-  const DetailPage({Key? key, required this.diagnosis}) : super(key: key);
+  const DetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final detailProvider = Provider.of<DetailProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -42,14 +42,14 @@ class DetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 Center(
-                  child: diagnosis.result == "Normal"
+                  child: detailProvider.diagnosis!.result == "Normal"
                       ? Image.asset('assets/emot_smile.png', width: 140)
                       : Image.asset('assets/emot_sad.png', width: 140),
                 ),
                 const SizedBox(height: edge),
-                buildReport(),
+                buildReport(detailProvider),
                 const SizedBox(height: 32),
-                buildPredictionDetails(),
+                buildPredictionDetails(detailProvider),
                 const SizedBox(height: 32),
                 // * Selected Image
                 InkWell(
@@ -92,7 +92,8 @@ class DetailPage extends StatelessWidget {
                           color: ghostWhiteColor,
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
-                            image: NetworkImage(diagnosis.imgUrl ?? ""),
+                            image: NetworkImage(
+                                detailProvider.diagnosis!.imgUrl ?? ""),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -101,13 +102,13 @@ class DetailPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                if (diagnosis.isCorrected!)
+                if (detailProvider.diagnosis!.isCorrected!)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Corrected Result', style: mediumFont),
                       const SizedBox(height: 16),
-                      CorrectedType(result: diagnosis.result!),
+                      CorrectedType(result: detailProvider.diagnosis!.result!),
                     ],
                   )
                 else
@@ -116,9 +117,20 @@ class DetailPage extends StatelessWidget {
                     children: [
                       Text('Is this diagnosis correct?', style: regularFont),
                       const SizedBox(height: 24),
-                      ButtonPrimary(text: "True", onPressed: () {}),
+                      ButtonPrimary(
+                          text: "True",
+                          onPressed: () {
+                            detailProvider.diagnosis = detailProvider.diagnosis!
+                                .copyWith(isCorrected: true);
+
+                            //TODO: update DB
+                          }),
                       const SizedBox(height: 16),
-                      ButtonSecondary(text: "False", onPressed: () {}),
+                      ButtonSecondary(
+                          text: "False",
+                          onPressed: () {
+                            _showSelectDiagnoseDialog(context);
+                          }),
                     ],
                   ),
 
@@ -131,7 +143,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildPredictionDetails() {
+  Widget buildPredictionDetails(DetailProvider detailProvider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -151,13 +163,13 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             ProgressBar(
-              value: diagnosis.covid ?? 0,
+              value: detailProvider.diagnosis!.covid ?? 0,
               color: redColor,
             ),
             SizedBox(
               width: 23,
               child: Text(
-                '${((diagnosis.covid ?? 0) * 100).round()}%',
+                '${((detailProvider.diagnosis!.covid ?? 0) * 100).round()}%',
                 style: lightFont.copyWith(fontSize: 12),
               ),
             ),
@@ -175,13 +187,13 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             ProgressBar(
-              value: diagnosis.pneumonia ?? 0,
+              value: detailProvider.diagnosis!.pneumonia ?? 0,
               color: yellowColor,
             ),
             SizedBox(
               width: 23,
               child: Text(
-                '${((diagnosis.pneumonia ?? 0) * 100).round()}%',
+                '${((detailProvider.diagnosis!.pneumonia ?? 0) * 100).round()}%',
                 style: lightFont.copyWith(fontSize: 12),
               ),
             ),
@@ -199,13 +211,13 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             ProgressBar(
-              value: diagnosis.normal ?? 0,
+              value: detailProvider.diagnosis!.normal ?? 0,
               color: greenColor,
             ),
             SizedBox(
               width: 23,
               child: Text(
-                '${((diagnosis.normal ?? 0) * 100).round()}%',
+                '${((detailProvider.diagnosis!.normal ?? 0) * 100).round()}%',
                 style: lightFont.copyWith(fontSize: 12),
               ),
             ),
@@ -215,18 +227,20 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildReport() {
+  Widget buildReport(DetailProvider detailProvider) {
     return Center(
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
           children: [
             TextSpan(
-              text: diagnosis.result == "Normal" ? "They are " : "Infected by ",
+              text: detailProvider.diagnosis!.result == "Normal"
+                  ? "They are "
+                  : "Infected by ",
               style: regularFont,
             ),
             TextSpan(
-              text: diagnosis.result,
+              text: detailProvider.diagnosis!.result,
               style: boldFont.copyWith(
                 fontSize: 16,
                 color: primaryColor,
@@ -234,12 +248,26 @@ class DetailPage extends StatelessWidget {
             ),
             TextSpan(
               text:
-                  '\nwith ${((diagnosis.result == "Normal" ? diagnosis.normal : diagnosis.result == "Pneumonia" ? diagnosis.pneumonia : diagnosis.covid) ?? 0) * 100}% prediction accuracy',
+                  '\nwith ${((detailProvider.diagnosis!.result == "Normal" ? detailProvider.diagnosis!.normal : detailProvider.diagnosis!.result == "Pneumonia" ? detailProvider.diagnosis!.pneumonia : detailProvider.diagnosis!.covid) ?? 0) * 100}% prediction accuracy',
               style: regularFont.copyWith(height: 1.3),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showSelectDiagnoseDialog(BuildContext context) {
+    final correctionProvider =
+        Provider.of<CorrectionDialogProvider>(context, listen: false);
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+    correctionProvider.tempValue = detailProvider.diagnosis!.result;
+    correctionProvider.selectedValue = detailProvider.diagnosis!.result;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const SelectDiseaseDialog();
+      },
     );
   }
 }

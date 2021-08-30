@@ -6,13 +6,16 @@ class DiagnosisCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailProvider = Provider.of<DetailProvider>(context);
     return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetailPage(diagnosis: diagnosis),
-        ),
-      ),
+      onTap: () {
+        detailProvider.diagnosis = diagnosis;
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DetailPage()),
+        );
+      },
       child: Container(
         height: 80,
         margin: const EdgeInsets.only(left: edge, right: edge, bottom: 16),
