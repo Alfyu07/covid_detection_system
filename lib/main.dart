@@ -42,9 +42,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const MainPage(
-          initialPage: 1,
-        ),
+        home: const SigninPage(),
       ),
     );
   }

@@ -40,6 +40,7 @@ final List<Diagnosis> diagnoses = [
     imgUrl:
         'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
     date: DateTime.now(),
+    isCorrected: true,
   ),
   Diagnosis(
     id: "2xjalkdhcd",
@@ -50,6 +51,7 @@ final List<Diagnosis> diagnoses = [
     imgUrl:
         'https://www.researchgate.net/publication/325559051/figure/fig3/AS:634061244596226@1528183389605/A-CT-scan-of-a-normal-lung-in-a-transverse-plane.png',
     date: DateTime.now(),
+    isCorrected: true,
   ),
   Diagnosis(
     id: "3fadkjfiekllad",

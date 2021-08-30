@@ -14,9 +14,21 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: edge),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('assets/menu.png', width: 24),
+                  InkWell(
+                    onTap: () =>
+                        Provider.of<BottomNavProvider>(context, listen: false)
+                            .setIndex(2),
+                    child: ClipOval(
+                      child: Image.network(
+                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+                        width: 36,
+                        height: 36,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {},
                     child: Image.asset('assets/search.png', width: 24),
