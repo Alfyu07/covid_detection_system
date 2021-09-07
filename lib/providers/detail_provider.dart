@@ -3,19 +3,26 @@ import 'package:flutter/widgets.dart';
 
 class DetailProvider with ChangeNotifier {
   Diagnosis? _diagnosis;
+  bool _isImgVisible = false;
+
+  String? _selectedCorrection;
 
   Diagnosis? get diagnosis => _diagnosis;
+  bool get isImgVisible => _isImgVisible;
+  String? get selectedCorrection => _selectedCorrection;
+
+  set isImgVisible(bool value) {
+    _isImgVisible = value;
+    notifyListeners();
+  }
+
   set diagnosis(Diagnosis? newValue) {
     _diagnosis = newValue;
     notifyListeners();
   }
 
-  bool _isImgVisible = false;
-
-  bool get isImgVisible => _isImgVisible;
-
-  void setImgVisibility(bool value) {
-    _isImgVisible = value;
+  set selectedCorrection(String? newValue) {
+    _selectedCorrection = newValue;
     notifyListeners();
   }
 }

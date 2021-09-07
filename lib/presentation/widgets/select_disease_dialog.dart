@@ -43,16 +43,16 @@ class SelectDiseaseDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              Consumer<CorrectionDialogProvider>(
+              Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.tempValue = "Covid 19",
+                  onTap: () => provider.selectedCorrection = "Covid 19",
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: provider.tempValue == "Covid 19"
+                        color: provider.selectedCorrection == "Covid 19"
                             ? const Color(0xff767EBC)
                             : whiteColor,
                         boxShadow: [
@@ -68,7 +68,7 @@ class SelectDiseaseDialog extends StatelessWidget {
                         'Covid 19',
                         style: mediumFont.copyWith(
                           fontSize: 16,
-                          color: provider.tempValue == "Covid 19"
+                          color: provider.selectedCorrection == "Covid 19"
                               ? whiteColor
                               : blackColor,
                         ),
@@ -78,16 +78,16 @@ class SelectDiseaseDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Consumer<CorrectionDialogProvider>(
+              Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.tempValue = "Pneumonia",
+                  onTap: () => provider.selectedCorrection = "Pneumonia",
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: provider.tempValue == "Pneumonia"
+                        color: provider.selectedCorrection == "Pneumonia"
                             ? const Color(0xff767EBC)
                             : whiteColor,
                         boxShadow: [
@@ -103,7 +103,7 @@ class SelectDiseaseDialog extends StatelessWidget {
                         'Pneumonia',
                         style: mediumFont.copyWith(
                           fontSize: 16,
-                          color: provider.tempValue == "Pneumonia"
+                          color: provider.selectedCorrection == "Pneumonia"
                               ? whiteColor
                               : blackColor,
                         ),
@@ -113,16 +113,16 @@ class SelectDiseaseDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Consumer<CorrectionDialogProvider>(
+              Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.tempValue = "Normal",
+                  onTap: () => provider.selectedCorrection = "Normal",
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: provider.tempValue == "Normal"
+                        color: provider.selectedCorrection == "Normal"
                             ? const Color(0xff767EBC)
                             : whiteColor,
                         boxShadow: [
@@ -138,7 +138,7 @@ class SelectDiseaseDialog extends StatelessWidget {
                         'Normal',
                         style: mediumFont.copyWith(
                           fontSize: 16,
-                          color: provider.tempValue == "Normal"
+                          color: provider.selectedCorrection == "Normal"
                               ? whiteColor
                               : blackColor,
                         ),
@@ -154,14 +154,13 @@ class SelectDiseaseDialog extends StatelessWidget {
                 onPressed: () {
                   final detailProvider =
                       Provider.of<DetailProvider>(context, listen: false);
-                  final correctionProvider =
-                      Provider.of<CorrectionDialogProvider>(context,
-                          listen: false);
-                  correctionProvider.setValue();
-                  detailProvider.diagnosis = detailProvider.diagnosis!.copyWith(
-                      result: correctionProvider.selectedValue,
-                      isCorrected: true);
 
+                  detailProvider.diagnosis = detailProvider.diagnosis!.copyWith(
+                    result: detailProvider.selectedCorrection,
+                    isCorrected: true,
+                  );
+
+                  print(detailProvider.diagnosis!.result);
                   //TODO : update in db
                   Navigator.pop(context);
                 },

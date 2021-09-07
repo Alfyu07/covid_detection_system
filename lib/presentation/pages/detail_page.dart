@@ -54,11 +54,9 @@ class DetailPage extends StatelessWidget {
                 // * Selected Image
                 InkWell(
                   onTap: () {
-                    final bool visibility =
-                        Provider.of<DetailProvider>(context, listen: false)
-                            .isImgVisible;
-                    Provider.of<DetailProvider>(context, listen: false)
-                        .setImgVisibility(!visibility);
+                    final detailProvider =
+                        Provider.of<DetailProvider>(context, listen: false);
+                    detailProvider.isImgVisible = !detailProvider.isImgVisible;
                   },
                   child: SizedBox(
                     height: 32,
@@ -258,11 +256,10 @@ class DetailPage extends StatelessWidget {
   }
 
   void _showSelectDiagnoseDialog(BuildContext context) {
-    final correctionProvider =
-        Provider.of<CorrectionDialogProvider>(context, listen: false);
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
-    correctionProvider.tempValue = detailProvider.diagnosis!.result;
-    correctionProvider.selectedValue = detailProvider.diagnosis!.result;
+
+    detailProvider.selectedCorrection = detailProvider.diagnosis!.result;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
