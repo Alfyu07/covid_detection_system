@@ -1,7 +1,7 @@
 part of 'models.dart';
 
 @JsonSerializable()
-class User extends Equatable {
+class User {
   final int id;
   final String? name;
   final String? imgUrl;
@@ -11,6 +11,4 @@ class User extends Equatable {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
-  @override
-  List<Object?> get props => [id, name, imgUrl];
 }

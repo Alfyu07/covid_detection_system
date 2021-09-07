@@ -1,7 +1,7 @@
 part of 'models.dart';
 
 @JsonSerializable()
-class Diagnosis extends Equatable {
+class Diagnosis {
   final String id;
   final String? imgUrl;
   final String? result;
@@ -46,8 +46,6 @@ class Diagnosis extends Equatable {
       _$DiagnosisFromJson(json);
 
   Map<String, dynamic> toJson() => _$DiagnosisToJson(this);
-  @override
-  List<Object?> get props => [id, imgUrl, result, covid, pneumonia, normal];
 }
 
 final List<Diagnosis> diagnoses = [
