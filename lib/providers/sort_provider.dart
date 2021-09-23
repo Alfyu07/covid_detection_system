@@ -7,7 +7,7 @@ class SortProvider with ChangeNotifier {
   int get index => _index;
   List<String> get sortBy => _sortBy;
 
-  void setIndex(int newValue) {
+  set index(int newValue) {
     _index = newValue;
     notifyListeners();
   }

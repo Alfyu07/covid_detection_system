@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "889299962692",
+    "project_id": "covid-19-system-6f473",
+    "storage_bucket": "covid-19-system-6f473.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889299962692:android:54e5ab5e0d98b772f36511",
+        "android_client_info": {
+          "package_name": "com.alfyu.covid_detection_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889299962692-kfm34mp5nbra8kjrpbm717haod81v0e1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3pB3hpYEEX3NzDHWh_JQ2THLBeGzohBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889299962692-kfm34mp5nbra8kjrpbm717haod81v0e1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

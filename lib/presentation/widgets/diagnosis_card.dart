@@ -10,7 +10,7 @@ class DiagnosisCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         detailProvider.diagnosis = diagnosis;
-
+        detailProvider.diagnosis!.isCorrected = diagnosis.isCorrected;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const DetailPage()),
@@ -47,7 +47,7 @@ class DiagnosisCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  diagnosis.id,
+                  diagnosis.id ?? "",
                   style: mediumFont,
                 ),
                 Text(
@@ -58,9 +58,9 @@ class DiagnosisCard extends StatelessWidget {
                       fontSize: 12, color: blueGreyColor, height: 1.2),
                 ),
                 const SizedBox(height: 8),
-                if (diagnosis.result == 'Normal')
+                if (diagnosis.label == 'Normal')
                   Text(
-                    diagnosis.result ?? "null",
+                    diagnosis.label ?? "null",
                     style: mediumFont.copyWith(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
@@ -74,7 +74,7 @@ class DiagnosisCard extends StatelessWidget {
                         style: lightFont,
                       ),
                       TextSpan(
-                        text: diagnosis.result,
+                        text: diagnosis.label,
                         style: mediumFont.copyWith(
                             fontWeight: FontWeight.w600, color: primaryColor),
                       ),

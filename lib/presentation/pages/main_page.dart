@@ -20,7 +20,16 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+
     pageController = PageController(initialPage: widget.initialPage);
+    TfliteApi.loadModel();
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    Tflite.close();
+    super.dispose();
   }
 
   Future pickImage(ImageSource source) async {
@@ -30,7 +39,7 @@ class _MainPageState extends State<MainPage> {
 
       final tempImg = File(image.path);
       // ignore: use_build_context_synchronously
-      Provider.of<ImgProvider>(context, listen: false).setImage(tempImg);
+      Provider.of<ImgProvider>(context, listen: false).image = tempImg;
       // ignore: use_build_context_synchronously
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const PreviewPage()));

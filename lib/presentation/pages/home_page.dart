@@ -5,6 +5,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sortProvider = Provider.of<SortProvider>(context);
+
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -111,58 +113,43 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildDiagnoseList(BuildContext context) {
-    return FutureBuilder<List<Diagnosis>>(
-      future: Api.readDiagnoses(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Container(
-              height: 100,
-              padding: const EdgeInsets.symmetric(horizontal: edge),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(color: primaryColor),
-                ],
-              ),
-            );
-          default:
-            if (snapshot.hasData && snapshot.data != null) {
-              final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
-              final sortProvider = Provider.of<SortProvider>(context);
-              final diagnoses = snapshot.data;
-              diagnoseProvider.setDiagnoses(diagnoses ?? []);
-              return Column(
-                children: ((sortProvider.index == 0)
-                        ? diagnoseProvider.diagnoses
-                        : (sortProvider.index == 1)
-                            ? diagnoseProvider.covidDiagnoses
-                            : (sortProvider.index == 2)
-                                ? diagnoseProvider.pneumoniaDiagnoses
-                                : diagnoseProvider.normalDiagnoses)
-                    .map((e) => DiagnosisCard(diagnosis: e))
-                    .toList(),
-              );
-            } else {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseApi.readDiagnoses(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
               return Container(
-                width: MediaQuery.of(context).size.width,
+                height: 100,
                 padding: const EdgeInsets.symmetric(horizontal: edge),
-                height: 80,
-                child: Center(
-                  child: Text(
-                    'No Data',
-                    style: mediumFont.copyWith(fontSize: 16),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(color: primaryColor),
+                  ],
                 ),
               );
-            }
-        }
+            default:
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
 
-        // Column(
-        //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
-        // ),
-      },
-    );
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text("Loading");
+              }
+              return Column(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                final diagnosis = Diagnosis.fromJson(data);
+                return DiagnosisCard(diagnosis: diagnosis);
+              }).toList());
+          }
+
+          // Column(
+          //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
+          // ),
+        });
   }
 
   Widget buildSort() {
@@ -175,7 +162,7 @@ class HomePage extends StatelessWidget {
               .map(
                 (e) => InkWell(
                   onTap: () =>
-                      sortProvider.setIndex(sortProvider.sortBy.indexOf(e)),
+                      sortProvider.index = sortProvider.sortBy.indexOf(e),
                   child: Padding(
                     padding: EdgeInsets.only(
                         left: e == sortProvider.sortBy.first ? 24 : 0),
