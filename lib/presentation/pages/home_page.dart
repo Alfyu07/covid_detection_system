@@ -5,8 +5,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sortProvider = Provider.of<SortProvider>(context);
-
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -113,8 +111,17 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildDiagnoseList(BuildContext context) {
+    final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
+    final sortProvider = Provider.of<SortProvider>(context);
+
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseApi.readDiagnoses(),
+        stream: sortProvider.sortValue == 'Terbaru'
+            ? diagnoseProvider.readDiagnoses()
+            : sortProvider.sortValue == 'Normal'
+                ? diagnoseProvider.readNormalDiagnoses()
+                : sortProvider.sortValue == 'Covid 19'
+                    ? diagnoseProvider.readCovidDiagnoses()
+                    : diagnoseProvider.readPneumoniaDiagnoses(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -130,16 +137,16 @@ class HomePage extends StatelessWidget {
               );
             default:
               if (snapshot.hasError) {
-                return Text('Something went wrong');
+                return const Text('Something went wrong');
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text("Loading");
+                return const Text("Loading");
               }
               return Column(
                   children:
                       snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
+                final Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
                 final diagnosis = Diagnosis.fromJson(data);
                 return DiagnosisCard(diagnosis: diagnosis);

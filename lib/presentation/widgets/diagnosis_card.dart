@@ -13,7 +13,13 @@ class DiagnosisCard extends StatelessWidget {
         detailProvider.diagnosis!.isCorrected = diagnosis.isCorrected;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const DetailPage()),
+          MaterialPageRoute(
+              builder: (context) => WillPopScope(
+                  onWillPop: () async {
+                    Navigator.of(context).pop();
+                    return false;
+                  },
+                  child: const DetailPage())),
         );
       },
       child: Container(
@@ -34,12 +40,23 @@ class DiagnosisCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                diagnosis.imgUrl ?? "",
+              child: CachedNetworkImage(
+                imageUrl: diagnosis.imgUrl ?? "",
                 width: 64,
                 height: 64,
+                placeholder: (context, url) => Container(
+                  width: 64,
+                  height: 64,
+                  color: blueGreyColor,
+                ),
                 fit: BoxFit.cover,
               ),
+              // Image.network(
+              //   diagnosis.imgUrl ?? "",
+              //   width: 64,
+              //   height: 64,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(width: 20),
             Column(

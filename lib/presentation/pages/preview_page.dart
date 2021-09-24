@@ -107,6 +107,7 @@ class PreviewPage extends StatelessWidget {
                   if (imgUrl == "null") {
                     //TODO : snackbar
                     Utils.showSnackBar(context, "Upload image Failed");
+                    return;
                   }
                   //* upload data ke firebase
                   final diagnosis = Diagnosis(

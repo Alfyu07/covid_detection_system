@@ -20,8 +20,27 @@ class FirebaseApi {
       .collection('diagnosis')
       .orderBy(DiagnosisField.createdTime, descending: true)
       .snapshots();
-  // .transform(Utils.transformer(Diagnosis.fromJson) as StreamTransformer<
-  //     QuerySnapshot<Map<String, dynamic>>, List<Diagnosis>>);
+
+  static Stream<QuerySnapshot> readNormalDiagnoses() =>
+      FirebaseFirestore.instance
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Normal')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
+
+  static Stream<QuerySnapshot> readPneumoniaDiagnoses() =>
+      FirebaseFirestore.instance
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Pneumonia')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
+
+  static Stream<QuerySnapshot> readCovidDiagnoses() =>
+      FirebaseFirestore.instance
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Covid 19')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
 
   static Future<String?>? uploadFile(String destination, File file) async {
     try {

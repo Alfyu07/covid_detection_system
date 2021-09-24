@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 class DetailProvider with ChangeNotifier {
   Diagnosis? _diagnosis;
-  bool _isImgVisible = false;
+  bool _isImgVisible = true;
 
   String? _selectedCorrection;
 

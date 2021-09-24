@@ -33,26 +33,62 @@ class _SigninPageState extends State<SigninPage> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Please enter your access code',
-              style: TextStyle(
-                color: blueGreyColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: edge),
+              child: Text(
+                'Email address',
+                style: mediumFont.copyWith(
+                  color: blueGreyColor,
+                ),
               ),
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: edge),
               height: 56,
               child: TextFormField(
                 decoration: InputDecoration(
-                    hintText: 'Access code',
+                    hintText: 'Enter your email',
                     hintStyle: const TextStyle(
                       color: blueGreyColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 2, color: blueGreyColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 2, color: secondaryColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: const EdgeInsets.only(left: 16)),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: edge),
+              child: Text(
+                'Email address',
+                style: mediumFont.copyWith(
+                  color: blueGreyColor,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: edge),
+              height: 56,
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    hintStyle: const TextStyle(
+                      color: blueGreyColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
@@ -68,7 +104,7 @@ class _SigninPageState extends State<SigninPage> {
               ),
             ),
             const SizedBox(
-              height: 32,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: edge),

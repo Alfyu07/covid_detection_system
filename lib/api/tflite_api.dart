@@ -4,7 +4,7 @@ import 'package:image/image.dart' as img;
 import 'package:tflite/tflite.dart';
 
 class TfliteApi {
-  static loadModel() async {
+  static Future<void> loadModel() async {
     await Tflite.loadModel(
         model: 'assets/model.tflite', labels: 'assets/labels.txt');
   }
