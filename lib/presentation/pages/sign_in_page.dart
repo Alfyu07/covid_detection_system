@@ -12,6 +12,7 @@ class _SigninPageState extends State<SigninPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _hidePassword = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -176,21 +177,69 @@ class _SigninPageState extends State<SigninPage> {
               const SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: edge),
-                child: ButtonPrimary(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final navProvider = Provider.of<BottomNavProvider>(
-                          context,
-                          listen: false);
-                      navProvider.index = 0;
-                      context.read<AuthenticationApi>().signIn(
-                          _emailController.text, _passwordController.text);
-                    }
-                  },
-                  text: "Sign In",
+              if (_isLoading)
+                const Center(
+                  child: CircularProgressIndicator(color: primaryColor),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: edge),
+                  child: ButtonPrimary(
+                    onPressed: () {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        final navProvider = Provider.of<BottomNavProvider>(
+                            context,
+                            listen: false);
+                        navProvider.index = 0;
+                        context
+                            .read<AuthenticationApi>()
+                            .signIn(
+                                _emailController.text, _passwordController.text)
+                            .then((value) {
+                          if (value == "signed in") {
+                            Utils.showSnackBar(
+                                context, "Successfully signed in", blackColor);
+                          } else {
+                            Utils.showSnackBar(context, value!, redColor);
+                          }
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        });
+                      }
+                    },
+                    text: "Sign In",
+                  ),
                 ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Can't remember password? ",
+                    style: lightFont,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ResetPasswordPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Reset here',
+                      style: mediumFont.copyWith(
+                          fontWeight: FontWeight.w600, color: secondaryColor),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 64,

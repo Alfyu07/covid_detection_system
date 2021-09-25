@@ -9,6 +9,7 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   final TextEditingController _emailController = TextEditingController();
 
   @override
@@ -25,14 +26,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 const SizedBox(height: 32),
                 InkWell(
                   onTap: () {
-                    final navProvider =
-                        Provider.of<BottomNavProvider>(context, listen: false);
-                    navProvider.index = 0;
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const MainPage(),
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: edge),
@@ -83,7 +77,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       return null;
                     },
                     decoration: InputDecoration(
-                        hintText: 'Email',
+                        hintText: 'Enter your email',
                         fillColor: ghostWhiteColor,
                         filled: true,
                         hintStyle: const TextStyle(
@@ -120,37 +114,71 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 const SizedBox(
                   height: 32,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: edge),
-                  child: ButtonPrimary(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        final navProvider = Provider.of<BottomNavProvider>(
-                            context,
-                            listen: false);
-                        navProvider.index = 0;
-                      }
-                    },
-                    text: "Sign In",
+                if (_isLoading)
+                  const Center(
+                    child: CircularProgressIndicator(color: primaryColor),
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: edge),
+                    child: ButtonPrimary(
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        if (_formKey.currentState!.validate()) {
+                          final sent = await FirebaseApi.sendResetEmail(
+                              _emailController.text);
+                          if (sent == "sent") {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            if (!mounted) return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ResetEmailSent(),
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                            if (!mounted) return;
+                            Utils.showSnackBar(
+                                context, 'Email failed to sent', redColor);
+                          }
+                        }
+                      },
+                      text: "Send",
+                    ),
                   ),
-                ),
                 const SizedBox(
                   height: 16,
                 ),
-                Center(
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: 'Remember password? ',
-                        style: lightFont,
-                      ),
-                      TextSpan(
-                        text: 'Resend',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Remember password? ',
+                      style: lightFont,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SigninPage(),
+                            ),
+                            (route) => false);
+                      },
+                      child: Text(
+                        'Back to login page',
                         style: mediumFont.copyWith(
                             fontWeight: FontWeight.w600, color: secondaryColor),
                       ),
-                    ]),
-                  ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 64,

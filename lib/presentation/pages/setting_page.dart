@@ -107,7 +107,13 @@ class SettingPage extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //Todo : Implement Logout
-                    context.read<AuthenticationApi>().signOut();
+                    context.read<AuthenticationApi>().signOut().then((value) {
+                      if (value == "User logged out") {
+                        Utils.showSnackBar(context, value!, blackColor);
+                      } else {
+                        Utils.showSnackBar(context, value!, redColor);
+                      }
+                    });
                   },
                   child: Row(
                     children: [

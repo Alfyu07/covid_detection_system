@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const ResetPasswordPage(),
+        home: const AuthenticationWrapper(),
       ),
     );
   }

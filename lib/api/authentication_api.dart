@@ -9,15 +9,46 @@ class AuthenticationApi {
   Future<String?> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: email.trim(), password: password.trim());
 
-      return "Successfully Signed In";
-    } on FirebaseAuthException catch (e) {
-      return e.message;
+      return "signed in";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+          return "No user found with this email.";
+        case "invalid-email":
+          return "Email address is invalid";
+        case "wrong-password":
+          return "Wrong email/password combination.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        default:
+          return "Login failed. Please try again.";
+      }
     }
   }
 
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  Future<String?> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      return "User logged out";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        default:
+          return "Log out. Please try again.";
+      }
+    }
   }
 }

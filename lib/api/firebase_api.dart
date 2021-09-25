@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covid_detection_system/models/models.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 // ignore: avoid_classes_with_only_static_members
@@ -70,5 +71,16 @@ class FirebaseApi {
         FirebaseFirestore.instance.collection('diagnosis').doc(diagnosis.id);
 
     await docDiagnosis.update(diagnosis.toJson());
+  }
+
+  static Future<String?> sendResetEmail(String email) async {
+    final _auth = FirebaseAuth.instance;
+    String? result;
+
+    await _auth
+        .sendPasswordResetEmail(email: email)
+        .whenComplete(() => result = "sent")
+        .onError((error, stackTrace) => result = "not sent");
+    return result;
   }
 }
