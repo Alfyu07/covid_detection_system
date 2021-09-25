@@ -1,8 +1,10 @@
+import 'package:covid_detection_system/api/authentication_api.dart';
 import 'package:covid_detection_system/presentation/pages/pages.dart';
 import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
 import 'package:covid_detection_system/providers/img_provider.dart';
 import 'package:covid_detection_system/providers/preview_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +21,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<AuthenticationApi>(
+          create: (_) => AuthenticationApi(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationApi>().authStateChanges,
+          initialData: null,
+        ),
         ChangeNotifierProvider<DiagnoseProvider>(
           create: (BuildContext context) => DiagnoseProvider(),
         ),
@@ -49,7 +59,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const SigninPage(),
+        home: const ResetPasswordPage(),
       ),
     );
   }

@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const PreviewPage()));
     } on PlatformException catch (e) {
-      print('Failed to pick image : $e');
+      Fluttertoast.showToast(msg: 'Failed to pick image : $e');
     }
   }
 
@@ -123,7 +123,7 @@ class _MainPageState extends State<MainPage> {
       );
       return;
     }
-    Provider.of<BottomNavProvider>(context, listen: false).setIndex(index);
+    Provider.of<BottomNavProvider>(context, listen: false).index = index;
   }
 
   Widget buildSheet() => Column(

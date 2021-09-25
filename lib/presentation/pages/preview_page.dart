@@ -100,13 +100,15 @@ class PreviewPage extends StatelessWidget {
 
                   //* predict
                   final output = await TfliteApi.classifyImage(image);
-
+                  if (output == null) {
+                    Fluttertoast.showToast(msg: 'something went wrong');
+                  }
                   // upload image ke firebase storage
                   final String? imgUrl =
                       await FirebaseApi.uploadFile(destination, image);
                   if (imgUrl == "null") {
                     //TODO : snackbar
-                    Utils.showSnackBar(context, "Upload image Failed");
+                    Fluttertoast.showToast(msg: 'Upload image Failed');
                     return;
                   }
                   //* upload data ke firebase
@@ -127,8 +129,7 @@ class PreviewPage extends StatelessWidget {
                   //*terima data dan bawa ke Detail Page
                   previewProvider.isLoading = false;
                   Provider.of<DetailProvider>(context, listen: false)
-                      .diagnosis!
-                      .isCorrected = diagnosis.isCorrected;
+                      .diagnosis = diagnosis;
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const DetailPage(),

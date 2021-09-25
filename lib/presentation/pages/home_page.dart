@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
                   InkWell(
                     onTap: () =>
                         Provider.of<BottomNavProvider>(context, listen: false)
-                            .setIndex(2),
+                            .index = 2,
                     child: ClipOval(
                       child: Image.network(
                         'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
@@ -30,7 +30,17 @@ class HomePage extends StatelessWidget {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      final Diagnosis? result = await showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                      if (result!.id == null) {
+                        return;
+                      }
+                      Provider.of<DetailProvider>(context, listen: false)
+                          .diagnosis = result;
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DetailPage()));
+                    },
                     child: Image.asset('assets/search.png', width: 24),
                   ),
                 ],
@@ -137,11 +147,22 @@ class HomePage extends StatelessWidget {
               );
             default:
               if (snapshot.hasError) {
-                return const Text('Something went wrong');
+                return const Center(child: Text('Something went wrong'));
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: primaryColor,
+                ));
+              }
+              if (snapshot.data == null || !snapshot.hasData) {
+                return Center(
+                  child: Text(
+                    'No Data',
+                    style: mediumFont,
+                  ),
+                );
               }
               return Column(
                   children:
@@ -149,7 +170,24 @@ class HomePage extends StatelessWidget {
                 final Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
                 final diagnosis = Diagnosis.fromJson(data);
-                return DiagnosisCard(diagnosis: diagnosis);
+                return DiagnosisCard(
+                    diagnosis: diagnosis,
+                    onTap: () {
+                      final detailProvider =
+                          Provider.of<DetailProvider>(context, listen: false);
+                      detailProvider.diagnosis = diagnosis;
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WillPopScope(
+                                onWillPop: () async {
+                                  Navigator.of(context).pop();
+                                  return false;
+                                },
+                                child: const DetailPage())),
+                      );
+                    });
               }).toList());
           }
 

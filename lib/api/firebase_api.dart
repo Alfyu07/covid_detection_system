@@ -42,6 +42,14 @@ class FirebaseApi {
           .orderBy(DiagnosisField.createdTime, descending: true)
           .snapshots();
 
+  static Future<QuerySnapshot> queryData(String query) async {
+    return FirebaseFirestore.instance
+        .collection('diagnosis')
+        .where('id', isGreaterThanOrEqualTo: query)
+        .where('id', isLessThan: '${query}z')
+        .get();
+  }
+
   static Future<String?>? uploadFile(String destination, File file) async {
     try {
       final ref = FirebaseStorage.instance.ref(destination);

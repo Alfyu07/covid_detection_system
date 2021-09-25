@@ -25,7 +25,7 @@ class DetailPage extends StatelessWidget {
                         final navProvider = Provider.of<BottomNavProvider>(
                             context,
                             listen: false);
-                        navProvider.setIndex(0);
+                        navProvider.index = 0;
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => const MainPage(),

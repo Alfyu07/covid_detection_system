@@ -2,26 +2,14 @@ part of 'widgets.dart';
 
 class DiagnosisCard extends StatelessWidget {
   final Diagnosis diagnosis;
-  const DiagnosisCard({Key? key, required this.diagnosis}) : super(key: key);
+  final VoidCallback? onTap;
+  const DiagnosisCard({Key? key, required this.diagnosis, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final detailProvider = Provider.of<DetailProvider>(context);
     return InkWell(
-      onTap: () {
-        detailProvider.diagnosis = diagnosis;
-        detailProvider.diagnosis!.isCorrected = diagnosis.isCorrected;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WillPopScope(
-                  onWillPop: () async {
-                    Navigator.of(context).pop();
-                    return false;
-                  },
-                  child: const DetailPage())),
-        );
-      },
+      onTap: onTap,
       child: Container(
         height: 80,
         margin: const EdgeInsets.only(left: edge, right: edge, bottom: 16),

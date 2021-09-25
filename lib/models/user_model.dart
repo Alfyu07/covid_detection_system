@@ -1,10 +1,10 @@
 part of 'models.dart';
 
 @JsonSerializable()
-class User {
+class UserModel {
   final int id;
   final String? name;
   final String? imgUrl;
 
-  const User({required this.id, this.name, this.imgUrl});
+  const UserModel({required this.id, this.name, this.imgUrl});
 }

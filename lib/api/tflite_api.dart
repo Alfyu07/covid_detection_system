@@ -17,7 +17,6 @@ class TfliteApi {
       imageMean: 127.5,
       imageStd: 125.5,
     );
-
     return output;
   }
 
