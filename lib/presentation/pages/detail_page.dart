@@ -26,11 +26,7 @@ class DetailPage extends StatelessWidget {
                             context,
                             listen: false);
                         navProvider.index = 0;
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const MainPage(),
-                          ),
-                        );
+                        Navigator.popUntil(context, (route) => route.isFirst);
                       },
                       child:
                           Image.asset('assets/arrow_back_black.png', width: 26),

@@ -35,7 +35,7 @@ class DiagnosisCard extends StatelessWidget {
                 placeholder: (context, url) => Container(
                   width: 64,
                   height: 64,
-                  color: blueGreyColor,
+                  color: ghostWhiteColor,
                 ),
                 fit: BoxFit.cover,
               ),

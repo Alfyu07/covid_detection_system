@@ -29,6 +29,7 @@ class PreviewPage extends StatelessWidget {
     final previewProvider = Provider.of<PreviewProvider>(context);
     final diagnosisProvider =
         Provider.of<DiagnoseProvider>(context, listen: false);
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: blackColor,
@@ -49,17 +50,20 @@ class PreviewPage extends StatelessWidget {
                 child: Row(
                   children: [
                     InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: SizedBox(
-                          width: 32,
-                          height: 32,
-                          child: Center(
-                            child: Image.asset('assets/arrow_back_white.png',
-                                width: 24),
+                      onTap: () {
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      },
+                      child: SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: Center(
+                          child: Image.asset(
+                            'assets/arrow_back_white.png',
+                            width: 24,
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     const Spacer(),
                     Text(
                       'Preview',
@@ -94,7 +98,7 @@ class PreviewPage extends StatelessWidget {
                   previewProvider.isLoading = true;
                   if (imgProvider.image == null) return;
 
-                  final File image = File(imgProvider.image!.path);
+                  final image = imgProvider.image!;
                   final filename = path.basename(image.path);
                   final destination = 'images/$filename';
 
@@ -128,9 +132,8 @@ class PreviewPage extends StatelessWidget {
 
                   //*terima data dan bawa ke Detail Page
                   previewProvider.isLoading = false;
-                  Provider.of<DetailProvider>(context, listen: false)
-                      .diagnosis = diagnosis;
-                  Navigator.of(context).pushReplacement(
+                  detailProvider.diagnosis = diagnosis;
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const DetailPage(),
                     ),

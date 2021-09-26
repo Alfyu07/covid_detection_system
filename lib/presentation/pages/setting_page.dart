@@ -5,6 +5,8 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.read<User>();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -14,14 +16,24 @@ class SettingPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 40),
-                Image.asset(
-                  'assets/unram_logo.png',
-                  width: 150,
-                  fit: BoxFit.cover,
+                CircleAvatar(
+                  radius: 72,
+                  backgroundColor: ghostWhiteColor,
+                  child: ClipOval(
+                    child: SvgPicture.network(
+                      firebaseUser.photoURL ??
+                          "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                      width: 150,
+                      placeholderBuilder: (context) {
+                        return Container(width: 150, color: ghostWhiteColor);
+                      },
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Universitas Mataram',
+                  firebaseUser.displayName ?? "User",
                   style: mediumFont.copyWith(fontSize: 20),
                 ),
                 const SizedBox(height: 32),
@@ -98,8 +110,21 @@ class SettingPage extends StatelessWidget {
                     final user = context.read<User?>();
                     if (user != null) {
                       final String? email = user.email;
-                      context.read<AuthenticationApi>().sendResetEmail(email!);
+                      context
+                          .read<AuthenticationApi>()
+                          .sendResetEmail(email!)
+                          .then((value) {
+                        if (value != "sent") {
+                          Utils.showSnackBar(context, value!, redColor);
+                        }
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const ResetEmailSent()));
+                      });
                     }
+                    return;
                   },
                   child: Row(
                     children: [

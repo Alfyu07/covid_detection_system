@@ -49,6 +49,9 @@ class _SigninPageState extends State<SigninPage> {
                     style: mediumFont.copyWith(color: blueGreyColor)),
               ),
               const SizedBox(height: 24),
+
+              // * Email Label
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: Text(
@@ -59,6 +62,8 @@ class _SigninPageState extends State<SigninPage> {
                 ),
               ),
               const SizedBox(height: 8),
+
+              // * Email TextField
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: TextFormField(
@@ -111,6 +116,8 @@ class _SigninPageState extends State<SigninPage> {
                 ),
               ),
               const SizedBox(height: 24),
+
+              // * Password Label
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: Text(
@@ -121,6 +128,8 @@ class _SigninPageState extends State<SigninPage> {
                 ),
               ),
               const SizedBox(height: 8),
+
+              // * Password TextField
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: TextFormField(
@@ -174,6 +183,8 @@ class _SigninPageState extends State<SigninPage> {
                       )),
                 ),
               ),
+
+              // * SignUp Button
               const SizedBox(
                 height: 40,
               ),
@@ -217,29 +228,49 @@ class _SigninPageState extends State<SigninPage> {
               const SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Can't remember password? ",
-                    style: lightFont,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const ResetPasswordPage(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ResetPasswordPage(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4.0, vertical: 2),
+                        child: Text(
+                          "Forgot your password? ",
+                          style: mediumFont,
                         ),
-                      );
-                    },
-                    child: Text(
-                      'Reset here',
-                      style: mediumFont.copyWith(
-                          fontWeight: FontWeight.w600, color: secondaryColor),
+                      ),
                     ),
-                  ),
-                ],
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpPage()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4.0, vertical: 2),
+                        child: Text(
+                          'Sign up',
+                          style: mediumFont.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: secondaryColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 64,

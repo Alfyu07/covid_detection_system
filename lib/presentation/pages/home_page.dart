@@ -5,6 +5,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.read<User>();
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -19,12 +21,19 @@ class HomePage extends StatelessWidget {
                     onTap: () =>
                         Provider.of<BottomNavProvider>(context, listen: false)
                             .index = 2,
-                    child: ClipOval(
-                      child: Image.network(
-                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-                        width: 36,
-                        height: 36,
-                        fit: BoxFit.cover,
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: ghostWhiteColor,
+                      child: ClipOval(
+                        child: SvgPicture.network(
+                          firebaseUser.photoURL ??
+                              "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                          width: 40,
+                          placeholderBuilder: (context) {
+                            return Container(width: 40, color: ghostWhiteColor);
+                          },
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -36,8 +45,8 @@ class HomePage extends StatelessWidget {
                       if (result!.id == null) {
                         return;
                       }
-                      Provider.of<DetailProvider>(context, listen: false)
-                          .diagnosis = result;
+
+                      detailProvider.diagnosis = result;
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const DetailPage()));
                     },
@@ -123,6 +132,7 @@ class HomePage extends StatelessWidget {
   Widget buildDiagnoseList(BuildContext context) {
     final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
     final sortProvider = Provider.of<SortProvider>(context);
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
     return StreamBuilder<QuerySnapshot>(
         stream: sortProvider.sortValue == 'Terbaru'
@@ -173,8 +183,6 @@ class HomePage extends StatelessWidget {
                   return DiagnosisCard(
                       diagnosis: diagnosis,
                       onTap: () {
-                        final detailProvider =
-                            Provider.of<DetailProvider>(context, listen: false);
                         detailProvider.diagnosis = diagnosis;
 
                         Navigator.push(

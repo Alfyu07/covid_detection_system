@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covid_detection_system/api/authentication_api.dart';
@@ -9,11 +12,13 @@ import 'package:covid_detection_system/models/models.dart';
 import 'package:covid_detection_system/presentation/widgets/widgets.dart';
 import 'package:covid_detection_system/providers/preview_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
+import 'package:covid_detection_system/providers/sign_up_provider.dart';
 import 'package:covid_detection_system/shared/shared.dart';
 import 'package:covid_detection_system/util/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,3 +35,4 @@ part 'sign_in_page.dart';
 part 'authentication_wrapper.dart';
 part 'reset_password_page.dart';
 part 'reset_email_sent.dart';
+part 'sign_up_page.dart';

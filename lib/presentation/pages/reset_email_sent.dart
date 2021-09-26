@@ -1,15 +1,14 @@
 part of 'pages.dart';
 
 class ResetEmailSent extends StatefulWidget {
-  const ResetEmailSent({Key? key}) : super(key: key);
+  final String? email;
+  const ResetEmailSent({Key? key, this.email}) : super(key: key);
 
   @override
   _ResetEmailSentState createState() => _ResetEmailSentState();
 }
 
 class _ResetEmailSentState extends State<ResetEmailSent> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +31,7 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
               const SizedBox(height: 40),
               const Center(
                 child: Text(
-                  'Reset Password',
+                  'Email has been sent!',
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 24,
@@ -42,8 +41,11 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
               ),
               const SizedBox(height: 16),
               Center(
-                child: Text('We will sent reset password email to you',
-                    style: mediumFont.copyWith(color: blueGreyColor)),
+                child: Text(
+                  'Please check your email and click in the\nreceived link to reset your password',
+                  style: mediumFont.copyWith(color: blueGreyColor),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(height: 24),
               Center(
@@ -61,12 +63,7 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: ButtonPrimary(
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SigninPage(),
-                        ),
-                        (route) => false);
+                    Navigator.popUntil(context, (route) => route.isFirst);
                   },
                   text:
                       context.read<User?>() != null ? "Back to Home" : "Login",
@@ -83,7 +80,38 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                     style: lightFont,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      final user = context.read<User?>();
+                      if (user != null) {
+                        final String? email = user.email;
+                        context
+                            .read<AuthenticationApi>()
+                            .sendResetEmail(email!)
+                            .then(
+                          (value) {
+                            if (value != "sent") {
+                              Utils.showSnackBar(context, value!, redColor);
+                            } else {
+                              Utils.showSnackBar(context,
+                                  "Email successfully sent", blackColor);
+                            }
+                          },
+                        );
+                      } else {
+                        context
+                            .read<AuthenticationApi>()
+                            .sendResetEmail(widget.email!)
+                            .then(
+                          (value) {
+                            if (value != "sent") {
+                              Utils.showSnackBar(context, value!, redColor);
+                            } else {
+                              Utils.showSnackBar(context, value!, blackColor);
+                            }
+                          },
+                        );
+                      }
+                    },
                     child: Text(
                       'Resend',
                       style: mediumFont.copyWith(

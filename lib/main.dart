@@ -4,6 +4,7 @@ import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
 import 'package:covid_detection_system/providers/img_provider.dart';
 import 'package:covid_detection_system/providers/preview_provider.dart';
 import 'package:covid_detection_system/providers/providers.dart';
+import 'package:covid_detection_system/providers/sign_up_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<PreviewProvider>(
           create: (BuildContext context) => PreviewProvider(),
+        ),
+        ChangeNotifierProvider<SignUpProvider>(
+          create: (BuildContext context) => SignUpProvider(),
         ),
       ],
       child: MaterialApp(

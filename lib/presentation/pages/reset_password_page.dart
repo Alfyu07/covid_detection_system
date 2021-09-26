@@ -139,7 +139,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const ResetEmailSent(),
+                                builder: (_) => ResetEmailSent(
+                                  email: _emailController.text,
+                                ),
                               ),
                             );
                           } else {
@@ -166,12 +168,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SigninPage(),
-                            ),
-                            (route) => false);
+                        Navigator.popUntil(context, (route) => route.isFirst);
                       },
                       child: Text(
                         'Back to login page',

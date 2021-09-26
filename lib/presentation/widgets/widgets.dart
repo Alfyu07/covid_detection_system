@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covid_detection_system/api/firebase_api.dart';
 import 'package:covid_detection_system/models/models.dart';
-import 'package:covid_detection_system/presentation/pages/pages.dart';
 import 'package:covid_detection_system/providers/providers.dart';
 import 'package:covid_detection_system/shared/shared.dart';
 import 'package:flutter/cupertino.dart';

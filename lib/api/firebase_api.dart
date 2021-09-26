@@ -11,10 +11,12 @@ class FirebaseApi {
   static Future<String?> createDiagnosis(Diagnosis diagnosis) async {
     final docDiagnosis = FirebaseFirestore.instance.collection('diagnosis');
 
-    final doc = await docDiagnosis.add(diagnosis.toJson());
-    diagnosis.id = doc.id;
-
-    updateDiagnoses(diagnosis);
+    await docDiagnosis.add(diagnosis.toJson()).then((value) {
+      FirebaseFirestore.instance
+          .collection('diagnosis')
+          .doc(value.id)
+          .update({'id': value.id});
+    });
   }
 
   static Stream<QuerySnapshot> readDiagnoses() => FirebaseFirestore.instance

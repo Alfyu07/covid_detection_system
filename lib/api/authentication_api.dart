@@ -28,6 +28,38 @@ class AuthenticationApi {
     }
   }
 
+  Future<String?> signUp(
+      String fullname, String email, String password, String imgUrl) async {
+    try {
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        if (value.user != null) {
+          value.user!.updateDisplayName(fullname);
+          if (imgUrl != null) {
+            value.user!.updatePhotoURL(fullname);
+          }
+        }
+      });
+      return "Successfully Signed up";
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Email address is invalid";
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        default:
+          return "Registration Failed. Please try again.";
+      }
+    }
+  }
+
   Future<String?> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
