@@ -95,6 +95,11 @@ class SettingPage extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //Todo : Implement reset password
+                    final user = context.read<User?>();
+                    if (user != null) {
+                      final String? email = user.email;
+                      context.read<AuthenticationApi>().sendResetEmail(email!);
+                    }
                   },
                   child: Row(
                     children: [

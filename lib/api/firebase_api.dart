@@ -72,15 +72,4 @@ class FirebaseApi {
 
     await docDiagnosis.update(diagnosis.toJson());
   }
-
-  static Future<String?> sendResetEmail(String email) async {
-    final _auth = FirebaseAuth.instance;
-    String? result;
-
-    await _auth
-        .sendPasswordResetEmail(email: email)
-        .whenComplete(() => result = "sent")
-        .onError((error, stackTrace) => result = "not sent");
-    return result;
-  }
 }

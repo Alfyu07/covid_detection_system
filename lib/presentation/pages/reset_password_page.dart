@@ -123,12 +123,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     child: ButtonPrimary(
                       onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
                         if (_formKey.currentState!.validate()) {
-                          final sent = await FirebaseApi.sendResetEmail(
-                              _emailController.text);
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          final sent = await context
+                              .read<AuthenticationApi>()
+                              .sendResetEmail(_emailController.text);
+
                           if (sent == "sent") {
                             setState(() {
                               _isLoading = false;
@@ -145,8 +147,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                               _isLoading = false;
                             });
                             if (!mounted) return;
-                            Utils.showSnackBar(
-                                context, 'Email failed to sent', redColor);
+                            Utils.showSnackBar(context, sent!, redColor);
                           }
                         }
                       },

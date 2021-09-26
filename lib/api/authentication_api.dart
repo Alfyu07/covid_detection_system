@@ -6,6 +6,28 @@ class AuthenticationApi {
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
+  Future<String?> sendResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return "sent";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Email address is invalid";
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        default:
+          return "Email not sent. Please try again.";
+      }
+    }
+  }
+
   Future<String?> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(

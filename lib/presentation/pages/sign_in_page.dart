@@ -186,10 +186,10 @@ class _SigninPageState extends State<SigninPage> {
                   padding: const EdgeInsets.symmetric(horizontal: edge),
                   child: ButtonPrimary(
                     onPressed: () {
-                      setState(() {
-                        _isLoading = true;
-                      });
                       if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _isLoading = true;
+                        });
                         final navProvider = Provider.of<BottomNavProvider>(
                             context,
                             listen: false);

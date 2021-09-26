@@ -10,7 +10,6 @@ class ResetEmailSent extends StatefulWidget {
 class _ResetEmailSentState extends State<ResetEmailSent> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +61,6 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                 padding: const EdgeInsets.symmetric(horizontal: edge),
                 child: ButtonPrimary(
                   onPressed: () {
-                    context.read<AuthenticationApi>().signOut();
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -70,7 +68,8 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                         ),
                         (route) => false);
                   },
-                  text: "Login",
+                  text:
+                      context.read<User?>() != null ? "Back to Home" : "Login",
                 ),
               ),
               const SizedBox(

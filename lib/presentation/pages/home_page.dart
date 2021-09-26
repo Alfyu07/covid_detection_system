@@ -152,49 +152,69 @@ class HomePage extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                    child: CircularProgressIndicator(
-                  color: primaryColor,
-                ));
-              }
-              if (snapshot.data == null || !snapshot.hasData) {
-                return Center(
-                  child: Text(
-                    'No Data',
-                    style: mediumFont,
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
                   ),
                 );
               }
-              return Column(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                final Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                final diagnosis = Diagnosis.fromJson(data);
-                return DiagnosisCard(
-                    diagnosis: diagnosis,
-                    onTap: () {
-                      final detailProvider =
-                          Provider.of<DetailProvider>(context, listen: false);
-                      detailProvider.diagnosis = diagnosis;
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+              if (snapshot.hasData) {
+                if (snapshot.data!.docs.isEmpty) {
+                  return buildNoData();
+                }
+
+                return Column(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                  final Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+
+                  final diagnosis = Diagnosis.fromJson(data);
+                  return DiagnosisCard(
+                      diagnosis: diagnosis,
+                      onTap: () {
+                        final detailProvider =
+                            Provider.of<DetailProvider>(context, listen: false);
+                        detailProvider.diagnosis = diagnosis;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => WillPopScope(
-                                onWillPop: () async {
-                                  Navigator.of(context).pop();
-                                  return false;
-                                },
-                                child: const DetailPage())),
-                      );
-                    });
-              }).toList());
+                              onWillPop: () async {
+                                Navigator.of(context).pop();
+                                return false;
+                              },
+                              child: const DetailPage(),
+                            ),
+                          ),
+                        );
+                      });
+                }).toList());
+              }
+              return buildNoData();
           }
 
           // Column(
           //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
           // ),
         });
+  }
+
+  Container buildNoData() {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: edge),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No Data',
+            style: mediumFont,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildSort() {
