@@ -104,7 +104,7 @@ class SignUpPage extends StatelessWidget {
                     onChanged: (value) => provider.fullNameValue = value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Full name is required";
+                        return "Full name can't be empty";
                       }
                       return null;
                     },
@@ -298,30 +298,39 @@ class SignUpPage extends StatelessWidget {
                                 if (value != "null") {
                                   imgUrl = value;
                                 }
-                                imgUrl =
-                                    "https://avatars.dicebear.com/api/jdenticon/$randString.svg";
-                              },
-                            );
-                            context
-                                .read<AuthenticationApi>()
-                                .signUp(
-                                  provider.fullNameValue!,
-                                  provider.emailValue!,
-                                  provider.passwordValue!,
-                                  imgUrl ??
-                                      "https://avatars.dicebear.com/api/jdenticon/$randString.svg",
-                                )
-                                .then(
-                              (value) {
-                                if (value == "Successfully Signed up") {
-                                  Utils.showSnackBar(
-                                      context, value!, blackColor);
-                                } else {
-                                  Utils.showSnackBar(context, value!, redColor);
-                                }
+
+                                Utils.showSnackBar(
+                                  context,
+                                  "Failed to upload image, try again",
+                                  redColor,
+                                );
+                                provider.isLoading = false;
+
+                                return;
                               },
                             );
                           }
+                          context
+                              .read<AuthenticationApi>()
+                              .signUp(
+                                provider.fullNameValue!,
+                                provider.emailValue!,
+                                provider.passwordValue!,
+                                imgUrl ??
+                                    "https://avatars.dicebear.com/api/jdenticon/$randString.svg",
+                              )
+                              .then(
+                            (value) {
+                              if (value == "Successfully Signed up") {
+                                Utils.showSnackBar(context, value!, blackColor);
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst);
+                              } else {
+                                Utils.showSnackBar(context, value!, redColor);
+                              }
+                              provider.isLoading = false;
+                            },
+                          );
                         }
                       },
                       text: "Sign Up",

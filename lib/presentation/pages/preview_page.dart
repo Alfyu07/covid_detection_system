@@ -100,7 +100,7 @@ class PreviewPage extends StatelessWidget {
 
                   final image = imgProvider.image!;
                   final filename = path.basename(image.path);
-                  final destination = 'images/$filename';
+                  final destination = 'images/predicted_image/$filename';
 
                   //* predict
                   final output = await TfliteApi.classifyImage(image);

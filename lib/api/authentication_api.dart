@@ -36,9 +36,7 @@ class AuthenticationApi {
           .then((value) {
         if (value.user != null) {
           value.user!.updateDisplayName(fullname);
-          if (imgUrl != null) {
-            value.user!.updatePhotoURL(fullname);
-          }
+          value.user!.updatePhotoURL(imgUrl);
         }
       });
       return "Successfully Signed up";
