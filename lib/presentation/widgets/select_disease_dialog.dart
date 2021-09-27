@@ -155,13 +155,15 @@ class SelectDiseaseDialog extends StatelessWidget {
                   final detailProvider =
                       Provider.of<DetailProvider>(context, listen: false);
 
+                  //TODO : update in db
+                  Provider.of<DiagnoseProvider>(context, listen: false)
+                      .updateDiagnoses(detailProvider.diagnosis!,
+                          detailProvider.selectedCorrection, true);
+
                   detailProvider.diagnosis = detailProvider.diagnosis!.copyWith(
-                    result: detailProvider.selectedCorrection,
+                    label: detailProvider.selectedCorrection,
                     isCorrected: true,
                   );
-
-                  print(detailProvider.diagnosis!.result);
-                  //TODO : update in db
                   Navigator.pop(context);
                 },
                 text: 'Select',
