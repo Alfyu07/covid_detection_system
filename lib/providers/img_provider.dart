@@ -7,7 +7,7 @@ class ImgProvider with ChangeNotifier {
 
   File? get image => _image;
 
-  void setImage(File? newImage) {
+  set image(File? newImage) {
     _image = newImage;
     notifyListeners();
   }

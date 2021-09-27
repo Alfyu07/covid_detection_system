@@ -5,7 +5,7 @@ class BottomNavProvider with ChangeNotifier {
 
   int get index => _index;
 
-  void setIndex(int value) {
+  set index(int value) {
     _index = value;
     notifyListeners();
   }

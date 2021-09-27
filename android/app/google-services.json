@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "275781709055",
+    "project_id": "covidia-10fe2",
+    "storage_bucket": "covidia-10fe2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275781709055:android:b5ea9af7623d28f2e4b0ca",
+        "android_client_info": {
+          "package_name": "com.alfyu.covid_detection_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275781709055-35r54ieugdqr1gcj1sou9lefeqv6n3js.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alfyu.covid_detection_system",
+            "certificate_hash": "eff4c54df8f17f0c7ac0cf9dda91a871347dfbbd"
+          }
+        },
+        {
+          "client_id": "275781709055-g7tfpg6rsqesl85cgi2fb4qgemff0fdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDen4XhsgeBkkaJtM2KaAXVkphZLfWM4Ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275781709055-g7tfpg6rsqesl85cgi2fb4qgemff0fdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

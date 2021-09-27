@@ -20,7 +20,16 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+
     pageController = PageController(initialPage: widget.initialPage);
+    TfliteApi.loadModel();
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    Tflite.close();
+    super.dispose();
   }
 
   Future pickImage(ImageSource source) async {
@@ -30,12 +39,12 @@ class _MainPageState extends State<MainPage> {
 
       final tempImg = File(image.path);
       // ignore: use_build_context_synchronously
-      Provider.of<ImgProvider>(context, listen: false).setImage(tempImg);
+      Provider.of<ImgProvider>(context, listen: false).image = tempImg;
       // ignore: use_build_context_synchronously
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const PreviewPage()));
     } on PlatformException catch (e) {
-      print('Failed to pick image : $e');
+      Fluttertoast.showToast(msg: 'Failed to pick image : $e');
     }
   }
 
@@ -114,7 +123,7 @@ class _MainPageState extends State<MainPage> {
       );
       return;
     }
-    Provider.of<BottomNavProvider>(context, listen: false).setIndex(index);
+    Provider.of<BottomNavProvider>(context, listen: false).index = index;
   }
 
   Widget buildSheet() => Column(

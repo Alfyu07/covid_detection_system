@@ -5,6 +5,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.read<User>();
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -18,19 +20,36 @@ class HomePage extends StatelessWidget {
                   InkWell(
                     onTap: () =>
                         Provider.of<BottomNavProvider>(context, listen: false)
-                            .setIndex(2),
-                    child: ClipOval(
-                      child: Image.network(
-                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-                        width: 36,
-                        height: 36,
-                        fit: BoxFit.cover,
+                            .index = 2,
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: ghostWhiteColor,
+                      child: ClipOval(
+                        child: SvgPicture.network(
+                          firebaseUser.photoURL ??
+                              "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                          width: 40,
+                          placeholderBuilder: (context) {
+                            return Container(width: 40, color: ghostWhiteColor);
+                          },
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      final Diagnosis? result = await showSearch(
+                          context: context, delegate: CustomSearchDelegate());
+                      if (result!.id == null) {
+                        return;
+                      }
+
+                      detailProvider.diagnosis = result;
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DetailPage()));
+                    },
                     child: Image.asset('assets/search.png', width: 24),
                   ),
                 ],
@@ -111,57 +130,98 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildDiagnoseList(BuildContext context) {
-    return FutureBuilder<List<Diagnosis>>(
-      future: Api.readDiagnoses(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Container(
-              height: 100,
-              padding: const EdgeInsets.symmetric(horizontal: edge),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(color: primaryColor),
-                ],
-              ),
-            );
-          default:
-            if (snapshot.hasData && snapshot.data != null) {
-              final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
-              final sortProvider = Provider.of<SortProvider>(context);
-              final diagnoses = snapshot.data;
-              diagnoseProvider.setDiagnoses(diagnoses ?? []);
-              return Column(
-                children: ((sortProvider.index == 0)
-                        ? diagnoseProvider.diagnoses
-                        : (sortProvider.index == 1)
-                            ? diagnoseProvider.covidDiagnoses
-                            : (sortProvider.index == 2)
-                                ? diagnoseProvider.pneumoniaDiagnoses
-                                : diagnoseProvider.normalDiagnoses)
-                    .map((e) => DiagnosisCard(diagnosis: e))
-                    .toList(),
-              );
-            } else {
+    final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
+    final sortProvider = Provider.of<SortProvider>(context);
+    final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: sortProvider.sortValue == 'Terbaru'
+            ? diagnoseProvider.readDiagnoses()
+            : sortProvider.sortValue == 'Normal'
+                ? diagnoseProvider.readNormalDiagnoses()
+                : sortProvider.sortValue == 'Covid 19'
+                    ? diagnoseProvider.readCovidDiagnoses()
+                    : diagnoseProvider.readPneumoniaDiagnoses(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
               return Container(
-                width: MediaQuery.of(context).size.width,
+                height: 100,
                 padding: const EdgeInsets.symmetric(horizontal: edge),
-                height: 80,
-                child: Center(
-                  child: Text(
-                    'No Data',
-                    style: mediumFont.copyWith(fontSize: 16),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(color: primaryColor),
+                  ],
                 ),
               );
-            }
-        }
+            default:
+              if (snapshot.hasError) {
+                return const Center(child: Text('Something went wrong'));
+              }
 
-        // Column(
-        //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
-        // ),
-      },
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
+                );
+              }
+
+              if (snapshot.hasData) {
+                if (snapshot.data!.docs.isEmpty) {
+                  return buildNoData();
+                }
+
+                return Column(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                  final Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+
+                  final diagnosis = Diagnosis.fromJson(data);
+                  return DiagnosisCard(
+                      diagnosis: diagnosis,
+                      onTap: () {
+                        detailProvider.diagnosis = diagnosis;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WillPopScope(
+                              onWillPop: () async {
+                                Navigator.of(context).pop();
+                                return false;
+                              },
+                              child: const DetailPage(),
+                            ),
+                          ),
+                        );
+                      });
+                }).toList());
+              }
+              return buildNoData();
+          }
+
+          // Column(
+          //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
+          // ),
+        });
+  }
+
+  Container buildNoData() {
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(horizontal: edge),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No Data',
+            style: mediumFont,
+          ),
+        ],
+      ),
     );
   }
 
@@ -175,7 +235,7 @@ class HomePage extends StatelessWidget {
               .map(
                 (e) => InkWell(
                   onTap: () =>
-                      sortProvider.setIndex(sortProvider.sortBy.indexOf(e)),
+                      sortProvider.index = sortProvider.sortBy.indexOf(e),
                   child: Padding(
                     padding: EdgeInsets.only(
                         left: e == sortProvider.sortBy.first ? 24 : 0),

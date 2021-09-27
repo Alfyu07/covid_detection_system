@@ -6,6 +6,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final detailProvider = Provider.of<DetailProvider>(context);
+    final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -23,12 +25,8 @@ class DetailPage extends StatelessWidget {
                         final navProvider = Provider.of<BottomNavProvider>(
                             context,
                             listen: false);
-                        navProvider.setIndex(0);
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const MainPage(),
-                          ),
-                        );
+                        navProvider.index = 0;
+                        Navigator.popUntil(context, (route) => route.isFirst);
                       },
                       child:
                           Image.asset('assets/arrow_back_black.png', width: 26),
@@ -42,15 +40,15 @@ class DetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 Center(
-                  child: detailProvider.diagnosis!.result == "Normal"
+                  child: detailProvider.diagnosis!.label == "Normal"
                       ? Image.asset('assets/emot_smile.png', width: 140)
                       : Image.asset('assets/emot_sad.png', width: 140),
                 ),
                 const SizedBox(height: edge),
                 buildReport(detailProvider),
                 const SizedBox(height: 32),
-                buildPredictionDetails(detailProvider),
-                const SizedBox(height: 32),
+                // buildPredictionDetails(detailProvider),
+                // const SizedBox(height: 32),
                 // * Selected Image
                 InkWell(
                   onTap: () {
@@ -106,7 +104,7 @@ class DetailPage extends StatelessWidget {
                     children: [
                       Text('Corrected Result', style: mediumFont),
                       const SizedBox(height: 16),
-                      CorrectedType(result: detailProvider.diagnosis!.result!),
+                      CorrectedType(result: detailProvider.diagnosis!.label!),
                     ],
                   )
                 else
@@ -118,10 +116,13 @@ class DetailPage extends StatelessWidget {
                       ButtonPrimary(
                           text: "True",
                           onPressed: () {
+                            //TODO: update DB
+                            diagnoseProvider.updateDiagnoses(
+                                detailProvider.diagnosis!,
+                                detailProvider.diagnosis!.label,
+                                true);
                             detailProvider.diagnosis = detailProvider.diagnosis!
                                 .copyWith(isCorrected: true);
-
-                            //TODO: update DB
                           }),
                       const SizedBox(height: 16),
                       ButtonSecondary(
@@ -141,89 +142,89 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildPredictionDetails(DetailProvider detailProvider) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Prediction Details',
-          style: mediumFont.copyWith(fontSize: 18),
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 70,
-              child: Text(
-                'Covid 19',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-            ProgressBar(
-              value: detailProvider.diagnosis!.covid ?? 0,
-              color: redColor,
-            ),
-            SizedBox(
-              width: 23,
-              child: Text(
-                '${((detailProvider.diagnosis!.covid ?? 0) * 100).round()}%',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 70,
-              child: Text(
-                'Pneumonia',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-            ProgressBar(
-              value: detailProvider.diagnosis!.pneumonia ?? 0,
-              color: yellowColor,
-            ),
-            SizedBox(
-              width: 23,
-              child: Text(
-                '${((detailProvider.diagnosis!.pneumonia ?? 0) * 100).round()}%',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 70,
-              child: Text(
-                'Normal',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-            ProgressBar(
-              value: detailProvider.diagnosis!.normal ?? 0,
-              color: greenColor,
-            ),
-            SizedBox(
-              width: 23,
-              child: Text(
-                '${((detailProvider.diagnosis!.normal ?? 0) * 100).round()}%',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Widget buildPredictionDetails(DetailProvider detailProvider) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Prediction Details',
+  //         style: mediumFont.copyWith(fontSize: 18),
+  //       ),
+  //       const SizedBox(height: 16),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           SizedBox(
+  //             width: 70,
+  //             child: Text(
+  //               'Covid 19',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //           ProgressBar(
+  //             value: detailProvider.diagnosis!.covid ?? 0,
+  //             color: redColor,
+  //           ),
+  //           SizedBox(
+  //             width: 23,
+  //             child: Text(
+  //               '${((detailProvider.diagnosis!.covid ?? 0) * 100).round()}%',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 16),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           SizedBox(
+  //             width: 70,
+  //             child: Text(
+  //               'Pneumonia',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //           ProgressBar(
+  //             value: detailProvider.diagnosis!.pneumonia ?? 0,
+  //             color: yellowColor,
+  //           ),
+  //           SizedBox(
+  //             width: 23,
+  //             child: Text(
+  //               '${((detailProvider.diagnosis!.pneumonia ?? 0) * 100).round()}%',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 16),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           SizedBox(
+  //             width: 70,
+  //             child: Text(
+  //               'Normal',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //           ProgressBar(
+  //             value: detailProvider.diagnosis!.normal ?? 0,
+  //             color: greenColor,
+  //           ),
+  //           SizedBox(
+  //             width: 23,
+  //             child: Text(
+  //               '${((detailProvider.diagnosis!.normal ?? 0) * 100).round()}%',
+  //               style: lightFont.copyWith(fontSize: 12),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget buildReport(DetailProvider detailProvider) {
     return Center(
@@ -232,13 +233,13 @@ class DetailPage extends StatelessWidget {
         text: TextSpan(
           children: [
             TextSpan(
-              text: detailProvider.diagnosis!.result == "Normal"
+              text: detailProvider.diagnosis!.label == "Normal"
                   ? "They are "
                   : "Infected by ",
               style: regularFont,
             ),
             TextSpan(
-              text: detailProvider.diagnosis!.result,
+              text: detailProvider.diagnosis!.label,
               style: boldFont.copyWith(
                 fontSize: 16,
                 color: primaryColor,
@@ -246,7 +247,7 @@ class DetailPage extends StatelessWidget {
             ),
             TextSpan(
               text:
-                  '\nwith ${((detailProvider.diagnosis!.result == "Normal" ? detailProvider.diagnosis!.normal : detailProvider.diagnosis!.result == "Pneumonia" ? detailProvider.diagnosis!.pneumonia : detailProvider.diagnosis!.covid) ?? 0) * 100}% prediction accuracy',
+                  '\nwith ${detailProvider.diagnosis!.confidence} prediction accuracy',
               style: regularFont.copyWith(height: 1.3),
             ),
           ],
@@ -258,7 +259,7 @@ class DetailPage extends StatelessWidget {
   void _showSelectDiagnoseDialog(BuildContext context) {
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
-    detailProvider.selectedCorrection = detailProvider.diagnosis!.result;
+    detailProvider.selectedCorrection = detailProvider.diagnosis!.label;
 
     showDialog(
       context: context,

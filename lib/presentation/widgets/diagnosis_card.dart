@@ -2,20 +2,14 @@ part of 'widgets.dart';
 
 class DiagnosisCard extends StatelessWidget {
   final Diagnosis diagnosis;
-  const DiagnosisCard({Key? key, required this.diagnosis}) : super(key: key);
+  final VoidCallback? onTap;
+  const DiagnosisCard({Key? key, required this.diagnosis, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final detailProvider = Provider.of<DetailProvider>(context);
     return InkWell(
-      onTap: () {
-        detailProvider.diagnosis = diagnosis;
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const DetailPage()),
-        );
-      },
+      onTap: onTap,
       child: Container(
         height: 80,
         margin: const EdgeInsets.only(left: edge, right: edge, bottom: 16),
@@ -34,12 +28,23 @@ class DiagnosisCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                diagnosis.imgUrl ?? "",
+              child: CachedNetworkImage(
+                imageUrl: diagnosis.imgUrl ?? "",
                 width: 64,
                 height: 64,
+                placeholder: (context, url) => Container(
+                  width: 64,
+                  height: 64,
+                  color: ghostWhiteColor,
+                ),
                 fit: BoxFit.cover,
               ),
+              // Image.network(
+              //   diagnosis.imgUrl ?? "",
+              //   width: 64,
+              //   height: 64,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(width: 20),
             Column(
@@ -47,7 +52,7 @@ class DiagnosisCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  diagnosis.id,
+                  diagnosis.id ?? "",
                   style: mediumFont,
                 ),
                 Text(
@@ -58,9 +63,9 @@ class DiagnosisCard extends StatelessWidget {
                       fontSize: 12, color: blueGreyColor, height: 1.2),
                 ),
                 const SizedBox(height: 8),
-                if (diagnosis.result == 'Normal')
+                if (diagnosis.label == 'Normal')
                   Text(
-                    diagnosis.result ?? "null",
+                    diagnosis.label ?? "null",
                     style: mediumFont.copyWith(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
@@ -74,7 +79,7 @@ class DiagnosisCard extends StatelessWidget {
                         style: lightFont,
                       ),
                       TextSpan(
-                        text: diagnosis.result,
+                        text: diagnosis.label,
                         style: mediumFont.copyWith(
                             fontWeight: FontWeight.w600, color: primaryColor),
                       ),
