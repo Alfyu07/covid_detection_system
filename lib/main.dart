@@ -1,10 +1,10 @@
-import 'package:covid_detection_system/api/authentication_api.dart';
-import 'package:covid_detection_system/presentation/pages/pages.dart';
-import 'package:covid_detection_system/providers/bottom_nav_provider.dart';
-import 'package:covid_detection_system/providers/img_provider.dart';
-import 'package:covid_detection_system/providers/preview_provider.dart';
-import 'package:covid_detection_system/providers/providers.dart';
-import 'package:covid_detection_system/providers/sign_up_provider.dart';
+import 'package:covidia/api/authentication_api.dart';
+import 'package:covidia/presentation/pages/pages.dart';
+import 'package:covidia/providers/bottom_nav_provider.dart';
+import 'package:covidia/providers/img_provider.dart';
+import 'package:covidia/providers/preview_provider.dart';
+import 'package:covidia/providers/providers.dart';
+import 'package:covidia/providers/sign_up_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

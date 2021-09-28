@@ -1,4 +1,4 @@
-# covid_detection_system
+# covidia
 
 A new Flutter project.
 
