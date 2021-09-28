@@ -1,4 +1,4 @@
-package com.alfyu.covid_detection_system
+package com.alfyu.covidia
 
 import io.flutter.embedding.android.FlutterActivity
 
