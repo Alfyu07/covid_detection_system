@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covid_detection_system/api/firebase_api.dart';
-import 'package:covid_detection_system/models/models.dart';
+import 'package:covidia/api/firebase_api.dart';
+import 'package:covidia/models/models.dart';
 import 'package:flutter/widgets.dart';
 
 class DiagnoseProvider with ChangeNotifier {

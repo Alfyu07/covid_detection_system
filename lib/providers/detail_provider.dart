@@ -1,4 +1,4 @@
-import 'package:covid_detection_system/models/models.dart';
+import 'package:covidia/models/models.dart';
 import 'package:flutter/widgets.dart';
 
 class DetailProvider with ChangeNotifier {
