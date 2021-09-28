@@ -39,12 +39,6 @@ class DiagnosisCard extends StatelessWidget {
                 ),
                 fit: BoxFit.cover,
               ),
-              // Image.network(
-              //   diagnosis.imgUrl ?? "",
-              //   width: 64,
-              //   height: 64,
-              //   fit: BoxFit.cover,
-              // ),
             ),
             const SizedBox(width: 20),
             Column(

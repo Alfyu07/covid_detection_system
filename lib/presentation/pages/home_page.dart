@@ -130,6 +130,41 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget buildSkeleton(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: edge, right: edge, bottom: 16),
+      padding: const EdgeInsets.only(left: 16),
+      child: Row(
+        children: [
+          const SkeletonContainer.circular(
+            width: 64,
+            height: 64,
+          ),
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SkeletonContainer.rounded(
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: 16,
+              ),
+              const SkeletonContainer.rounded(
+                width: 60,
+                height: 12,
+              ),
+              const SizedBox(height: 8),
+              const SkeletonContainer.rounded(
+                width: 60,
+                height: 14,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   Widget buildDiagnoseList(BuildContext context) {
     final diagnoseProvider = Provider.of<DiagnoseProvider>(context);
     final sortProvider = Provider.of<SortProvider>(context);
@@ -146,60 +181,45 @@ class HomePage extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Container(
-                height: 100,
-                padding: const EdgeInsets.symmetric(horizontal: edge),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(color: primaryColor),
-                  ],
-                ),
-              );
+              return Column(children: [
+                for (int i = 0; i < 10; i++) buildSkeleton(context),
+              ]);
             default:
               if (snapshot.hasError) {
                 return const Center(child: Text('Something went wrong'));
               }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: primaryColor,
-                  ),
-                );
-              }
-
               if (snapshot.hasData) {
                 if (snapshot.data!.docs.isEmpty) {
                   return buildNoData();
                 }
 
                 return Column(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                  final Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    final Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
 
-                  final diagnosis = Diagnosis.fromJson(data);
-                  return DiagnosisCard(
-                      diagnosis: diagnosis,
-                      onTap: () {
-                        detailProvider.diagnosis = diagnosis;
+                    final diagnosis = Diagnosis.fromJson(data);
+                    return DiagnosisCard(
+                        diagnosis: diagnosis,
+                        onTap: () {
+                          detailProvider.diagnosis = diagnosis;
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WillPopScope(
-                              onWillPop: () async {
-                                Navigator.of(context).pop();
-                                return false;
-                              },
-                              child: const DetailPage(),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WillPopScope(
+                                onWillPop: () async {
+                                  Navigator.of(context).pop();
+                                  return false;
+                                },
+                                child: const DetailPage(),
+                              ),
                             ),
-                          ),
-                        );
-                      });
-                }).toList());
+                          );
+                        });
+                  }).toList(),
+                );
               }
               return buildNoData();
           }

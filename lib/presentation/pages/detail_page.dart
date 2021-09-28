@@ -117,10 +117,17 @@ class DetailPage extends StatelessWidget {
                           text: "True",
                           onPressed: () {
                             //TODO: update DB
-                            diagnoseProvider.updateDiagnoses(
-                                detailProvider.diagnosis!,
-                                detailProvider.diagnosis!.label,
-                                true);
+                            diagnoseProvider
+                                .updateDiagnoses(detailProvider.diagnosis!,
+                                    detailProvider.diagnosis!.label, true)
+                                .then(
+                              (value) {
+                                if (value != "Data successfully updated") {
+                                  Utils.showSnackBar(context, value!, redColor);
+                                }
+                                Utils.showSnackBar(context, value!, blackColor);
+                              },
+                            );
                             detailProvider.diagnosis = detailProvider.diagnosis!
                                 .copyWith(isCorrected: true);
                           }),
@@ -247,7 +254,7 @@ class DetailPage extends StatelessWidget {
             ),
             TextSpan(
               text:
-                  '\nwith ${detailProvider.diagnosis!.confidence} prediction accuracy',
+                  '\nwith ${detailProvider.diagnosis!.confidence!.toStringAsFixed(4)} prediction accuracy',
               style: regularFont.copyWith(height: 1.3),
             ),
           ],

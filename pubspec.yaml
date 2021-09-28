@@ -41,6 +41,7 @@ dependencies:
   lint: ^1.5.3
   path: ^1.8.0
   provider: ^6.0.0
+  skeleton_text: ^3.0.0
   tflite: ^1.1.2
 
 dev_dependencies:

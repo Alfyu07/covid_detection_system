@@ -68,10 +68,21 @@ class FirebaseApi {
     }
   }
 
-  static Future updateDiagnoses(Diagnosis diagnosis) async {
-    final docDiagnosis =
-        FirebaseFirestore.instance.collection('diagnosis').doc(diagnosis.id);
+  static Future<String?> updateDiagnoses(Diagnosis diagnosis) async {
+    try {
+      final docDiagnosis =
+          FirebaseFirestore.instance.collection('diagnosis').doc(diagnosis.id);
 
-    await docDiagnosis.update(diagnosis.toJson());
+      await docDiagnosis.update(diagnosis.toJson());
+
+      return "Data successfully updated";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "object-not-found":
+          return "Update data failed, No data found";
+        default:
+          return "Update data failed : ${e.code}";
+      }
+    }
   }
 }
