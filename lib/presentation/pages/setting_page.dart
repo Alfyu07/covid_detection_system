@@ -139,7 +139,8 @@ class SettingPage extends StatelessWidget {
                     //Todo : Implement Logout
                     context.read<AuthenticationApi>().signOut().then((value) {
                       if (value == "User logged out") {
-                        Provider.of<BottomNavProvider>(context).index = 0;
+                        Provider.of<BottomNavProvider>(context, listen: false)
+                            .index = 0;
                         Utils.showSnackBar(context, value!, blackColor);
                       } else {
                         Utils.showSnackBar(context, value!, redColor);
@@ -154,6 +155,9 @@ class SettingPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 100,
+                )
               ],
             ),
           ),

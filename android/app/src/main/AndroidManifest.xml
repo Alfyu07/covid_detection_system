@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alfyu.covid_detection_system">
+    package="com.alfyu.covidia">
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="covid_detection_system"
+        android:label="covidia"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

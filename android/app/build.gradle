@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.alfyu.covid_detection_system"
+        applicationId "com.alfyu.covidia"
         minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true

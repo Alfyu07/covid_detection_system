@@ -28,6 +28,7 @@ class _SigninPageState extends State<SigninPage> {
                 clipper: SignInClipper(),
                 child: Container(
                   height: 320,
+                  width: double.infinity,
                   padding: const EdgeInsets.only(bottom: 16),
                   color: primaryColor,
                   child: Image.asset('assets/person_fighting_with_virus.png'),

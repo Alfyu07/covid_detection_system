@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.read<User>();
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -93,7 +94,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            buildDisease(),
+            buildDisease(size),
             const SizedBox(height: 80),
           ],
         ),
@@ -253,11 +254,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildDisease() {
+  Widget buildDisease(Size size) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: edge),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: size.width < 480
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.spaceAround,
         children: [
           DiseaseCard(
               image: Image.asset('assets/tipe_covid.png', width: 70),
