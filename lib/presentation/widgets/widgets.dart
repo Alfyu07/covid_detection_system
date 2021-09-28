@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:skeleton_text/skeleton_text.dart';
 part 'btn_primary.dart';
 part 'btn_secondary.dart';
 part 'carousel_item.dart';
@@ -25,3 +25,4 @@ part 'select_model_dialog.dart';
 part 'sign_in_clipper.dart';
 part 'sort_item.dart';
 part 'custom_search_delegate.dart';
+part 'skeleton_container.dart';

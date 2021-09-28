@@ -15,11 +15,12 @@ class DiagnoseProvider with ChangeNotifier {
   Stream<QuerySnapshot> readCovidDiagnoses() =>
       FirebaseApi.readCovidDiagnoses();
 
-  void updateDiagnoses(Diagnosis diagnosis, String? label, bool? isCorrected) {
+  Future<String?> updateDiagnoses(
+      Diagnosis diagnosis, String? label, bool? isCorrected) async {
     diagnosis.label = label;
     diagnosis.isCorrected = isCorrected;
 
-    FirebaseApi.updateDiagnoses(diagnosis);
+    return FirebaseApi.updateDiagnoses(diagnosis);
   }
 
   void addDiagnoses(Diagnosis diagnosis) =>
