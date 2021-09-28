@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:275781709055:android:b5ea9af7623d28f2e4b0ca",
+        "mobilesdk_app_id": "1:275781709055:android:a8c750032a7b7285e4b0ca",
         "android_client_info": {
-          "package_name": "com.alfyu.covid_detection_system"
+          "package_name": "com.alfyu.covidia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "275781709055-35r54ieugdqr1gcj1sou9lefeqv6n3js.apps.googleusercontent.com",
+          "client_id": "275781709055-k76hkgcggslqbetmuv0h47d40a8a4slr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.alfyu.covid_detection_system",
+            "package_name": "com.alfyu.covidia",
             "certificate_hash": "eff4c54df8f17f0c7ac0cf9dda91a871347dfbbd"
           }
         },
