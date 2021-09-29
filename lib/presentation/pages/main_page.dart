@@ -123,6 +123,7 @@ class _MainPageState extends State<MainPage> {
       );
       return;
     }
+
     Provider.of<BottomNavProvider>(context, listen: false).index = index;
   }
 

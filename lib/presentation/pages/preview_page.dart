@@ -128,16 +128,17 @@ class PreviewPage extends StatelessWidget {
                     confidence: (output[0]['confidence'] as num).toDouble(),
                   );
 
-                  diagnosisProvider.addDiagnoses(diagnosis);
-
+                  diagnosisProvider.addDiagnoses(diagnosis).then((value) {
+                    diagnosis.id = value;
+                    previewProvider.isLoading = false;
+                    detailProvider.diagnosis = diagnosis;
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const DetailPage(),
+                      ),
+                    );
+                  });
                   //*terima data dan bawa ke Detail Page
-                  previewProvider.isLoading = false;
-                  detailProvider.diagnosis = diagnosis;
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(),
-                    ),
-                  );
                 },
                 text: "Diagnose",
               ),

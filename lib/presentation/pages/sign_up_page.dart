@@ -13,6 +13,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final String randString = getRandString(5);
     final provider = Provider.of<SignUpProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthenticationApi>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -55,26 +56,29 @@ class SignUpPage extends StatelessWidget {
                     height: 120,
                     width: 120,
                     child: Stack(children: [
-                      ClipOval(child: Consumer<SignUpProvider>(
-                          builder: (context, provider, _) {
-                        if (provider.image != null) {
-                          return Image.file(provider.image!);
-                        }
-                        return SvgPicture.network(
-                          'https://avatars.dicebear.com/api/identicon/$randString}.svg',
-                          fit: BoxFit.cover,
-                          placeholderBuilder: (context) {
-                            return Container(
-                                width: 120, color: ghostWhiteColor);
-                          },
+                      SizedBox(
                           width: 120,
-                        );
-                      })),
+                          height: 120,
+                          child: Consumer<SignUpProvider>(
+                              builder: (context, provider, _) {
+                            if (provider.image != null) {
+                              return ClipOval(
+                                child: Image.file(provider.image!,
+                                    fit: BoxFit.cover),
+                              );
+                            }
+                            return Image.asset('assets/user_default_avatar.png',
+                                fit: BoxFit.cover);
+                          })),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
                             provider.pickImage(ImageSource.gallery);
+
+                            //upload jika belum ada
+
+                            //delete dan upload jika sudah ada
                           },
                           child: Image.asset('assets/camera2.png', width: 40),
                         ),
@@ -219,123 +223,116 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 8),
 
                 // * Password TextField
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: edge),
-                  child: TextFormField(
-                    onChanged: (value) => provider.passwordValue = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Password can't be empty";
-                      }
-                      return null;
-                    },
-                    obscureText: provider.hidePassword,
-                    decoration: InputDecoration(
-                        fillColor: ghostWhiteColor,
-                        filled: true,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            provider.hidePassword = !provider.hidePassword;
-                          },
-                          icon: provider.hidePassword
-                              ? const Icon(Icons.visibility_off_outlined)
-                              : const Icon(Icons.visibility),
-                        ),
-                        hintText: 'Enter your password',
-                        hintStyle: const TextStyle(
-                          color: blueGreyColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        border: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                          //borderSide: const BorderSide(),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: secondaryColor, width: 1.5),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: redColor, width: 1.5),
-                        ),
-                        contentPadding: const EdgeInsets.only(
-                          left: 16,
-                        )),
+                Consumer<SignUpProvider>(
+                  builder: (context, provider, _) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: edge),
+                    child: TextFormField(
+                      onChanged: (value) => provider.passwordValue = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password can't be empty";
+                        }
+                        return null;
+                      },
+                      obscureText: provider.hidePassword,
+                      decoration: InputDecoration(
+                          fillColor: ghostWhiteColor,
+                          filled: true,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              provider.hidePassword = !provider.hidePassword;
+                            },
+                            icon: provider.hidePassword
+                                ? const Icon(Icons.visibility_off_outlined)
+                                : const Icon(Icons.visibility),
+                          ),
+                          hintText: 'Enter your password',
+                          hintStyle: const TextStyle(
+                            color: blueGreyColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          border: OutlineInputBorder(
+                            // width: 0.0 produces a thin "hairline" border
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                            //borderSide: const BorderSide(),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            // width: 0.0 produces a thin "hairline" border
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                                color: secondaryColor, width: 1.5),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            // width: 0.0 produces a thin "hairline" border
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:
+                                const BorderSide(color: redColor, width: 1.5),
+                          ),
+                          contentPadding: const EdgeInsets.only(
+                            left: 16,
+                          )),
+                    ),
                   ),
                 ),
 
                 const SizedBox(
                   height: 32,
                 ),
-                if (provider.isLoading)
-                  const Center(
-                    child: CircularProgressIndicator(color: primaryColor),
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: edge),
-                    child: ButtonPrimary(
-                      onPressed: () {
-                        if (provider.formKey.currentState!.validate()) {
-                          provider.isLoading = true;
-                          String? imgUrl;
+                Consumer<SignUpProvider>(
+                  builder: (context, provider, _) {
+                    if (provider.isLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: primaryColor),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: edge),
+                        child: ButtonPrimary(
+                          onPressed: () async {
+                            if (!provider.formKey.currentState!.validate()) {
+                              return;
+                            }
+                            provider.isLoading = true;
 
-                          if (provider.image != null) {
                             final filename =
                                 path.basename(provider.image!.path);
                             final destination = 'images/users/$filename';
-                            FirebaseApi.uploadFile(
-                                    destination, provider.image!)!
-                                .then(
-                              (value) {
-                                if (value != "null") {
-                                  imgUrl = value;
-                                }
+                            final imgUrl = await FirebaseApi.uploadFile(
+                                destination, provider.image!);
+                            print("successfully upload image");
+                            //sign up
 
-                                Utils.showSnackBar(
-                                  context,
-                                  "Failed to upload image, try again",
-                                  redColor,
-                                );
-                                provider.isLoading = false;
-
-                                return;
-                              },
+                            final resultSignUp = await authProvider.signUp(
+                              provider.fullNameValue!,
+                              provider.emailValue!,
+                              provider.passwordValue!,
+                              imgUrl ?? "null",
                             );
-                          }
-                          context
-                              .read<AuthenticationApi>()
-                              .signUp(
-                                provider.fullNameValue!,
-                                provider.emailValue!,
-                                provider.passwordValue!,
-                                imgUrl ??
-                                    "https://avatars.dicebear.com/api/jdenticon/$randString.svg",
-                              )
-                              .then(
-                            (value) {
-                              if (value == "Successfully Signed up") {
-                                Utils.showSnackBar(context, value!, blackColor);
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst);
-                              } else {
-                                Utils.showSnackBar(context, value!, redColor);
-                              }
-                              provider.isLoading = false;
-                            },
-                          );
-                        }
-                      },
-                      text: "Sign Up",
-                    ),
-                  ),
+                            if (resultSignUp == "Successfully signed up") {
+                              Utils.showSnackBar(
+                                  context, resultSignUp!, blackColor);
+                              provider.isLoading = true;
+
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                            } else {
+                              provider.isLoading = true;
+                              Utils.showSnackBar(
+                                context,
+                                resultSignUp!,
+                                redColor,
+                              );
+                            }
+                          },
+                          text: "Sign Up",
+                        ),
+                      );
+                    }
+                  },
+                ),
+
                 const SizedBox(
                   height: 16,
                 ),

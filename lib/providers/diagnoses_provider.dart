@@ -23,6 +23,6 @@ class DiagnoseProvider with ChangeNotifier {
     return FirebaseApi.updateDiagnoses(diagnosis);
   }
 
-  void addDiagnoses(Diagnosis diagnosis) =>
+  Future<String?> addDiagnoses(Diagnosis diagnosis) =>
       FirebaseApi.createDiagnosis(diagnosis);
 }

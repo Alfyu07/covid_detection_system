@@ -6,6 +6,7 @@ import 'package:covidia/api/firebase_api.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/shared/shared.dart';
+import 'package:covidia/util/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -252,11 +252,19 @@ class DetailPage extends StatelessWidget {
                 color: primaryColor,
               ),
             ),
-            TextSpan(
-              text:
-                  '\nwith ${detailProvider.diagnosis!.confidence!.toStringAsFixed(4)} prediction accuracy',
-              style: regularFont.copyWith(height: 1.3),
-            ),
+            if (detailProvider.diagnosis!.confidence == 0 ||
+                detailProvider.diagnosis!.confidence == 1)
+              TextSpan(
+                text:
+                    '\nwith ${detailProvider.diagnosis!.confidence!.toStringAsFixed(1)} prediction accuracy',
+                style: regularFont.copyWith(height: 1.3),
+              )
+            else
+              TextSpan(
+                text:
+                    '\nwith ${detailProvider.diagnosis!.confidence!.toStringAsFixed(4)} prediction accuracy',
+                style: regularFont.copyWith(height: 1.3),
+              ),
           ],
         ),
       ),

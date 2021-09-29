@@ -22,6 +22,11 @@ class SignUpProvider extends ChangeNotifier {
   String? get passwordValue => _passwordValue;
   File? get image => _image;
 
+  set image(File? newValue) {
+    _image = newValue;
+    notifyListeners();
+  }
+
   set isLoading(bool newValue) {
     _isLoading = !_isLoading;
     notifyListeners();
