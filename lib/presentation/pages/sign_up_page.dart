@@ -112,6 +112,7 @@ class SignUpPage extends StatelessWidget {
                       }
                       return null;
                     },
+                    textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
                         hintText: 'Enter your full name',
                         fillColor: ghostWhiteColor,
@@ -295,14 +296,15 @@ class SignUpPage extends StatelessWidget {
                               return;
                             }
                             provider.isLoading = true;
-
-                            final filename =
-                                path.basename(provider.image!.path);
-                            final destination = 'images/users/$filename';
-                            final imgUrl = await FirebaseApi.uploadFile(
-                                destination, provider.image!);
-                            print("successfully upload image");
-                            //sign up
+                            String? imgUrl = "null";
+                            if (provider.image != null) {
+                              final filename =
+                                  path.basename(provider.image!.path);
+                              final destination = 'images/users/$filename';
+                              imgUrl = await FirebaseApi.uploadFile(
+                                  destination, provider.image!);
+                              //sign up
+                            }
 
                             final resultSignUp = await authProvider.signUp(
                               provider.fullNameValue!,
