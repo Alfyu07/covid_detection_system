@@ -44,20 +44,7 @@ class AuthenticationApi {
       await FirebaseApi.updateUserData(user.uid, 'RS Unram');
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case "invalid-email":
-          return "Email address is invalid";
-        case "user-not-found":
-          return "No user found with this email.";
-        case "too-many-requests":
-          return "Too many requests to log into this account.";
-        case "operation-not-allowed":
-          return "Server error, please try again later.";
-        case "user-disabled":
-          return "User disabled.";
-        default:
-          return "Registration Failed. Please try again.";
-      }
+      return e.message;
     }
   }
 

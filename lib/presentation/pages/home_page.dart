@@ -39,8 +39,7 @@ class HomePage extends StatelessWidget {
                               child: snapshot.data!.photoURL == "null" ||
                                       snapshot.data!.photoURL == null
                                   ? SvgPicture.network(
-                                      snapshot.data!.photoURL ??
-                                          "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                      "https://avatars.dicebear.com/api/jdenticon/default.svg",
                                       width: 40,
                                       placeholderBuilder: (context) {
                                         return Container(
