@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:covidia/api/firebase_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationApi {
@@ -31,15 +33,16 @@ class AuthenticationApi {
   Future<String?> signUp(
       String fullname, String email, String password, String imgUrl) async {
     try {
-      await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        if (value.user != null) {
-          value.user!.updateDisplayName(fullname);
-          value.user!.updatePhotoURL(imgUrl);
-        }
-      });
-      return "Successfully Signed up";
+      final value = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final user = value.user;
+      if (user == null) return "failed";
+
+      await user
+          .updateDisplayName(fullname)
+          .whenComplete(() => user.updatePhotoURL(imgUrl));
+      await FirebaseApi.updateUserData(user.uid, 'RS Unram');
+      return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "invalid-email":
@@ -56,6 +59,11 @@ class AuthenticationApi {
           return "Registration Failed. Please try again.";
       }
     }
+  }
+
+  Future<User?> getLoggedUser() async {
+    await _firebaseAuth.currentUser!.reload();
+    return _firebaseAuth.currentUser;
   }
 
   Future<String?> signIn(String email, String password) async {

@@ -24,7 +24,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import 'package:tflite/tflite.dart';
-
 part 'detail_page.dart';
 part 'home_page.dart';
 part 'main_page.dart';

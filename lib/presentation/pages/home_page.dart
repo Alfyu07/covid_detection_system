@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.read<User>();
+    final firebaseUser = context.watch<User>();
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -22,21 +22,40 @@ class HomePage extends StatelessWidget {
                     onTap: () =>
                         Provider.of<BottomNavProvider>(context, listen: false)
                             .index = 2,
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: ghostWhiteColor,
-                      child: ClipOval(
-                        child: SvgPicture.network(
-                          firebaseUser.photoURL ??
-                              "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                          width: 40,
-                          placeholderBuilder: (context) {
-                            return Container(width: 40, color: ghostWhiteColor);
-                          },
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    child: StreamBuilder<User?>(
+                        stream: FirebaseAuth.instance.userChanges(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const SkeletonContainer.circular(
+                              width: 40,
+                              height: 40,
+                            );
+                          }
+                          return CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ghostWhiteColor,
+                            child: ClipOval(
+                              child: snapshot.data!.photoURL == "null" ||
+                                      snapshot.data!.photoURL == null
+                                  ? SvgPicture.network(
+                                      snapshot.data!.photoURL ??
+                                          "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                      width: 40,
+                                      placeholderBuilder: (context) {
+                                        return Container(
+                                            width: 40, color: ghostWhiteColor);
+                                      },
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      snapshot.data!.photoURL!,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          );
+                        }),
                   ),
                   const Spacer(),
                   GestureDetector(

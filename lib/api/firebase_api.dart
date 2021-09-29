@@ -11,12 +11,12 @@ class FirebaseApi {
   static Future<String?> createDiagnosis(Diagnosis diagnosis) async {
     final docDiagnosis = FirebaseFirestore.instance.collection('diagnosis');
 
-    await docDiagnosis.add(diagnosis.toJson()).then((value) {
-      FirebaseFirestore.instance
-          .collection('diagnosis')
-          .doc(value.id)
-          .update({'id': value.id});
-    });
+    final docref = await docDiagnosis.add(diagnosis.toJson());
+
+    diagnosis.id = docref.id;
+
+    updateDiagnoses(diagnosis);
+    return diagnosis.id;
   }
 
   static Stream<QuerySnapshot> readDiagnoses() => FirebaseFirestore.instance
@@ -53,19 +53,23 @@ class FirebaseApi {
         .get();
   }
 
-  static Future<String?>? uploadFile(String destination, File file) async {
+  static Future<String?> uploadFile(String destination, File file) async {
     try {
       final ref = FirebaseStorage.instance.ref(destination);
-
-      final upload = ref.putFile(file);
-      String? url;
-      await upload.whenComplete(() async {
-        url = await ref.getDownloadURL();
-      });
-      return url;
+      final result = await ref.putFile(file);
+      final imgUrl = await result.ref.getDownloadURL();
+      return imgUrl;
     } on FirebaseException {
       return "null";
     }
+  }
+
+  static Future updateUserData(
+    String? uid,
+    String? unitKerja,
+  ) async {
+    final userCollection = FirebaseFirestore.instance.collection('users');
+    return await userCollection.doc(uid).set({'unitKerja': unitKerja});
   }
 
   static Future<String?> updateDiagnoses(Diagnosis diagnosis) async {
@@ -79,9 +83,9 @@ class FirebaseApi {
     } on FirebaseException catch (e) {
       switch (e.code) {
         case "object-not-found":
-          return "Update data failed, No data found";
+          return e.message;
         default:
-          return "Update data failed : ${e.code}";
+          return "Update data failed : ${e.message}";
       }
     }
   }

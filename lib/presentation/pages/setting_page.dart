@@ -5,8 +5,6 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.read<User>();
-
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -16,26 +14,60 @@ class SettingPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 40),
-                CircleAvatar(
-                  radius: 72,
-                  backgroundColor: ghostWhiteColor,
-                  child: ClipOval(
-                    child: SvgPicture.network(
-                      firebaseUser.photoURL ??
-                          "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                      width: 150,
-                      placeholderBuilder: (context) {
-                        return Container(width: 150, color: ghostWhiteColor);
-                      },
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SkeletonContainer.circular(
+                          width: 150,
+                          height: 150,
+                        );
+                      }
+                      if (!snapshot.hasData) {
+                        return const SkeletonContainer.circular(
+                          width: 150,
+                          height: 150,
+                        );
+                      }
+                      return CircleAvatar(
+                        radius: 72,
+                        backgroundColor: ghostWhiteColor,
+                        child: ClipOval(
+                          child: snapshot.data!.photoURL == "null" ||
+                                  snapshot.data!.photoURL == null
+                              ? SvgPicture.network(
+                                  snapshot.data!.photoURL ??
+                                      "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                  width: 150,
+                                  placeholderBuilder: (context) {
+                                    return Container(
+                                        width: 150, color: ghostWhiteColor);
+                                  },
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  snapshot.data!.photoURL!,
+                                  width: 150,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      );
+                    }),
                 const SizedBox(height: 8),
-                Text(
-                  firebaseUser.displayName ?? "User",
-                  style: mediumFont.copyWith(fontSize: 20),
-                ),
+                StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SkeletonContainer.rounded(
+                          height: 20,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                        );
+                      }
+                      return Text(
+                        snapshot.data!.displayName ?? "User",
+                        style: mediumFont.copyWith(fontSize: 20),
+                      );
+                    }),
                 const SizedBox(height: 32),
                 Container(
                   width: double.infinity,

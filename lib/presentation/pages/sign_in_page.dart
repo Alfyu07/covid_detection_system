@@ -16,6 +16,7 @@ class _SigninPageState extends State<SigninPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -27,7 +28,7 @@ class _SigninPageState extends State<SigninPage> {
               ClipPath(
                 clipper: SignInClipper(),
                 child: Container(
-                  height: 320,
+                  height: size.height <= 480 ? 320 : size.height * 0.4,
                   width: double.infinity,
                   padding: const EdgeInsets.only(bottom: 16),
                   color: primaryColor,
@@ -254,10 +255,14 @@ class _SigninPageState extends State<SigninPage> {
                     ),
                     InkWell(
                       onTap: () {
+                        Provider.of<SignUpProvider>(context, listen: false)
+                            .image = null;
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpPage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
