@@ -234,6 +234,10 @@ class DetailPage extends StatelessWidget {
   // }
 
   Widget buildReport(DetailProvider detailProvider) {
+    if (detailProvider.diagnosis!.confidence == null) {
+      return Container();
+    }
+
     return Center(
       child: RichText(
         textAlign: TextAlign.center,

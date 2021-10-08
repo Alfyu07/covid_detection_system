@@ -11,7 +11,6 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String randString = getRandString(5);
     final provider = Provider.of<SignUpProvider>(context, listen: false);
     final authProvider = Provider.of<AuthenticationApi>(context);
     return Scaffold(

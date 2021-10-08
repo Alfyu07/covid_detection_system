@@ -5,7 +5,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -112,7 +111,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            buildDisease(size),
+            buildDisease(context, size),
             const SizedBox(height: 80),
           ],
         ),
@@ -292,7 +291,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildDisease(Size size) {
+  Widget buildDisease(BuildContext context, Size size) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: edge),
       child: Row(
@@ -300,15 +299,53 @@ class HomePage extends StatelessWidget {
             ? MainAxisAlignment.spaceBetween
             : MainAxisAlignment.spaceAround,
         children: [
-          DiseaseCard(
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsDisease(
+                    disease: diseases[0],
+                  ),
+                ),
+              );
+            },
+            child: DiseaseCard(
               image: Image.asset('assets/tipe_covid.png', width: 70),
-              name: 'Covid 19'),
-          DiseaseCard(
+              name: 'Covid 19',
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsDisease(
+                    disease: diseases[1],
+                  ),
+                ),
+              );
+            },
+            child: DiseaseCard(
               image: Image.asset('assets/tipe_pneumonia.png', width: 70),
-              name: 'Pneumonia'),
-          DiseaseCard(
-              image: Image.asset('assets/tipe_normal.png', width: 70),
-              name: 'Normal Lungs')
+              name: 'Pneumonia',
+            ),
+          ),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsDisease(
+                      disease: diseases[2],
+                    ),
+                  ),
+                );
+              },
+              child: DiseaseCard(
+                image: Image.asset('assets/tipe_normal.png', width: 70),
+                name: 'Normal Lungs',
+              ))
         ],
       ),
     );

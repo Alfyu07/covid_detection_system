@@ -37,7 +37,7 @@ class SelectModelDialog extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                'Diagnostic result depends on the model you choose.',
+                'Diagnostic result depends on the\nmodel you choose.',
                 style: regularFont.copyWith(color: blueGreyColor, fontSize: 12),
                 textAlign: TextAlign.center,
               ),

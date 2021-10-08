@@ -10,7 +10,6 @@ class AuthenticationWrapper extends StatelessWidget {
     if (user == null) {
       return const SigninPage();
     }
-    print(user);
     return const MainPage();
   }
 }

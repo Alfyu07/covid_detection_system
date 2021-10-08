@@ -4,7 +4,6 @@ class DiagnosisField {
   static const createdTime = 'createdTime';
 }
 
-@JsonSerializable()
 class Diagnosis {
   String? id;
   String? imgUrl;

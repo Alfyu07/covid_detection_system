@@ -4,4 +4,5 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'api_return_value.dart';
 part 'diagnosis.dart';
-part 'user_model.dart';
+part 'predict_result.dart';
+part 'models.g.dart';
