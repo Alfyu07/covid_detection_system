@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:tflite/tflite.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class TfliteApi {
   static Future<void> loadModel() async {
     await Tflite.loadModel(

@@ -12,6 +12,7 @@ PredictResult _$PredictResultFromJson(Map<String, dynamic> json) {
         .map((e) => (e as num).toDouble())
         .toList(),
     json['prediction'] as String,
+    json['index'] as int,
   );
 }
 
@@ -19,4 +20,5 @@ Map<String, dynamic> _$PredictResultToJson(PredictResult instance) =>
     <String, dynamic>{
       'confidence': instance.confidence,
       'prediction': instance.prediction,
+      'index': instance.index,
     };

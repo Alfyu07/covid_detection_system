@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:covidia/models/models.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: avoid_classes_with_only_static_members
 class MyApi {
-  static Future<ApiReturnValue<PredictResult>> predict(File imageFile,
+  static Future<ApiReturnValue<PredictResult>> classifyImage(File imageFile,
       {http.MultipartRequest? request}) async {
-    String url = 'https://covidia-flask.azurewebsites.net/predict';
+    const String url = 'https://covidia-be.azurewebsites.net/predict';
     final uri = Uri.parse(url);
     request ??= http.MultipartRequest(
       "POST",
@@ -15,7 +16,7 @@ class MyApi {
     )..headers["Content-Type"] = "application/json";
 
     final multipartFile =
-        await http.MultipartFile.fromPath('image', imageFile.path);
+        await http.MultipartFile.fromPath('file', imageFile.path);
     request.files.add(multipartFile);
 
     final response = await request.send();
@@ -24,11 +25,11 @@ class MyApi {
       return ApiReturnValue(message: "Add item failed, please try again");
     }
 
-    String responseBody = await response.stream.bytesToString();
+    final String responseBody = await response.stream.bytesToString();
 
     final data = jsonDecode(responseBody) as Map<String, dynamic>;
 
-    PredictResult result = PredictResult.fromJson(data);
+    final PredictResult result = PredictResult.fromJson(data);
 
     return ApiReturnValue(value: result, message: "success");
     // PredictResult value = PredictResult.fromJson(data);

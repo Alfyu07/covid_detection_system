@@ -8,9 +8,10 @@ class Diagnosis {
   String? id;
   String? imgUrl;
   String? label;
-  double? confidence;
+  List<double>? confidence;
   bool? isCorrected;
   DateTime? date;
+  int? index;
 
   Diagnosis({
     this.id,
@@ -19,21 +20,26 @@ class Diagnosis {
     this.confidence,
     this.date,
     this.isCorrected = false,
+    this.index,
   });
 
   Diagnosis copyWith({
     String? id,
     String? imgUrl,
     String? label,
+    List<double>? confidence,
     bool? isCorrected,
     DateTime? date,
+    int? index,
   }) =>
       Diagnosis(
         id: id ?? this.id,
         imgUrl: imgUrl ?? this.imgUrl,
         label: label ?? this.label,
+        confidence: confidence ?? this.confidence,
         isCorrected: isCorrected ?? this.isCorrected,
         date: date ?? this.date,
+        index: index ?? this.index,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,69 +49,20 @@ class Diagnosis {
         'label': label,
         'confidence': confidence,
         'isCorrected': isCorrected,
+        'index': index
       };
 
   static Diagnosis fromJson(Map<String, dynamic> data) => Diagnosis(
         id: data['id'] as String,
         imgUrl: data['imgUrl'] as String,
         label: data['label'] as String,
-        confidence: data['confidence'] as double,
+        confidence: (data['confidence'] as List<dynamic>)
+            .map((e) => (e as num).toDouble())
+            .toList(),
         isCorrected: data['isCorrected'] as bool,
         date: Utils.toDateTime(
           data['createdTime'] as Timestamp,
         ),
+        index: data['index'] as int,
       );
 }
-
-final List<Diagnosis> diagnoses = [
-  Diagnosis(
-    id: "1xdeafdxaa",
-    confidence: 0.92,
-    label: 'Covid 19',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-    isCorrected: true,
-  ),
-  Diagnosis(
-    id: "2xjalkdhcd",
-    confidence: 0.22,
-    label: 'Pneumonia',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-    isCorrected: true,
-  ),
-  Diagnosis(
-    id: "3fadkjfiekllad",
-    confidence: 0.72,
-    label: 'Normal',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-  ),
-  Diagnosis(
-    id: "2xjalkdhcd",
-    confidence: 0.82,
-    label: 'Pneumonia',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-  ),
-  Diagnosis(
-    id: "2xjalkdhcd",
-    confidence: 0.32,
-    label: 'Pneumonia',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-  ),
-  Diagnosis(
-    id: "2xjalkdhcd",
-    confidence: 0.72,
-    label: 'Pneumonia',
-    imgUrl:
-        'https://prod-images-static.radiopaedia.org/images/157288/4c1383482027c97c445f418c9b74b3_big_gallery.jpg',
-    date: DateTime.now(),
-  ),
-];

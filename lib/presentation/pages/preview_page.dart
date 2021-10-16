@@ -103,9 +103,10 @@ class PreviewPage extends StatelessWidget {
                   final destination = 'images/predicted_image/$filename';
 
                   //* predict
-                  final output = await TfliteApi.classifyImage(image);
-                  if (output == null) {
+                  final output = await MyApi.classifyImage(image);
+                  if (output.message != "success") {
                     Fluttertoast.showToast(msg: 'something went wrong');
+                    return;
                   }
                   // upload image ke firebase storage
                   final String? imgUrl =
@@ -115,17 +116,21 @@ class PreviewPage extends StatelessWidget {
                     Fluttertoast.showToast(msg: 'Upload image Failed');
                     return;
                   }
+
                   //* upload data ke firebase
                   final diagnosis = Diagnosis(
                     id: DateTime.now().toString(),
-                    date: DateTime.now(),
-                    label: output[0]['index'] == 0
-                        ? "Covid 19"
-                        : output[0]['index'] == 1
-                            ? "Normal"
-                            : "Pneumonia",
                     imgUrl: imgUrl,
-                    confidence: (output[0]['confidence'] as num).toDouble(),
+                    label: output.value!.prediction == "covid"
+                        ? "Covid 19"
+                        : output.value!.prediction == "pneumonia"
+                            ? "Pneumonia"
+                            : output.value!.prediction == "normal"
+                                ? "Normal"
+                                : "null",
+                    confidence: output.value!.confidence,
+                    date: DateTime.now(),
+                    index: output.value!.index,
                   );
 
                   diagnosisProvider.addDiagnoses(diagnosis).then((value) {
