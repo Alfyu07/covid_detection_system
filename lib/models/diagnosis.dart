@@ -52,7 +52,7 @@ class Diagnosis {
         'index': index
       };
 
-  static Diagnosis fromJson(Map<String, dynamic> data) => Diagnosis(
+  factory Diagnosis.fromJson(Map<String, dynamic> data) => Diagnosis(
         id: data['id'] as String,
         imgUrl: data['imgUrl'] as String,
         label: data['label'] as String,

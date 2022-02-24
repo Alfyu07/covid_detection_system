@@ -1,14 +1,21 @@
 class Disease {
+  /// class Disease -> model untuk penyakit yang dideteksi
+  /// [name]  -> string untuk nama penyakit
+  /// [description] -> string untuk deskripsi penyakit
+  /// [imageUrl] -> String path gambar
+  /// [gejala] -> list of string yang berisikan gejala gejala dari penyakit tsb
+  /// [gejalaImgUrl]
+  ///
   final String? name;
   final String? description;
   final String? imageUrl;
   final List<String?>? gejala;
-  final List<String?>? gejalaPhotoUrl;
+  final List<String?>? gejalaImgUrl;
   final List<String?>? pencegahan;
   final List<String?>? pencegahanUrl;
   final List<String?>? ctScanUrl;
 
-  Disease(this.name, this.description, this.gejala, this.gejalaPhotoUrl,
+  Disease(this.name, this.description, this.gejala, this.gejalaImgUrl,
       this.pencegahan, this.pencegahanUrl, this.ctScanUrl, this.imageUrl);
 }
 

@@ -22,13 +22,11 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     pageController = PageController(initialPage: widget.initialPage);
-    TfliteApi.loadModel();
     setState(() {});
   }
 
   @override
   void dispose() {
-    Tflite.close();
     super.dispose();
   }
 

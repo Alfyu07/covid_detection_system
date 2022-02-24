@@ -1,6 +1,6 @@
 part of 'shared.dart';
 
-const double edge = 24;
+const double edge = 40;
 
 const Color whiteColor = Color(0xffffffff);
 

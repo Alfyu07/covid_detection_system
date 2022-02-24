@@ -133,7 +133,7 @@ class DetailsDisease extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   image: DecorationImage(
-                    image: AssetImage(disease.gejalaPhotoUrl![i]!),
+                    image: AssetImage(disease.gejalaImgUrl![i]!),
                     fit: BoxFit.cover,
                   ),
                 ),

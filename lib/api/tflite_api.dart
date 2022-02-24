@@ -3,12 +3,12 @@ import 'package:tflite/tflite.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class TfliteApi {
-  static Future<void> loadModel() async {
+  Future<void> loadModel() async {
     await Tflite.loadModel(
         model: 'assets/lite_model.tflite', labels: 'assets/labels.txt');
   }
 
-  static Future classifyImage(File image) async {
+  Future classifyImage(File image) async {
     final output = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 3,

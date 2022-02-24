@@ -157,8 +157,10 @@ class SelectDiseaseDialog extends StatelessWidget {
 
                   //TODO : update in db
                   Provider.of<DiagnoseProvider>(context, listen: false)
-                      .updateDiagnoses(detailProvider.diagnosis!,
-                          detailProvider.selectedCorrection, true)
+                      .updateDiagnoses(
+                          diagnosis: detailProvider.diagnosis!,
+                          label: detailProvider.selectedCorrection,
+                          isCorrected: true)
                       .then((value) {
                     if (value == "Data successfully updated") {
                       detailProvider.diagnosis =

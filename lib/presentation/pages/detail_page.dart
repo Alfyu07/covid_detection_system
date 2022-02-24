@@ -125,8 +125,10 @@ class DetailPage extends StatelessWidget {
                             onPressed: () {
                               //TODO: update DB
                               diagnoseProvider
-                                  .updateDiagnoses(detailProvider.diagnosis!,
-                                      detailProvider.diagnosis!.label, true)
+                                  .updateDiagnoses(
+                                      diagnosis: detailProvider.diagnosis!,
+                                      label: detailProvider.diagnosis!.label,
+                                      isCorrected: true)
                                   .then(
                                 (value) {
                                   if (value != "Data successfully updated") {
@@ -186,7 +188,7 @@ class DetailPage extends StatelessWidget {
               color: redColor,
             ),
             SizedBox(
-              width: 23,
+              width: 28,
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![0]) * 100).round()}%'

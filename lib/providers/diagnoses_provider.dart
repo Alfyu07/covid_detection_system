@@ -16,7 +16,7 @@ class DiagnoseProvider with ChangeNotifier {
       FirebaseApi.readCovidDiagnoses();
 
   Future<String?> updateDiagnoses(
-      Diagnosis diagnosis, String? label, bool? isCorrected) async {
+      {required Diagnosis diagnosis, String? label, bool? isCorrected}) async {
     diagnosis.label = label;
     diagnosis.isCorrected = isCorrected;
 

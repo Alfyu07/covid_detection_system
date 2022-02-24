@@ -103,7 +103,7 @@ class PreviewPage extends StatelessWidget {
                   final destination = 'images/predicted_image/$filename';
 
                   //* predict
-                  final output = await MyApi.classifyImage(image);
+                  final output = await EngineApi.classifyImage(image);
                   if (output.message != "success") {
                     Fluttertoast.showToast(msg: 'something went wrong');
                     return;

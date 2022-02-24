@@ -1,7 +1,5 @@
 import 'package:covidia/api/authentication_api.dart';
 import 'package:covidia/presentation/pages/pages.dart';
-import 'package:covidia/providers/bottom_nav_provider.dart';
-import 'package:covidia/providers/img_provider.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/sign_up_provider.dart';

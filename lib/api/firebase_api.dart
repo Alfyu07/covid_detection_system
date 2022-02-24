@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 // ignore: avoid_classes_with_only_static_members
@@ -69,6 +68,7 @@ class FirebaseApi {
     String? unitKerja,
   ) async {
     final userCollection = FirebaseFirestore.instance.collection('users');
+
     return await userCollection.doc(uid).set({'unitKerja': unitKerja});
   }
 
