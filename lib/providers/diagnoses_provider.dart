@@ -1,28 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covidia/api/firebase_api.dart';
 import 'package:covidia/models/models.dart';
+import 'package:covidia/services/diagnose_service.dart';
 import 'package:flutter/widgets.dart';
 
 class DiagnoseProvider with ChangeNotifier {
-  Stream<QuerySnapshot> readDiagnoses() => FirebaseApi.readDiagnoses();
+  final DiagnoseService diagnoseService;
+  DiagnoseProvider(this.diagnoseService);
+
+  Stream<QuerySnapshot> readDiagnoses() => diagnoseService.readDiagnoses();
 
   Stream<QuerySnapshot> readNormalDiagnoses() =>
-      FirebaseApi.readNormalDiagnoses();
+      diagnoseService.readNormalDiagnoses();
 
   Stream<QuerySnapshot> readPneumoniaDiagnoses() =>
-      FirebaseApi.readPneumoniaDiagnoses();
+      diagnoseService.readPneumoniaDiagnoses();
 
   Stream<QuerySnapshot> readCovidDiagnoses() =>
-      FirebaseApi.readCovidDiagnoses();
+      diagnoseService.readCovidDiagnoses();
 
   Future<String?> updateDiagnoses(
       {required Diagnosis diagnosis, String? label, bool? isCorrected}) async {
     diagnosis.label = label;
     diagnosis.isCorrected = isCorrected;
 
-    return FirebaseApi.updateDiagnoses(diagnosis);
+    return diagnoseService.updateDiagnoses(diagnosis);
   }
 
   Future<String?> addDiagnoses(Diagnosis diagnosis) =>
-      FirebaseApi.createDiagnosis(diagnosis);
+      diagnoseService.createDiagnosis(diagnosis);
 }

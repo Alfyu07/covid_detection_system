@@ -1,6 +1,8 @@
 part of 'widgets.dart';
 
 class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
+  DiagnoseService diagnoseService = DiagnoseService();
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -29,7 +31,7 @@ class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
       child: Padding(
         padding: const EdgeInsets.only(top: edge),
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseApi.queryData(query),
+          future: diagnoseService.queryData(query),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Column(
@@ -71,7 +73,7 @@ class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
       child: Padding(
         padding: const EdgeInsets.only(top: edge),
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseApi.queryData(query),
+          future: diagnoseService.queryData(query),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Column(

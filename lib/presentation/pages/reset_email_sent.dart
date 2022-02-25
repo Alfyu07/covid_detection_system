@@ -85,7 +85,7 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                       if (user != null) {
                         final String? email = user.email;
                         context
-                            .read<AuthenticationApi>()
+                            .read<AuthenticationService>()
                             .sendResetEmail(email!)
                             .then(
                           (value) {
@@ -99,7 +99,7 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                         );
                       } else {
                         context
-                            .read<AuthenticationApi>()
+                            .read<AuthenticationService>()
                             .sendResetEmail(widget.email!)
                             .then(
                           (value) {

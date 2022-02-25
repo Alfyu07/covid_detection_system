@@ -1,9 +1,9 @@
-import 'package:covidia/api/firebase_api.dart';
+import 'package:covidia/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthenticationApi {
+class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
-  AuthenticationApi(this._firebaseAuth);
+  AuthenticationService(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
@@ -40,7 +40,8 @@ class AuthenticationApi {
       await user
           .updateDisplayName(fullname)
           .whenComplete(() => user.updatePhotoURL(imgUrl));
-      await FirebaseApi.updateUserData(user.uid, 'RS Unram');
+      final userService = UserService();
+      await userService.updateUserData(user.uid, 'RS Unram');
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;

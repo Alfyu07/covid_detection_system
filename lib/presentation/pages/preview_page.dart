@@ -36,10 +36,12 @@ class PreviewPage extends StatelessWidget {
       body: Stack(
         children: [
           Consumer<ImgProvider>(
-            builder: (context, imgProvider, _) => SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image.file(imgProvider.image!, fit: BoxFit.contain),
+            builder: (context, imgProvider, _) => InteractiveViewer(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Image.file(imgProvider.image!, fit: BoxFit.contain),
+              ),
             ),
           ),
           Align(
@@ -103,14 +105,14 @@ class PreviewPage extends StatelessWidget {
                   final destination = 'images/predicted_image/$filename';
 
                   //* predict
-                  final output = await EngineApi.classifyImage(image);
+                  final output = await EngineService.classifyImage(image);
                   if (output.message != "success") {
                     Fluttertoast.showToast(msg: 'something went wrong');
                     return;
                   }
                   // upload image ke firebase storage
                   final String? imgUrl =
-                      await FirebaseApi.uploadFile(destination, image);
+                      await FirebaseApi().uploadFile(destination, image);
                   if (imgUrl == "null") {
                     //TODO : snackbar
                     Fluttertoast.showToast(msg: 'Upload image Failed');

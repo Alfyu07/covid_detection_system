@@ -12,7 +12,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SignUpProvider>(context, listen: false);
-    final authProvider = Provider.of<AuthenticationApi>(context);
+    final authProvider = Provider.of<AuthenticationService>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -280,6 +280,7 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(
                   height: 32,
                 ),
+
                 Consumer<SignUpProvider>(
                   builder: (context, provider, _) {
                     if (provider.isLoading) {
@@ -291,6 +292,9 @@ class SignUpPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: edge),
                         child: ButtonPrimary(
                           onPressed: () async {
+                            final navigator = Navigator.of(context);
+                            final scaffoldMessenger =
+                                ScaffoldMessenger.of(context);
                             if (!provider.formKey.currentState!.validate()) {
                               return;
                             }
@@ -300,8 +304,8 @@ class SignUpPage extends StatelessWidget {
                               final filename =
                                   path.basename(provider.image!.path);
                               final destination = 'images/users/$filename';
-                              imgUrl = await FirebaseApi.uploadFile(
-                                  destination, provider.image!);
+                              imgUrl = await FirebaseApi()
+                                  .uploadFile(destination, provider.image!);
                               //sign up
                             }
 
@@ -312,19 +316,28 @@ class SignUpPage extends StatelessWidget {
                               imgUrl ?? "null",
                             );
                             if (resultSignUp == "Successfully signed up") {
-                              Utils.showSnackBar(
-                                  context, resultSignUp!, blackColor);
+                              scaffoldMessenger
+                                ..removeCurrentSnackBar()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    content: Text(resultSignUp!),
+                                    backgroundColor: blackColor,
+                                  ),
+                                );
+
                               provider.isLoading = true;
 
-                              Navigator.popUntil(
-                                  context, (route) => route.isFirst);
+                              navigator.popUntil((route) => route.isFirst);
                             } else {
                               provider.isLoading = true;
-                              Utils.showSnackBar(
-                                context,
-                                resultSignUp!,
-                                redColor,
-                              );
+                              scaffoldMessenger
+                                ..removeCurrentSnackBar()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    content: Text(resultSignUp!),
+                                    backgroundColor: blackColor,
+                                  ),
+                                );
                             }
                           },
                           text: "Sign Up",

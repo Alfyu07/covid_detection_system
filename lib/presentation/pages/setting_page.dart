@@ -142,7 +142,7 @@ class SettingPage extends StatelessWidget {
                     if (user != null) {
                       final String? email = user.email;
                       context
-                          .read<AuthenticationApi>()
+                          .read<AuthenticationService>()
                           .sendResetEmail(email!)
                           .then((value) {
                         if (value != "sent") {
@@ -168,7 +168,10 @@ class SettingPage extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //Todo : Implement Logout
-                    context.read<AuthenticationApi>().signOut().then((value) {
+                    context
+                        .read<AuthenticationService>()
+                        .signOut()
+                        .then((value) {
                       if (value == "User logged out") {
                         Provider.of<BottomNavProvider>(context, listen: false)
                             .index = 0;

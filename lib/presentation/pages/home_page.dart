@@ -58,6 +58,7 @@ class HomePage extends StatelessWidget {
                   const Spacer(),
                   GestureDetector(
                     onTap: () async {
+                      final navigator = Navigator.of(context);
                       final Diagnosis? result = await showSearch(
                           context: context, delegate: CustomSearchDelegate());
                       if (result!.id == null) {
@@ -65,8 +66,11 @@ class HomePage extends StatelessWidget {
                       }
 
                       detailProvider.diagnosis = result;
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DetailPage()));
+                      navigator.push(
+                        MaterialPageRoute(
+                          builder: (context) => const DetailPage(),
+                        ),
+                      );
                     },
                     child: Image.asset('assets/search.png', width: 24),
                   ),

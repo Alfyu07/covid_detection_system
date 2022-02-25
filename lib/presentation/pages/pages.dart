@@ -4,15 +4,15 @@ import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covidia/api/authentication_api.dart';
-import 'package:covidia/api/engine_api.dart';
-import 'package:covidia/api/firebase_api.dart';
 import 'package:covidia/models/disease.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/presentation/widgets/widgets.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
+import 'package:covidia/services/authentication_service.dart';
+import 'package:covidia/services/engine_service.dart';
+import 'package:covidia/services/firebase_service.dart';
 import 'package:covidia/shared/shared.dart';
 import 'package:covidia/util/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -208,7 +208,7 @@ class _SigninPageState extends State<SigninPage> {
                             listen: false);
                         navProvider.index = 0;
                         context
-                            .read<AuthenticationApi>()
+                            .read<AuthenticationService>()
                             .signIn(
                                 _emailController.text, _passwordController.text)
                             .then((value) {

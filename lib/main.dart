@@ -1,8 +1,9 @@
-import 'package:covidia/api/authentication_api.dart';
 import 'package:covidia/presentation/pages/pages.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
+import 'package:covidia/services/authentication_service.dart';
+import 'package:covidia/services/diagnose_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,20 +17,21 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final DiagnoseService _diagnoseService = DiagnoseService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AuthenticationApi>(
-          create: (_) => AuthenticationApi(FirebaseAuth.instance),
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
           create: (context) =>
-              context.read<AuthenticationApi>().authStateChanges,
+              context.read<AuthenticationService>().authStateChanges,
           initialData: null,
         ),
         ChangeNotifierProvider<DiagnoseProvider>(
-          create: (BuildContext context) => DiagnoseProvider(),
+          create: (BuildContext context) => DiagnoseProvider(_diagnoseService),
         ),
         ChangeNotifierProvider<DetailProvider>(
           create: (BuildContext context) => DetailProvider(),

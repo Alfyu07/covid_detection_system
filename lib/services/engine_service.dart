@@ -5,7 +5,7 @@ import 'package:covidia/models/models.dart';
 import 'package:http/http.dart' as http;
 
 // ignore: avoid_classes_with_only_static_members
-class EngineApi {
+class EngineService {
   static Future<ApiReturnValue<PredictResult>> classifyImage(File imageFile,
       {http.MultipartRequest? request}) async {
     const String url = 'https://covidia-be.azurewebsites.net/predict';
@@ -32,6 +32,5 @@ class EngineApi {
     final PredictResult result = PredictResult.fromJson(data);
 
     return ApiReturnValue(value: result, message: "success");
-    // PredictResult value = PredictResult.fromJson(data);
   }
 }

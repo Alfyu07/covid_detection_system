@@ -128,7 +128,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             _isLoading = true;
                           });
                           final sent = await context
-                              .read<AuthenticationApi>()
+                              .read<AuthenticationService>()
                               .sendResetEmail(_emailController.text);
 
                           if (sent == "sent") {

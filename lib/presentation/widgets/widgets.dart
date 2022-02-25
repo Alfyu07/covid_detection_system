@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covidia/api/firebase_api.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/providers/providers.dart';
+import 'package:covidia/services/diagnose_service.dart';
 import 'package:covidia/shared/shared.dart';
 import 'package:covidia/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+
 part 'btn_primary.dart';
 part 'btn_secondary.dart';
 part 'carousel_item.dart';
