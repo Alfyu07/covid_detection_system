@@ -18,8 +18,11 @@ class DiagnoseProvider with ChangeNotifier {
   Stream<QuerySnapshot> readCovidDiagnoses() =>
       diagnoseService.readCovidDiagnoses();
 
-  Future<String?> updateDiagnoses(
-      {required Diagnosis diagnosis, String? label, bool? isCorrected}) async {
+  Future<String?> updateDiagnoses({
+    required Diagnosis diagnosis,
+    String? label,
+    bool? isCorrected,
+  }) async {
     diagnosis.label = label;
     diagnosis.isCorrected = isCorrected;
 

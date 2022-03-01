@@ -15,58 +15,62 @@ class SettingPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 40),
                 StreamBuilder<User?>(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SkeletonContainer.circular(
-                          width: 150,
-                          height: 150,
-                        );
-                      }
-                      if (!snapshot.hasData) {
-                        return const SkeletonContainer.circular(
-                          width: 150,
-                          height: 150,
-                        );
-                      }
-                      return CircleAvatar(
-                        radius: 72,
-                        backgroundColor: ghostWhiteColor,
-                        child: ClipOval(
-                          child: snapshot.data!.photoURL == "null" ||
-                                  snapshot.data!.photoURL == null
-                              ? SvgPicture.network(
-                                  "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                                  width: 150,
-                                  placeholderBuilder: (context) {
-                                    return Container(
-                                        width: 150, color: ghostWhiteColor);
-                                  },
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.network(
-                                  snapshot.data!.photoURL!,
-                                  width: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const SkeletonContainer.circular(
+                        width: 150,
+                        height: 150,
                       );
-                    }),
+                    }
+                    if (!snapshot.hasData) {
+                      return const SkeletonContainer.circular(
+                        width: 150,
+                        height: 150,
+                      );
+                    }
+                    return CircleAvatar(
+                      radius: 72,
+                      backgroundColor: ghostWhiteColor,
+                      child: ClipOval(
+                        child: snapshot.data!.photoURL == "null" ||
+                                snapshot.data!.photoURL == null
+                            ? SvgPicture.network(
+                                "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                width: 150,
+                                placeholderBuilder: (context) {
+                                  return Container(
+                                    width: 150,
+                                    color: ghostWhiteColor,
+                                  );
+                                },
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                snapshot.data!.photoURL!,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 8),
                 StreamBuilder<User?>(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SkeletonContainer.rounded(
-                          height: 20,
-                          width: MediaQuery.of(context).size.width * 0.6,
-                        );
-                      }
-                      return Text(
-                        snapshot.data!.displayName ?? "User",
-                        style: mediumFont.copyWith(fontSize: 20),
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SkeletonContainer.rounded(
+                        height: 20,
+                        width: MediaQuery.of(context).size.width * 0.6,
                       );
-                    }),
+                    }
+                    return Text(
+                      snapshot.data!.displayName ?? "User",
+                      style: mediumFont.copyWith(fontSize: 20),
+                    );
+                  },
+                ),
                 const SizedBox(height: 32),
                 Container(
                   width: double.infinity,
@@ -150,9 +154,11 @@ class SettingPage extends StatelessWidget {
                         }
 
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const ResetEmailSent()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ResetEmailSent(),
+                          ),
+                        );
                       });
                     }
                     return;
@@ -184,8 +190,10 @@ class SettingPage extends StatelessWidget {
                   child: Row(
                     children: [
                       const SizedBox(width: 8),
-                      Text('Logout',
-                          style: regularFont.copyWith(color: redColor)),
+                      Text(
+                        'Logout',
+                        style: regularFont.copyWith(color: redColor),
+                      ),
                     ],
                   ),
                 ),

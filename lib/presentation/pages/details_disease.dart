@@ -30,66 +30,68 @@ class DetailsDisease extends StatelessWidget {
                     color: whiteColor,
                   ),
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // * Header
-                        buildHeader(),
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: edge),
-                          child: Text(
-                            'Coronavirus atau disebut juga dengan virus corona merupakan keluarga besar virus yang mengakibatkan terjadinya infeksi saluran pernapasan atas ringan hingga sedang, seperti penyakit flu.  Banyak orang terinfeksi virus ini, setidaknya satu kali dalam hidupnya.',
-                            style: lightFont,
-                          ),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // * Header
+                      buildHeader(),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: edge),
+                        child: Text(
+                          'Coronavirus atau disebut juga dengan virus corona merupakan keluarga besar virus yang mengakibatkan terjadinya infeksi saluran pernapasan atas ringan hingga sedang, seperti penyakit flu.  Banyak orang terinfeksi virus ini, setidaknya satu kali dalam hidupnya.',
+                          style: lightFont,
                         ),
-                        const SizedBox(height: 16),
+                      ),
+                      const SizedBox(height: 16),
 
-                        // *Gejala
-                        if (disease.name != "Paru Normal")
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: edge),
-                                child: Text(
-                                  'Gejala',
-                                  style: mediumFont.copyWith(fontSize: 18),
-                                ),
+                      // *Gejala
+                      if (disease.name != "Paru Normal")
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: edge,
                               ),
-                              const SizedBox(height: 8),
-                              buildGejala(),
-                              const SizedBox(height: 16),
-                            ],
-                          )
-                        else
-                          Container(),
+                              child: Text(
+                                'Gejala',
+                                style: mediumFont.copyWith(fontSize: 18),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            buildGejala(),
+                            const SizedBox(height: 16),
+                          ],
+                        )
+                      else
+                        Container(),
 
-                        //* Pencegahan
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: edge),
-                          child: Text(
-                            disease.name == "Paru Normal"
-                                ? "Menjaga Paru Sehat"
-                                : 'Pencegahan',
-                            style: mediumFont.copyWith(fontSize: 18),
-                          ),
+                      //* Pencegahan
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: edge),
+                        child: Text(
+                          disease.name == "Paru Normal"
+                              ? "Menjaga Paru Sehat"
+                              : 'Pencegahan',
+                          style: mediumFont.copyWith(fontSize: 18),
                         ),
-                        const SizedBox(height: 8),
-                        buildPencegahan(),
-                        const SizedBox(height: 16),
-                        //* Location
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: edge),
-                          child: Text(
-                            'Gambar CT Scan',
-                            style: mediumFont.copyWith(fontSize: 16),
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      buildPencegahan(),
+                      const SizedBox(height: 16),
+                      //* Location
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: edge),
+                        child: Text(
+                          'Gambar CT Scan',
+                          style: mediumFont.copyWith(fontSize: 16),
                         ),
-                        const SizedBox(height: 8),
-                        buildPhotos(),
-                        const SizedBox(height: 64),
-                      ]),
+                      ),
+                      const SizedBox(height: 8),
+                      buildPhotos(),
+                      const SizedBox(height: 64),
+                    ],
+                  ),
                 ),
               ],
             )
@@ -122,28 +124,34 @@ class DetailsDisease extends StatelessWidget {
   Widget buildGejala() {
     return SizedBox(
       height: 100,
-      child: ListView(scrollDirection: Axis.horizontal, children: [
-        for (int i = 0; i < disease.gejala!.length; i++)
-          Column(
-            children: [
-              Container(
-                height: 64,
-                width: 64,
-                margin: const EdgeInsets.only(left: edge),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage(disease.gejalaImgUrl![i]!),
-                    fit: BoxFit.cover,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          for (int i = 0; i < disease.gejala!.length; i++)
+            Column(
+              children: [
+                Container(
+                  height: 64,
+                  width: 64,
+                  margin: const EdgeInsets.only(left: edge),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image: DecorationImage(
+                      image: AssetImage(disease.gejalaImgUrl![i]!),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                  child: Text(disease.gejala![i]!,
-                      style: regularFont.copyWith(fontSize: 12))),
-            ],
-          ),
-      ]),
+                Center(
+                  child: Text(
+                    disease.gejala![i]!,
+                    style: regularFont.copyWith(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
@@ -175,29 +183,32 @@ class DetailsDisease extends StatelessWidget {
   Widget buildPencegahan() {
     return SizedBox(
       height: 100,
-      child: ListView(scrollDirection: Axis.horizontal, children: [
-        for (int i = 0; i < disease.pencegahan!.length; i++)
-          Column(
-            children: [
-              Container(
-                height: 64,
-                width: 64,
-                margin: const EdgeInsets.only(left: edge),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage(disease.pencegahanUrl![i]!),
-                    fit: BoxFit.cover,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          for (int i = 0; i < disease.pencegahan!.length; i++)
+            Column(
+              children: [
+                Container(
+                  height: 64,
+                  width: 64,
+                  margin: const EdgeInsets.only(left: edge),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image: DecorationImage(
+                      image: AssetImage(disease.pencegahanUrl![i]!),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                disease.pencegahan![i]!,
-                style: regularFont.copyWith(fontSize: 12),
-              ),
-            ],
-          ),
-      ]),
+                Text(
+                  disease.pencegahan![i]!,
+                  style: regularFont.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }

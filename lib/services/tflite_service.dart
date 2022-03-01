@@ -5,7 +5,9 @@ import 'package:tflite/tflite.dart';
 class TfliteApi {
   Future<void> loadModel() async {
     await Tflite.loadModel(
-        model: 'assets/lite_model.tflite', labels: 'assets/labels.txt');
+      model: 'assets/lite_model.tflite',
+      labels: 'assets/labels.txt',
+    );
   }
 
   Future classifyImage(File image) async {

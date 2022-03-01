@@ -6,10 +6,12 @@ class Utils {
   static void showSnackBar(BuildContext context, String text, Color? color) {
     ScaffoldMessenger.of(context)
       ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        content: Text(text),
-        backgroundColor: color,
-      ));
+      ..showSnackBar(
+        SnackBar(
+          content: Text(text),
+          backgroundColor: color,
+        ),
+      );
   }
 
   static dynamic fromDateTimeToJson(DateTime? date) {

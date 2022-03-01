@@ -19,9 +19,10 @@ class DiagnosisCard extends StatelessWidget {
           color: whiteColor,
           boxShadow: [
             BoxShadow(
-                blurRadius: 24,
-                offset: const Offset(0, 16),
-                color: const Color(0xff7090B0).withOpacity(0.15))
+              blurRadius: 24,
+              offset: const Offset(0, 16),
+              color: const Color(0xff7090B0).withOpacity(0.15),
+            )
           ],
         ),
         child: Row(
@@ -54,7 +55,10 @@ class DiagnosisCard extends StatelessWidget {
                       ? "null"
                       : DateFormat.yMMMd().format(diagnosis.date!),
                   style: lightFont.copyWith(
-                      fontSize: 12, color: blueGreyColor, height: 1.2),
+                    fontSize: 12,
+                    color: blueGreyColor,
+                    height: 1.2,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 if (diagnosis.label == 'Normal')
@@ -67,17 +71,21 @@ class DiagnosisCard extends StatelessWidget {
                   )
                 else
                   RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: 'Infected by ',
-                        style: lightFont,
-                      ),
-                      TextSpan(
-                        text: diagnosis.label,
-                        style: mediumFont.copyWith(
-                            fontWeight: FontWeight.w600, color: primaryColor),
-                      ),
-                    ]),
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Infected by ',
+                          style: lightFont,
+                        ),
+                        TextSpan(
+                          text: diagnosis.label,
+                          style: mediumFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
               ],
             )

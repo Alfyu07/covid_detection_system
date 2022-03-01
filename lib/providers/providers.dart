@@ -4,3 +4,4 @@ export 'detail_provider.dart';
 export 'diagnoses_provider.dart';
 export 'img_provider.dart';
 export 'sort_provider.dart';
+export 'zoom_provider.dart';

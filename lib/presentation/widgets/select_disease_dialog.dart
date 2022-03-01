@@ -51,17 +51,18 @@ class SelectDiseaseDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: provider.selectedCorrection == "Covid 19"
-                            ? const Color(0xff767EBC)
-                            : whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff7090B0).withOpacity(0.15),
-                            offset: const Offset(0, 4),
-                            blurRadius: 24,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.selectedCorrection == "Covid 19"
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -86,17 +87,18 @@ class SelectDiseaseDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: provider.selectedCorrection == "Pneumonia"
-                            ? const Color(0xff767EBC)
-                            : whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff7090B0).withOpacity(0.15),
-                            offset: const Offset(0, 4),
-                            blurRadius: 24,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.selectedCorrection == "Pneumonia"
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -121,17 +123,18 @@ class SelectDiseaseDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: provider.selectedCorrection == "Normal"
-                            ? const Color(0xff767EBC)
-                            : whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff7090B0).withOpacity(0.15),
-                            offset: const Offset(0, 4),
-                            blurRadius: 24,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.selectedCorrection == "Normal"
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -158,9 +161,10 @@ class SelectDiseaseDialog extends StatelessWidget {
                   //TODO : update in db
                   Provider.of<DiagnoseProvider>(context, listen: false)
                       .updateDiagnoses(
-                          diagnosis: detailProvider.diagnosis!,
-                          label: detailProvider.selectedCorrection,
-                          isCorrected: true)
+                    diagnosis: detailProvider.diagnosis!,
+                    label: detailProvider.selectedCorrection,
+                    isCorrected: true,
+                  )
                       .then((value) {
                     if (value == "Data successfully updated") {
                       detailProvider.diagnosis =

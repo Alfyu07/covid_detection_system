@@ -47,8 +47,10 @@ class _SigninPageState extends State<SigninPage> {
               ),
               const SizedBox(height: 8),
               Center(
-                child: Text('Please login to continue',
-                    style: mediumFont.copyWith(color: blueGreyColor)),
+                child: Text(
+                  'Please login to continue',
+                  style: mediumFont.copyWith(color: blueGreyColor),
+                ),
               ),
               const SizedBox(height: 24),
 
@@ -75,45 +77,45 @@ class _SigninPageState extends State<SigninPage> {
                       return "Email address can't be empty";
                     }
                     final bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value);
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(value);
                     if (!emailValid) {
                       return "Please enter a valid email address";
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      hintText: 'Enter your email',
-                      fillColor: ghostWhiteColor,
-                      filled: true,
-                      hintStyle: const TextStyle(
-                        color: blueGreyColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      border: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                        //borderSide: const BorderSide(),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            const BorderSide(color: secondaryColor, width: 1.5),
+                    hintText: 'Enter your email',
+                    fillColor: ghostWhiteColor,
+                    filled: true,
+                    hintStyle: const TextStyle(
+                      color: blueGreyColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    border: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                      //borderSide: const BorderSide(),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide:
+                          const BorderSide(color: secondaryColor, width: 1.5),
 
-                        //borderSide: const BorderSide(),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            const BorderSide(color: redColor, width: 1.5),
+                      //borderSide: const BorderSide(),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: redColor, width: 1.5),
 
-                        //borderSide: const BorderSide(),
-                      ),
-                      contentPadding: const EdgeInsets.only(left: 16)),
+                      //borderSide: const BorderSide(),
+                    ),
+                    contentPadding: const EdgeInsets.only(left: 16),
+                  ),
                   autofillHints: const [AutofillHints.email],
                 ),
               ),
@@ -144,45 +146,45 @@ class _SigninPageState extends State<SigninPage> {
                   },
                   obscureText: _hidePassword,
                   decoration: InputDecoration(
-                      fillColor: ghostWhiteColor,
-                      filled: true,
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _hidePassword = !_hidePassword;
-                          });
-                        },
-                        icon: _hidePassword
-                            ? const Icon(Icons.visibility_off_outlined)
-                            : const Icon(Icons.visibility),
-                      ),
-                      hintText: 'Enter your password',
-                      hintStyle: const TextStyle(
-                        color: blueGreyColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      border: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                        //borderSide: const BorderSide(),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            const BorderSide(color: secondaryColor, width: 1.5),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            const BorderSide(color: redColor, width: 1.5),
-                      ),
-                      contentPadding: const EdgeInsets.only(
-                        left: 16,
-                      )),
+                    fillColor: ghostWhiteColor,
+                    filled: true,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _hidePassword = !_hidePassword;
+                        });
+                      },
+                      icon: _hidePassword
+                          ? const Icon(Icons.visibility_off_outlined)
+                          : const Icon(Icons.visibility),
+                    ),
+                    hintText: 'Enter your password',
+                    hintStyle: const TextStyle(
+                      color: blueGreyColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    border: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                      //borderSide: const BorderSide(),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide:
+                          const BorderSide(color: secondaryColor, width: 1.5),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: redColor, width: 1.5),
+                    ),
+                    contentPadding: const EdgeInsets.only(
+                      left: 16,
+                    ),
+                  ),
                 ),
               ),
 
@@ -204,17 +206,23 @@ class _SigninPageState extends State<SigninPage> {
                           _isLoading = true;
                         });
                         final navProvider = Provider.of<BottomNavProvider>(
-                            context,
-                            listen: false);
+                          context,
+                          listen: false,
+                        );
                         navProvider.index = 0;
                         context
                             .read<AuthenticationService>()
                             .signIn(
-                                _emailController.text, _passwordController.text)
+                              _emailController.text,
+                              _passwordController.text,
+                            )
                             .then((value) {
                           if (value == "signed in") {
                             Utils.showSnackBar(
-                                context, "Successfully signed in", blackColor);
+                              context,
+                              "Successfully signed in",
+                              blackColor,
+                            );
                           } else {
                             Utils.showSnackBar(context, value!, redColor);
                           }
@@ -246,7 +254,9 @@ class _SigninPageState extends State<SigninPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 2),
+                          horizontal: 4.0,
+                          vertical: 2,
+                        ),
                         child: Text(
                           "Forgot your password? ",
                           style: mediumFont,
@@ -266,12 +276,15 @@ class _SigninPageState extends State<SigninPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 2),
+                          horizontal: 4.0,
+                          vertical: 2,
+                        ),
                         child: Text(
                           'Sign up',
                           style: mediumFont.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: secondaryColor),
+                            fontWeight: FontWeight.w600,
+                            color: secondaryColor,
+                          ),
                         ),
                       ),
                     ),

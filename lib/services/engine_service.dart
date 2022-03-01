@@ -6,8 +6,10 @@ import 'package:http/http.dart' as http;
 
 // ignore: avoid_classes_with_only_static_members
 class EngineService {
-  static Future<ApiReturnValue<PredictResult>> classifyImage(File imageFile,
-      {http.MultipartRequest? request}) async {
+  static Future<ApiReturnValue<PredictResult>> classifyImage(
+    File imageFile, {
+    http.MultipartRequest? request,
+  }) async {
     const String url = 'https://covidia-be.azurewebsites.net/predict';
     final uri = Uri.parse(url);
     request ??= http.MultipartRequest(

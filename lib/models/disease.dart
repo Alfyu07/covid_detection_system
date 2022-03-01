@@ -15,8 +15,16 @@ class Disease {
   final List<String?>? pencegahanUrl;
   final List<String?>? ctScanUrl;
 
-  Disease(this.name, this.description, this.gejala, this.gejalaImgUrl,
-      this.pencegahan, this.pencegahanUrl, this.ctScanUrl, this.imageUrl);
+  Disease(
+    this.name,
+    this.description,
+    this.gejala,
+    this.gejalaImgUrl,
+    this.pencegahan,
+    this.pencegahanUrl,
+    this.ctScanUrl,
+    this.imageUrl,
+  );
 }
 
 final diseases = [

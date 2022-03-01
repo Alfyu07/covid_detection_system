@@ -39,8 +39,10 @@ class _MainPageState extends State<MainPage> {
       // ignore: use_build_context_synchronously
       Provider.of<ImgProvider>(context, listen: false).image = tempImg;
       // ignore: use_build_context_synchronously
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const PreviewPage()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PreviewPage()),
+      );
     } on PlatformException catch (e) {
       Fluttertoast.showToast(msg: 'Failed to pick image : $e');
     }
@@ -65,36 +67,37 @@ class _MainPageState extends State<MainPage> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(16),
-          ),
-          child: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: index,
-            onTap: onChangeBottomNav,
-            items: [
-              BottomNavigationBarItem(
-                label: '',
-                icon: index == 0
-                    ? Image.asset('assets/home_active.png', width: edge)
-                    : Image.asset('assets/home.png', width: edge),
-              ),
-              BottomNavigationBarItem(
-                label: '',
-                icon: index == 1
-                    ? Image.asset('assets/add_active.png', width: edge)
-                    : Image.asset('assets/add.png', width: edge),
-              ),
-              BottomNavigationBarItem(
-                label: '',
-                icon: index == 2
-                    ? Image.asset('assets/setting_active.png', width: edge)
-                    : Image.asset('assets/setting.png', width: edge),
-              ),
-            ],
-          )),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(16),
+        ),
+        child: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: index,
+          onTap: onChangeBottomNav,
+          items: [
+            BottomNavigationBarItem(
+              label: '',
+              icon: index == 0
+                  ? Image.asset('assets/home_active.png', width: edge)
+                  : Image.asset('assets/home.png', width: edge),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: index == 1
+                  ? Image.asset('assets/add_active.png', width: edge)
+                  : Image.asset('assets/add.png', width: edge),
+            ),
+            BottomNavigationBarItem(
+              label: '',
+              icon: index == 2
+                  ? Image.asset('assets/setting_active.png', width: edge)
+                  : Image.asset('assets/setting.png', width: edge),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -134,8 +137,9 @@ class _MainPageState extends State<MainPage> {
               height: 4,
               width: 36,
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  color: Color(0xffBABEDE)),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Color(0xffBABEDE),
+              ),
             ),
           ),
           const SizedBox(height: edge),

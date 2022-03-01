@@ -22,45 +22,50 @@ class HomePage extends StatelessWidget {
                         Provider.of<BottomNavProvider>(context, listen: false)
                             .index = 2,
                     child: StreamBuilder<User?>(
-                        stream: FirebaseAuth.instance.userChanges(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const SkeletonContainer.circular(
-                              width: 40,
-                              height: 40,
-                            );
-                          }
-                          return CircleAvatar(
-                            radius: 20,
-                            backgroundColor: ghostWhiteColor,
-                            child: ClipOval(
-                              child: snapshot.data!.photoURL == "null" ||
-                                      snapshot.data!.photoURL == null
-                                  ? SvgPicture.network(
-                                      "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                                      width: 40,
-                                      placeholderBuilder: (context) {
-                                        return Container(
-                                            width: 40, color: ghostWhiteColor);
-                                      },
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.network(
-                                      snapshot.data!.photoURL!,
-                                      width: 40,
-                                      fit: BoxFit.cover,
-                                    ),
-                            ),
+                      stream: FirebaseAuth.instance.userChanges(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const SkeletonContainer.circular(
+                            width: 40,
+                            height: 40,
                           );
-                        }),
+                        }
+                        return CircleAvatar(
+                          radius: 20,
+                          backgroundColor: ghostWhiteColor,
+                          child: ClipOval(
+                            child: snapshot.data!.photoURL == "null" ||
+                                    snapshot.data!.photoURL == null
+                                ? SvgPicture.network(
+                                    "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                    width: 40,
+                                    placeholderBuilder: (context) {
+                                      return Container(
+                                        width: 40,
+                                        color: ghostWhiteColor,
+                                      );
+                                    },
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    snapshot.data!.photoURL!,
+                                    width: 40,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   const Spacer(),
                   GestureDetector(
                     onTap: () async {
                       final navigator = Navigator.of(context);
                       final Diagnosis? result = await showSearch(
-                          context: context, delegate: CustomSearchDelegate());
+                        context: context,
+                        delegate: CustomSearchDelegate(),
+                      );
                       if (result!.id == null) {
                         return;
                       }
@@ -167,7 +172,7 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SkeletonContainer.rounded(
-                width: MediaQuery.of(context).size.width * 0.6,
+                width: MediaQuery.of(context).size.width * 0.55,
                 height: 16,
               ),
               const SkeletonContainer.rounded(
@@ -176,7 +181,7 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               const SkeletonContainer.rounded(
-                width: 60,
+                width: 80,
                 height: 14,
               ),
             ],
@@ -192,63 +197,68 @@ class HomePage extends StatelessWidget {
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
     return StreamBuilder<QuerySnapshot>(
-        stream: sortProvider.sortValue == 'Terbaru'
-            ? diagnoseProvider.readDiagnoses()
-            : sortProvider.sortValue == 'Normal'
-                ? diagnoseProvider.readNormalDiagnoses()
-                : sortProvider.sortValue == 'Covid 19'
-                    ? diagnoseProvider.readCovidDiagnoses()
-                    : diagnoseProvider.readPneumoniaDiagnoses(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Column(children: [
+      stream: sortProvider.sortValue == 'Terbaru'
+          ? diagnoseProvider.readDiagnoses()
+          : sortProvider.sortValue == 'Normal'
+              ? diagnoseProvider.readNormalDiagnoses()
+              : sortProvider.sortValue == 'Covid 19'
+                  ? diagnoseProvider.readCovidDiagnoses()
+                  : diagnoseProvider.readPneumoniaDiagnoses(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Column(
+              children: [
                 for (int i = 0; i < 10; i++) buildSkeleton(context),
-              ]);
-            default:
-              if (snapshot.hasError) {
-                return const Center(child: Text('Something went wrong'));
+              ],
+            );
+          default:
+            if (snapshot.hasError) {
+              return const Center(child: Text('Something went wrong'));
+            }
+            if (snapshot.hasData) {
+              if (snapshot.data!.docs.isEmpty) {
+                return buildNoData();
               }
-              if (snapshot.hasData) {
-                if (snapshot.data!.docs.isEmpty) {
-                  return buildNoData();
-                }
 
-                return Column(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
+              return Column(
+                children: snapshot.data!.docs.map(
+                  (DocumentSnapshot document) {
                     final Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
 
                     final diagnosis = Diagnosis.fromJson(data);
                     return DiagnosisCard(
-                        diagnosis: diagnosis,
-                        onTap: () {
-                          detailProvider.diagnosis = diagnosis;
+                      diagnosis: diagnosis,
+                      onTap: () {
+                        detailProvider.diagnosis = diagnosis;
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WillPopScope(
-                                onWillPop: () async {
-                                  Navigator.of(context).pop();
-                                  return false;
-                                },
-                                child: const DetailPage(),
-                              ),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WillPopScope(
+                              onWillPop: () async {
+                                Navigator.of(context).pop();
+                                return false;
+                              },
+                              child: const DetailPage(),
                             ),
-                          );
-                        });
-                  }).toList(),
-                );
-              }
-              return buildNoData();
-          }
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ).toList(),
+              );
+            }
+            return buildNoData();
+        }
 
-          // Column(
-          //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
-          // ),
-        });
+        // Column(
+        //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
+        // ),
+      },
+    );
   }
 
   Container buildNoData() {
@@ -280,7 +290,8 @@ class HomePage extends StatelessWidget {
                       sortProvider.index = sortProvider.sortBy.indexOf(e),
                   child: Padding(
                     padding: EdgeInsets.only(
-                        left: e == sortProvider.sortBy.first ? 24 : 0),
+                      left: e == sortProvider.sortBy.first ? 24 : 0,
+                    ),
                     child: SortItem(
                       title: e,
                       isActive:
@@ -336,20 +347,21 @@ class HomePage extends StatelessWidget {
             ),
           ),
           InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailsDisease(
-                      disease: diseases[2],
-                    ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsDisease(
+                    disease: diseases[2],
                   ),
-                );
-              },
-              child: DiseaseCard(
-                image: Image.asset('assets/tipe_normal.png', width: 70),
-                name: 'Normal Lungs',
-              ))
+                ),
+              );
+            },
+            child: DiseaseCard(
+              image: Image.asset('assets/tipe_normal.png', width: 70),
+              name: 'Normal Lungs',
+            ),
+          )
         ],
       ),
     );

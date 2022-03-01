@@ -52,8 +52,10 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                 child: SizedBox(
                   height: 218,
                   width: 244,
-                  child: Image.asset('assets/email_illustration.png',
-                      fit: BoxFit.cover),
+                  child: Image.asset(
+                    'assets/email_illustration.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -92,8 +94,11 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                             if (value != "sent") {
                               Utils.showSnackBar(context, value!, redColor);
                             } else {
-                              Utils.showSnackBar(context,
-                                  "Email successfully sent", blackColor);
+                              Utils.showSnackBar(
+                                context,
+                                "Email successfully sent",
+                                blackColor,
+                              );
                             }
                           },
                         );
@@ -115,7 +120,9 @@ class _ResetEmailSentState extends State<ResetEmailSent> {
                     child: Text(
                       'Resend',
                       style: mediumFont.copyWith(
-                          fontWeight: FontWeight.w600, color: secondaryColor),
+                        fontWeight: FontWeight.w600,
+                        color: secondaryColor,
+                      ),
                     ),
                   ),
                 ],

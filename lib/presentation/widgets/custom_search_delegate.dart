@@ -44,15 +44,16 @@ class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
 
             if (snapshot.hasData) {
               return Column(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                final Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                final diagnosis = Diagnosis.fromJson(data);
-                return DiagnosisCard(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  final Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  final diagnosis = Diagnosis.fromJson(data);
+                  return DiagnosisCard(
                     diagnosis: diagnosis,
-                    onTap: () => close(context, diagnosis));
-              }).toList());
+                    onTap: () => close(context, diagnosis),
+                  );
+                }).toList(),
+              );
             }
             if (!snapshot.hasData) {
               return Column(
@@ -86,15 +87,16 @@ class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
 
             if (snapshot.hasData) {
               return Column(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                final Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                final diagnosis = Diagnosis.fromJson(data);
-                return DiagnosisCard(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  final Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  final diagnosis = Diagnosis.fromJson(data);
+                  return DiagnosisCard(
                     diagnosis: diagnosis,
-                    onTap: () => close(context, diagnosis));
-              }).toList());
+                    onTap: () => close(context, diagnosis),
+                  );
+                }).toList(),
+              );
             }
             if (!snapshot.hasData) {
               return Column(

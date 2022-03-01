@@ -36,3 +36,4 @@ part 'reset_password_page.dart';
 part 'setting_page.dart';
 part 'sign_in_page.dart';
 part 'sign_up_page.dart';
+part 'zoom_page.dart';

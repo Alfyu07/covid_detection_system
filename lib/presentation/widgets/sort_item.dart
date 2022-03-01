@@ -25,8 +25,9 @@ class SortItem extends StatelessWidget {
         margin: const EdgeInsets.only(right: 16),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         decoration: BoxDecoration(
-            border: Border.all(color: primaryColor, width: 1.5),
-            borderRadius: BorderRadius.circular(16)),
+          border: Border.all(color: primaryColor, width: 1.5),
+          borderRadius: BorderRadius.circular(16),
+        ),
         child: Text(
           title,
           style: mediumFont.copyWith(fontSize: 12, color: primaryColor),

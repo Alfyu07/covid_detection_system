@@ -46,43 +46,53 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Center(
-                  child: Text('Please create an account to continue',
-                      style: mediumFont.copyWith(color: blueGreyColor)),
+                  child: Text(
+                    'Please create an account to continue',
+                    style: mediumFont.copyWith(color: blueGreyColor),
+                  ),
                 ),
                 const SizedBox(height: 24),
                 Center(
                   child: SizedBox(
                     height: 120,
                     width: 120,
-                    child: Stack(children: [
-                      SizedBox(
+                    child: Stack(
+                      children: [
+                        SizedBox(
                           width: 120,
                           height: 120,
                           child: Consumer<SignUpProvider>(
-                              builder: (context, provider, _) {
-                            if (provider.image != null) {
-                              return ClipOval(
-                                child: Image.file(provider.image!,
-                                    fit: BoxFit.cover),
+                            builder: (context, provider, _) {
+                              if (provider.image != null) {
+                                return ClipOval(
+                                  child: Image.file(
+                                    provider.image!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              }
+                              return Image.asset(
+                                'assets/user_default_avatar.png',
+                                fit: BoxFit.cover,
                               );
-                            }
-                            return Image.asset('assets/user_default_avatar.png',
-                                fit: BoxFit.cover);
-                          })),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          onTap: () {
-                            provider.pickImage(ImageSource.gallery);
-
-                            //upload jika belum ada
-
-                            //delete dan upload jika sudah ada
-                          },
-                          child: Image.asset('assets/camera2.png', width: 40),
+                            },
+                          ),
                         ),
-                      )
-                    ]),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            onTap: () {
+                              provider.pickImage(ImageSource.gallery);
+
+                              //upload jika belum ada
+
+                              //delete dan upload jika sudah ada
+                            },
+                            child: Image.asset('assets/camera2.png', width: 40),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -113,37 +123,40 @@ class SignUpPage extends StatelessWidget {
                     },
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
-                        hintText: 'Enter your full name',
-                        fillColor: ghostWhiteColor,
-                        filled: true,
-                        hintStyle: const TextStyle(
-                          color: blueGreyColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                      hintText: 'Enter your full name',
+                      fillColor: ghostWhiteColor,
+                      filled: true,
+                      hintStyle: const TextStyle(
+                        color: blueGreyColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                        //borderSide: const BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: secondaryColor,
+                          width: 1.5,
                         ),
-                        border: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                          //borderSide: const BorderSide(),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: secondaryColor, width: 1.5),
 
-                          //borderSide: const BorderSide(),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: redColor, width: 1.5),
+                        //borderSide: const BorderSide(),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            const BorderSide(color: redColor, width: 1.5),
 
-                          //borderSide: const BorderSide(),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 16)),
+                        //borderSide: const BorderSide(),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 16),
+                    ),
                     autofillHints: const [AutofillHints.email],
                   ),
                 ),
@@ -173,37 +186,40 @@ class SignUpPage extends StatelessWidget {
                         return "Email address can't be empty";
                       }
                       final bool emailValid = RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value);
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      ).hasMatch(value);
                       if (!emailValid) {
                         return "Please enter a valid email address";
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        fillColor: ghostWhiteColor,
-                        filled: true,
-                        hintStyle: const TextStyle(
-                          color: blueGreyColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                      hintText: 'Enter your email',
+                      fillColor: ghostWhiteColor,
+                      filled: true,
+                      hintStyle: const TextStyle(
+                        color: blueGreyColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: secondaryColor,
+                          width: 1.5,
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: secondaryColor, width: 1.5),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: redColor, width: 1.5),
-                        ),
-                        contentPadding: const EdgeInsets.only(left: 16)),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            const BorderSide(color: redColor, width: 1.5),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 16),
+                    ),
                     autofillHints: const [AutofillHints.email],
                   ),
                 ),
@@ -236,43 +252,46 @@ class SignUpPage extends StatelessWidget {
                       },
                       obscureText: provider.hidePassword,
                       decoration: InputDecoration(
-                          fillColor: ghostWhiteColor,
-                          filled: true,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              provider.hidePassword = !provider.hidePassword;
-                            },
-                            icon: provider.hidePassword
-                                ? const Icon(Icons.visibility_off_outlined)
-                                : const Icon(Icons.visibility),
+                        fillColor: ghostWhiteColor,
+                        filled: true,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            provider.hidePassword = !provider.hidePassword;
+                          },
+                          icon: provider.hidePassword
+                              ? const Icon(Icons.visibility_off_outlined)
+                              : const Icon(Icons.visibility),
+                        ),
+                        hintText: 'Enter your password',
+                        hintStyle: const TextStyle(
+                          color: blueGreyColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        border: OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                          //borderSide: const BorderSide(),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: secondaryColor,
+                            width: 1.5,
                           ),
-                          hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
-                            color: blueGreyColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          border: OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                            //borderSide: const BorderSide(),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: secondaryColor, width: 1.5),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                const BorderSide(color: redColor, width: 1.5),
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                            left: 16,
-                          )),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: redColor, width: 1.5),
+                        ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -364,7 +383,9 @@ class SignUpPage extends StatelessWidget {
                       child: Text(
                         'Login',
                         style: mediumFont.copyWith(
-                            fontWeight: FontWeight.w600, color: secondaryColor),
+                          fontWeight: FontWeight.w600,
+                          color: secondaryColor,
+                        ),
                       ),
                     ),
                   ],

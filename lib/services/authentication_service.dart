@@ -30,10 +30,16 @@ class AuthenticationService {
   }
 
   Future<String?> signUp(
-      String fullname, String email, String password, String imgUrl) async {
+    String fullname,
+    String email,
+    String password,
+    String imgUrl,
+  ) async {
     try {
       final value = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       final user = value.user;
       if (user == null) return "failed";
 
@@ -56,7 +62,9 @@ class AuthenticationService {
   Future<String?> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email.trim(), password: password.trim());
+        email: email.trim(),
+        password: password.trim(),
+      );
 
       return "signed in";
     } on FirebaseException catch (e) {

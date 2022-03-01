@@ -5,7 +5,7 @@ class PreviewPage extends StatelessWidget {
 
   static Future<File?> cropImage(File? image) async {
     if (image == null) return null;
-    final tempFile = await ImageCropper.cropImage(
+    final tempFile = await ImageCropper().cropImage(
       sourcePath: image.path,
       androidUiSettings: androidUiSettings(),
       iosUiSettings: iosUiSettings(),
@@ -35,8 +35,10 @@ class PreviewPage extends StatelessWidget {
       backgroundColor: blackColor,
       body: Stack(
         children: [
+          /// Image
           Consumer<ImgProvider>(
             builder: (context, imgProvider, _) => InteractiveViewer(
+              minScale: 1.0,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -44,6 +46,9 @@ class PreviewPage extends StatelessWidget {
               ),
             ),
           ),
+
+          /// Appbar
+
           Align(
             alignment: Alignment.topCenter,
             child: SafeArea(
@@ -73,18 +78,19 @@ class PreviewPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     InkWell(
-                        onTap: () async {
-                          final File? imgFile =
-                              await cropImage(imgProvider.image);
-                          imgProvider.image = imgFile;
-                        },
-                        child: SizedBox(
-                          width: 32,
-                          height: 32,
-                          child: Center(
-                            child: Image.asset('assets/crop.png', width: 24),
-                          ),
-                        )),
+                      onTap: () async {
+                        final File? imgFile =
+                            await cropImage(imgProvider.image);
+                        imgProvider.image = imgFile;
+                      },
+                      child: SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: Center(
+                          child: Image.asset('assets/crop.png', width: 24),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

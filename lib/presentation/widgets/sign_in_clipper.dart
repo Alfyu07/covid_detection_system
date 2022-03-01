@@ -6,7 +6,11 @@ class SignInClipper extends CustomClipper<Path> {
     final Path path = Path();
     path.lineTo(0, size.height * 0.7);
     path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height * 0.7);
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height * 0.7,
+    );
     path.lineTo(size.width, 0);
     return path;
   }

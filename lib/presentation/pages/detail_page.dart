@@ -28,13 +28,16 @@ class DetailPage extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           final navProvider = Provider.of<BottomNavProvider>(
-                              context,
-                              listen: false);
+                            context,
+                            listen: false,
+                          );
                           navProvider.index = 0;
                           Navigator.popUntil(context, (route) => route.isFirst);
                         },
-                        child: Image.asset('assets/arrow_back_black.png',
-                            width: 26),
+                        child: Image.asset(
+                          'assets/arrow_back_black.png',
+                          width: 26,
+                        ),
                       ),
                       Text(
                         'Diagnostic Result',
@@ -88,16 +91,35 @@ class DetailPage extends StatelessWidget {
                       width: double.infinity,
                       height: detailProvider.isImgVisible ? 160 : 0,
                       child: Center(
-                        child: Container(
-                          width: 200,
-                          height: 160,
-                          decoration: BoxDecoration(
-                            color: ghostWhiteColor,
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
+                        child: InkWell(
+                          onTap: () {
+                            final img = Image(
                               image: NetworkImage(
-                                  detailProvider.diagnosis!.imgUrl ?? ""),
-                              fit: BoxFit.cover,
+                                detailProvider.diagnosis!.imgUrl ?? "",
+                              ),
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ZoomPage(image: img),
+                              ),
+                            );
+                          },
+                          child: Hero(
+                            tag: 'zoom',
+                            child: Container(
+                              width: 200,
+                              height: 160,
+                              decoration: BoxDecoration(
+                                color: ghostWhiteColor,
+                                borderRadius: BorderRadius.circular(12),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    detailProvider.diagnosis!.imgUrl ?? "",
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -121,34 +143,42 @@ class DetailPage extends StatelessWidget {
                         Text('Is this diagnosis correct?', style: regularFont),
                         const SizedBox(height: 24),
                         ButtonPrimary(
-                            text: "True",
-                            onPressed: () {
-                              //TODO: update DB
-                              diagnoseProvider
-                                  .updateDiagnoses(
-                                      diagnosis: detailProvider.diagnosis!,
-                                      label: detailProvider.diagnosis!.label,
-                                      isCorrected: true)
-                                  .then(
-                                (value) {
-                                  if (value != "Data successfully updated") {
-                                    Utils.showSnackBar(
-                                        context, value!, redColor);
-                                  }
+                          text: "True",
+                          onPressed: () {
+                            //TODO: update DB
+                            diagnoseProvider
+                                .updateDiagnoses(
+                              diagnosis: detailProvider.diagnosis!,
+                              label: detailProvider.diagnosis!.label,
+                              isCorrected: true,
+                            )
+                                .then(
+                              (value) {
+                                if (value != "Data successfully updated") {
                                   Utils.showSnackBar(
-                                      context, value!, blackColor);
-                                },
-                              );
-                              detailProvider.diagnosis = detailProvider
-                                  .diagnosis!
-                                  .copyWith(isCorrected: true);
-                            }),
+                                    context,
+                                    value!,
+                                    redColor,
+                                  );
+                                }
+                                Utils.showSnackBar(
+                                  context,
+                                  value!,
+                                  blackColor,
+                                );
+                              },
+                            );
+                            detailProvider.diagnosis = detailProvider.diagnosis!
+                                .copyWith(isCorrected: true);
+                          },
+                        ),
                         const SizedBox(height: 16),
                         ButtonSecondary(
-                            text: "False",
-                            onPressed: () {
-                              _showSelectDiagnoseDialog(context);
-                            }),
+                          text: "False",
+                          onPressed: () {
+                            _showSelectDiagnoseDialog(context);
+                          },
+                        ),
                       ],
                     ),
 

@@ -50,17 +50,18 @@ class SelectModelDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: modelProvider.tempValue == "CNN"
-                            ? const Color(0xff767EBC)
-                            : whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff7090B0).withOpacity(0.15),
-                            offset: const Offset(0, 4),
-                            blurRadius: 24,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(8),
+                      color: modelProvider.tempValue == "CNN"
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -85,17 +86,18 @@ class SelectModelDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: modelProvider.tempValue == "KNN"
-                            ? const Color(0xff767EBC)
-                            : whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff7090B0).withOpacity(0.15),
-                            offset: const Offset(0, 4),
-                            blurRadius: 24,
-                          )
-                        ]),
+                      borderRadius: BorderRadius.circular(8),
+                      color: modelProvider.tempValue == "KNN"
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
