@@ -101,7 +101,8 @@ class DetailPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ZoomPage(image: img),
+                                builder: (context) =>
+                                    ZoomPage(image: img, tag: "zoom"),
                               ),
                             );
                           },

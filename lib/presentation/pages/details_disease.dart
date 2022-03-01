@@ -12,6 +12,10 @@ class DetailsDisease extends StatelessWidget {
         bottom: false,
         child: Stack(
           children: [
+            // Container(
+            //   color: blackColor,
+            //   height: 350,
+            // ),
             Image.asset(
               disease.imageUrl ?? "",
               width: MediaQuery.of(context).size.width,
@@ -88,13 +92,35 @@ class DetailsDisease extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      buildPhotos(),
+                      buildPhotos(context),
                       const SizedBox(height: 64),
                     ],
                   ),
                 ),
               ],
-            )
+            ),
+            SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                child: Container(
+                  width: 40,
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    },
+                    icon: const ImageIcon(
+                      AssetImage('assets/arrow_back_black.png'),
+                      size: 32,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -155,27 +181,44 @@ class DetailsDisease extends StatelessWidget {
     );
   }
 
-  Widget buildPhotos() {
+  Widget buildPhotos(BuildContext context) {
     return SizedBox(
       height: 88,
-      child: ListView(
+      child: ListView.builder(
+        itemCount: disease.ctScanUrl == null ? 0 : disease.ctScanUrl!.length,
         scrollDirection: Axis.horizontal,
-        children: (disease.ctScanUrl ?? [])
-            .map(
-              (item) => Container(
-                width: 110,
-                height: 88,
-                margin: const EdgeInsets.only(left: edge),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage(item!),
-                    fit: BoxFit.cover,
-                  ),
+        itemBuilder: (context, index) => InkWell(
+          onTap: () {
+            Image image = Image(
+              image: AssetImage(disease.ctScanUrl![index] ?? ""),
+            );
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ZoomPage(
+                  image: image,
+                  tag: "$index",
                 ),
               ),
-            )
-            .toList(),
+            );
+          },
+          child: Hero(
+            tag: '$index',
+            child: Container(
+              width: 110,
+              height: 88,
+              margin: const EdgeInsets.only(left: edge),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                  image: AssetImage(disease.ctScanUrl![index] ?? ""),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

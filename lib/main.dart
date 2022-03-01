@@ -33,9 +33,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<DiagnoseProvider>(
           create: (BuildContext context) => DiagnoseProvider(_diagnoseService),
         ),
-        ChangeNotifierProvider<ZoomProvider>(
-          create: (BuildContext context) => ZoomProvider(),
-        ),
         ChangeNotifierProvider<DetailProvider>(
           create: (BuildContext context) => DetailProvider(),
         ),

@@ -201,10 +201,13 @@ class _SigninPageState extends State<SigninPage> {
                   padding: const EdgeInsets.symmetric(horizontal: edge),
                   child: ButtonPrimary(
                     onPressed: () {
+                      final messenger = ScaffoldMessenger.of(context);
                       if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _isLoading = true;
-                        });
+                        if (mounted) {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                        }
                         final navProvider = Provider.of<BottomNavProvider>(
                           context,
                           listen: false,
@@ -217,18 +220,31 @@ class _SigninPageState extends State<SigninPage> {
                               _passwordController.text,
                             )
                             .then((value) {
-                          if (value == "signed in") {
-                            Utils.showSnackBar(
-                              context,
-                              "Successfully signed in",
-                              blackColor,
-                            );
-                          } else {
-                            Utils.showSnackBar(context, value!, redColor);
+                          if (mounted) {
+                            setState(() {
+                              _isLoading = false;
+                            });
                           }
-                          setState(() {
-                            _isLoading = false;
-                          });
+
+                          if (value == "signed in") {
+                            messenger
+                              ..removeCurrentSnackBar()
+                              ..showSnackBar(
+                                const SnackBar(
+                                  content: Text("Successfully signed in"),
+                                  backgroundColor: blackColor,
+                                ),
+                              );
+                          } else {
+                            messenger
+                              ..removeCurrentSnackBar()
+                              ..showSnackBar(
+                                SnackBar(
+                                  content: Text(value!),
+                                  backgroundColor: blackColor,
+                                ),
+                              );
+                          }
                         });
                       }
                     },
