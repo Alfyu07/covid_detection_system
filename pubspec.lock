@@ -428,7 +428,11 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.1.3"
+=======
+    version: "3.0.5"
+>>>>>>> 454e2dd7cfb0045ac03b9b5ef9f9820a277b5af1
   image_cropper:
     dependency: "direct main"
     description:

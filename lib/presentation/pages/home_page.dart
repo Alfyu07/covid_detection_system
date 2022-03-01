@@ -222,33 +222,31 @@ class HomePage extends StatelessWidget {
               }
 
               return Column(
-                children: snapshot.data!.docs.map(
-                  (DocumentSnapshot document) {
-                    final Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  final Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
 
-                    final diagnosis = Diagnosis.fromJson(data);
-                    return DiagnosisCard(
-                      diagnosis: diagnosis,
-                      onTap: () {
-                        detailProvider.diagnosis = diagnosis;
+                  final diagnosis = Diagnosis.fromJson(data);
+                  return DiagnosisCard(
+                    diagnosis: diagnosis,
+                    onTap: () {
+                      detailProvider.diagnosis = diagnosis;
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WillPopScope(
-                              onWillPop: () async {
-                                Navigator.of(context).pop();
-                                return false;
-                              },
-                              child: const DetailPage(),
-                            ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WillPopScope(
+                            onWillPop: () async {
+                              Navigator.of(context).pop();
+                              return false;
+                            },
+                            child: const DetailPage(),
                           ),
-                        );
-                      },
-                    );
-                  },
-                ).toList(),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               );
             }
             return buildNoData();

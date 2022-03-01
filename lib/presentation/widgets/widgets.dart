@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';
-
 part 'btn_primary.dart';
 part 'btn_secondary.dart';
 part 'carousel_item.dart';

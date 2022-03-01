@@ -25,7 +25,7 @@ class _ZoomPageState extends State<ZoomPage> with TickerProviderStateMixin {
 
     _controller.addListener(() {
       if (_controller.value.getMaxScaleOnAxis() > 1.3) {
-        print("scaled up > 1.3");
+        // print("scaled up > 1.3");
       }
     });
   }

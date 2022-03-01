@@ -189,7 +189,7 @@ class DetailsDisease extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            Image image = Image(
+            final Image image = Image(
               image: AssetImage(disease.ctScanUrl![index] ?? ""),
             );
 
