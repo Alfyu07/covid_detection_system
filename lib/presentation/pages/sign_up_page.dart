@@ -334,6 +334,7 @@ class SignUpPage extends StatelessWidget {
                               provider.passwordValue!,
                               imgUrl ?? "null",
                             );
+
                             if (resultSignUp == "Successfully signed up") {
                               scaffoldMessenger
                                 ..removeCurrentSnackBar()

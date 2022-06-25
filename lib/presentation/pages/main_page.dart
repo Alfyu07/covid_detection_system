@@ -9,26 +9,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  late PageController pageController;
-
   final _pageNavigation = [
     const HomePage(),
     Container(),
     const SettingPage(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-
-    pageController = PageController(initialPage: widget.initialPage);
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   Future pickImage(ImageSource source) async {
     try {

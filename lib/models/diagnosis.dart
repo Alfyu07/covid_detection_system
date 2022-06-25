@@ -49,7 +49,7 @@ class Diagnosis {
         'label': label,
         'confidence': confidence,
         'isCorrected': isCorrected,
-        'index': index
+        'index': index,
       };
 
   factory Diagnosis.fromJson(Map<String, dynamic> data) => Diagnosis(
