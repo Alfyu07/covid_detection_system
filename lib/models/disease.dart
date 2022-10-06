@@ -59,14 +59,14 @@ final diseases = [
       'assets/gejala_pusing_pneumonia.png',
       'assets/gejala_demam_pneumonia.png',
       'assets/gejala_batuk_pneumonia.png',
-      'assets/gejala_kulit pucat_pneumonia.png',
+      'assets/gejala_kulit_pucat.png',
     ],
     ["Cuci tangan", "Jaga jarak", "Memakai Masker", "Makanan sehat"],
     [
       "assets/cuci tangan.png",
       "assets/jaga jarak.png",
       "assets/memakai masker.png",
-      "assets/dirumah aja.png"
+      "assets/makanan sehat.png"
     ],
     [
       "assets/ct_pneumonia1.png",

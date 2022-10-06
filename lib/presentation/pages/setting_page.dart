@@ -72,6 +72,62 @@ class SettingPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 32),
+                // Container(
+                //   width: double.infinity,
+                //   height: 28,
+                //   color: ghostWhiteColor,
+                //   child: Padding(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //     child: Text('Settings', style: regularFont),
+                //   ),
+                // ),
+                // const SizedBox(height: 16),
+                // InkWell(
+                //   onTap: () => _showSelectModelDialog(context),
+                //   child: Row(
+                //     children: [
+                //       const SizedBox(width: 8),
+                //       Image.asset(
+                //         'assets/ai_model.png',
+                //         width: 24,
+                //       ),
+                //       const SizedBox(width: 8),
+                //       Text('Classification Model', style: regularFont),
+                //       const Spacer(),
+                //       Consumer<AiModelProvider>(
+                //         builder: (context, modelProvider, _) => Row(
+                //           children: [
+                //             Text(
+                //               modelProvider.selectedValue ?? "",
+                //               style: regularFont,
+                //             ),
+                //             const SizedBox(width: 8),
+                //             Image.asset('assets/arrow_right.png', width: 24),
+                //           ],
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(height: 16),
+                // InkWell(
+                //   onTap: () => _showResetModelDialog(context),
+                //   child: Row(
+                //     children: [
+                //       const SizedBox(width: 8),
+                //       Image.asset(
+                //         'assets/reset.png',
+                //         width: 24,
+                //       ),
+                //       const SizedBox(width: 8),
+                //       Text('Reset Model to Default', style: regularFont),
+                //       const Spacer(),
+                //       Image.asset('assets/arrow_right.png', width: 24),
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(height: 16),
                 Container(
                   width: double.infinity,
                   height: 28,
@@ -84,58 +140,23 @@ class SettingPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 InkWell(
-                  onTap: () => _showSelectModelDialog(context),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SendSaranPage(),
+                      ),
+                    );
+                  },
                   child: Row(
                     children: [
-                      const SizedBox(width: 8),
                       Image.asset(
-                        'assets/ai_model.png',
+                        'assets/icon_send.png',
                         width: 24,
                       ),
                       const SizedBox(width: 8),
-                      Text('Classification Model', style: regularFont),
-                      const Spacer(),
-                      Consumer<AiModelProvider>(
-                        builder: (context, modelProvider, _) => Row(
-                          children: [
-                            Text(
-                              modelProvider.selectedValue ?? "",
-                              style: regularFont,
-                            ),
-                            const SizedBox(width: 8),
-                            Image.asset('assets/arrow_right.png', width: 24),
-                          ],
-                        ),
-                      )
+                      Text('Send Feedback', style: regularFont),
                     ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: () => _showResetModelDialog(context),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 8),
-                      Image.asset(
-                        'assets/reset.png',
-                        width: 24,
-                      ),
-                      const SizedBox(width: 8),
-                      Text('Reset Model to Default', style: regularFont),
-                      const Spacer(),
-                      Image.asset('assets/arrow_right.png', width: 24),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  height: 28,
-                  color: ghostWhiteColor,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: Text('Account', style: regularFont),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -165,6 +186,10 @@ class SettingPage extends StatelessWidget {
                   },
                   child: Row(
                     children: [
+                      Image.asset(
+                        'assets/icon_password.png',
+                        width: 24,
+                      ),
                       const SizedBox(width: 8),
                       Text('Reset Password', style: regularFont),
                     ],
@@ -189,6 +214,10 @@ class SettingPage extends StatelessWidget {
                   },
                   child: Row(
                     children: [
+                      Image.asset(
+                        'assets/icon_logout.png',
+                        width: 24,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Logout',
@@ -208,17 +237,17 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  void _showResetModelDialog(BuildContext context) => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const ResetDialog();
-        },
-      );
+  // void _showResetModelDialog(BuildContext context) => showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return const ResetDialog();
+  //       },
+  //     );
 
-  void _showSelectModelDialog(BuildContext context) => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const SelectModelDialog();
-        },
-      );
+  // void _showSelectModelDialog(BuildContext context) => showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return const SelectModelDialog();
+  //       },
+  //     );
 }

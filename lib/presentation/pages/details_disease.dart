@@ -12,10 +12,10 @@ class DetailsDisease extends StatelessWidget {
         bottom: false,
         child: Stack(
           children: [
-            // Container(
-            //   color: blackColor,
-            //   height: 350,
-            // ),
+            Container(
+              color: const Color(0xffEDEDED),
+              height: 350,
+            ),
             Image.asset(
               disease.imageUrl ?? "",
               width: MediaQuery.of(context).size.width,
@@ -154,27 +154,29 @@ class DetailsDisease extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           for (int i = 0; i < disease.gejala!.length; i++)
-            Column(
-              children: [
-                Container(
-                  height: 64,
-                  width: 64,
-                  margin: const EdgeInsets.only(left: edge),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    image: DecorationImage(
-                      image: AssetImage(disease.gejalaImgUrl![i]!),
-                      fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.only(left: edge),
+              child: Column(
+                children: [
+                  Container(
+                    height: 64,
+                    width: 64,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      image: DecorationImage(
+                        image: AssetImage(disease.gejalaImgUrl![i]!),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Center(
-                  child: Text(
-                    disease.gejala![i]!,
-                    style: regularFont.copyWith(fontSize: 12),
+                  Center(
+                    child: Text(
+                      disease.gejala![i]!,
+                      style: regularFont.copyWith(fontSize: 12),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
         ],
       ),
@@ -230,25 +232,29 @@ class DetailsDisease extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           for (int i = 0; i < disease.pencegahan!.length; i++)
-            Column(
-              children: [
-                Container(
-                  height: 64,
-                  width: 64,
-                  margin: const EdgeInsets.only(left: edge),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    image: DecorationImage(
-                      image: AssetImage(disease.pencegahanUrl![i]!),
-                      fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.only(left: edge),
+              child: Column(
+                children: [
+                  Center(
+                    child: Container(
+                      height: 64,
+                      width: 64,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          image: AssetImage(disease.pencegahanUrl![i]!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  disease.pencegahan![i]!,
-                  style: regularFont.copyWith(fontSize: 12),
-                ),
-              ],
+                  Text(
+                    disease.pencegahan![i]!,
+                    style: regularFont.copyWith(fontSize: 12),
+                  ),
+                ],
+              ),
             ),
         ],
       ),

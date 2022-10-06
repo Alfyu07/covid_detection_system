@@ -172,9 +172,10 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SkeletonContainer.rounded(
-                width: MediaQuery.of(context).size.width * 0.55,
+                width: MediaQuery.of(context).size.width * 0.4,
                 height: 16,
               ),
+              const SizedBox(height: 8),
               const SkeletonContainer.rounded(
                 width: 60,
                 height: 12,
@@ -220,7 +221,6 @@ class HomePage extends StatelessWidget {
               if (snapshot.data!.docs.isEmpty) {
                 return buildNoData();
               }
-
               return Column(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   final Map<String, dynamic> data =
@@ -251,10 +251,6 @@ class HomePage extends StatelessWidget {
             }
             return buildNoData();
         }
-
-        // Column(
-        //   children: diagnoses.map((e) => DiagnosisCard(diagnosis: e)).toList(),
-        // ),
       },
     );
   }

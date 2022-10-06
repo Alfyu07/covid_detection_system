@@ -1,9 +1,11 @@
 import 'package:covidia/presentation/pages/pages.dart';
+import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
+import 'package:covidia/services/saran_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,6 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final DiagnoseService _diagnoseService = DiagnoseService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
           initialData: null,
         ),
         ChangeNotifierProvider<DiagnoseProvider>(
-          create: (BuildContext context) => DiagnoseProvider(_diagnoseService),
+          create: (BuildContext context) => DiagnoseProvider(DiagnoseService()),
+        ),
+        ChangeNotifierProvider<SaranProvider>(
+          create: (BuildContext context) => SaranProvider(SaranService()),
         ),
         ChangeNotifierProvider<DetailProvider>(
           create: (BuildContext context) => DetailProvider(),

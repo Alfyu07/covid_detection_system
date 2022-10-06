@@ -6,3 +6,4 @@ part 'api_return_value.dart';
 part 'diagnosis.dart';
 part 'predict_result.dart';
 part 'models.g.dart';
+part 'saran.dart';

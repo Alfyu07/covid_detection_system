@@ -65,20 +65,20 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               label: '',
               icon: index == 0
-                  ? Image.asset('assets/home_active.png', width: edge)
-                  : Image.asset('assets/home.png', width: edge),
+                  ? Image.asset('assets/home_active.png', width: 24)
+                  : Image.asset('assets/home.png', width: 24),
             ),
             BottomNavigationBarItem(
               label: '',
               icon: index == 1
-                  ? Image.asset('assets/add_active.png', width: edge)
-                  : Image.asset('assets/add.png', width: edge),
+                  ? Image.asset('assets/add_active.png', width: 24)
+                  : Image.asset('assets/add.png', width: 24),
             ),
             BottomNavigationBarItem(
               label: '',
               icon: index == 2
-                  ? Image.asset('assets/setting_active.png', width: edge)
-                  : Image.asset('assets/setting.png', width: edge),
+                  ? Image.asset('assets/setting_active.png', width: 24)
+                  : Image.asset('assets/setting.png', width: 24),
             ),
           ],
         ),

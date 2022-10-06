@@ -114,6 +114,7 @@ class PreviewPage extends StatelessWidget {
                   final output = await EngineService.classifyImage(image);
                   if (output.message != "success") {
                     Fluttertoast.showToast(msg: 'something went wrong');
+                    previewProvider.isLoading = false;
                     return;
                   }
                   // upload image ke firebase storage

@@ -88,7 +88,37 @@ class _SigninPageState extends State<SigninPage> {
               // * Password TextField
               _buildPasswordTextField(),
 
-              // * SignUp Button
+              const SizedBox(height: 16),
+
+              // * Forgot Password
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ResetPasswordPage(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: edge,
+                      ),
+                      child: Text(
+                        'Forgot password?',
+                        style: mediumFont.copyWith(
+                          color: secondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // * Signin Button
               const SizedBox(
                 height: 40,
               ),
@@ -113,30 +143,14 @@ class _SigninPageState extends State<SigninPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const ResetPasswordPage(),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0,
-                          vertical: 2,
-                        ),
-                        child: Text(
-                          "Forgot your password? ",
-                          style: mediumFont,
-                        ),
+                    Text(
+                      "Don't have an account yet?",
+                      style: regularFont.copyWith(
+                        color: blueGreyColor,
                       ),
                     ),
-
-                    //sign up button
                     InkWell(
                       onTap: () {
                         Provider.of<SignUpProvider>(context, listen: false)
@@ -155,8 +169,7 @@ class _SigninPageState extends State<SigninPage> {
                         ),
                         child: Text(
                           'Sign up',
-                          style: mediumFont.copyWith(
-                            fontWeight: FontWeight.w600,
+                          style: boldFont.copyWith(
                             color: secondaryColor,
                           ),
                         ),
