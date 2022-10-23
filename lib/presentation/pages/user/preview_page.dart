@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class PreviewPage extends StatelessWidget {
   const PreviewPage({Key? key}) : super(key: key);

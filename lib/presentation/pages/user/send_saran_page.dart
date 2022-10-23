@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class SendSaranPage extends StatefulWidget {
   const SendSaranPage({Key? key}) : super(key: key);
@@ -180,7 +180,10 @@ class _SendSaranPageState extends State<SendSaranPage> {
 
                   if (!mounted) return;
                   Utils.showSnackBar(
-                      context, "Sending feedback failed", redColor);
+                    context,
+                    "Sending feedback failed",
+                    redColor,
+                  );
                 }
               }
             },

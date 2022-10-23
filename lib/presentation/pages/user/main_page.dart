@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class MainPage extends StatefulWidget {
   final int initialPage;

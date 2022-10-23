@@ -24,3 +24,4 @@ part 'sign_in_clipper.dart';
 part 'sort_item.dart';
 part 'custom_search_delegate.dart';
 part 'skeleton_container.dart';
+part 'admin_menu_item.dart';

@@ -1,4 +1,4 @@
-part of 'pages.dart';
+part of '../pages.dart';
 
 class ZoomPage extends StatefulWidget {
   final Image image;

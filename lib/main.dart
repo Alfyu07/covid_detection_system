@@ -1,7 +1,7 @@
 import 'package:covidia/presentation/pages/pages.dart';
-import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
+import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const AuthenticationWrapper(),
+        home: const AdminHomePage(),
       ),
     );
   }
