@@ -25,3 +25,4 @@ part 'sort_item.dart';
 part 'custom_search_delegate.dart';
 part 'skeleton_container.dart';
 part 'admin_menu_item.dart';
+part 'admin_user_item.dart';

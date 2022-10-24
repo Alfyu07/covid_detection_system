@@ -252,7 +252,14 @@ class _AdminHomePageState extends State<AdminHomePage> {
               iconUrl: "assets/icon_users_menu.png",
               title: "User Management",
               subtitle: "Create, Delete and update\nuser’s data",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AdminManageUsersPage(),
+                  ),
+                );
+              },
             ),
             AdminMenuItem(
               iconUrl: "assets/icon_feedbacks_menu.png",

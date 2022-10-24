@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/disease.dart';
@@ -40,3 +41,4 @@ part 'sign_up_page.dart';
 part 'user/zoom_page.dart';
 part 'user/send_saran_page.dart';
 part 'admin/admin_home_page.dart';
+part 'admin/admin_manage_users_page.dart';
