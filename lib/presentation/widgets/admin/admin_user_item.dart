@@ -1,4 +1,4 @@
-part of 'widgets.dart';
+part of '../widgets.dart';
 
 class AdminUserItem extends StatelessWidget {
   const AdminUserItem({Key? key}) : super(key: key);

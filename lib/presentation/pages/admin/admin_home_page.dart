@@ -265,7 +265,14 @@ class _AdminHomePageState extends State<AdminHomePage> {
               iconUrl: "assets/icon_feedbacks_menu.png",
               title: "Feedbacks",
               subtitle: "See feedback sent by user",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AdminFeedbackManagementPage(),
+                  ),
+                );
+              },
             ),
             AdminMenuItem(
               iconUrl: "assets/icon_models_menu.png",

@@ -1,16 +1,16 @@
-part of 'widgets.dart';
+part of '../widgets.dart';
 
-class AdminMenuItem extends StatelessWidget {
+class AdminModelItem extends StatelessWidget {
   final String iconUrl;
   final String title;
-  final String subtitle;
+  final String date;
   final VoidCallback onTap;
 
-  const AdminMenuItem({
+  const AdminModelItem({
     Key? key,
     required this.iconUrl,
     required this.title,
-    required this.subtitle,
+    required this.date,
     required this.onTap,
   }) : super(key: key);
 
@@ -52,7 +52,7 @@ class AdminMenuItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  subtitle,
+                  date,
                   style: lightFont.copyWith(
                     fontSize: 12,
                     color: blueGreyColor,
