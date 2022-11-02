@@ -1,10 +1,16 @@
 part of 'widgets.dart';
 
-class SelectDiseaseDialog extends StatelessWidget {
+class SelectDiseaseDialog extends StatefulWidget {
   const SelectDiseaseDialog({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<SelectDiseaseDialog> createState() => _SelectDiseaseDialogState();
+}
+
+class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -17,8 +23,17 @@ class SelectDiseaseDialog extends StatelessWidget {
     );
   }
 
+  String titleCase(String str) {
+    List<String> splitStr = str.toLowerCase().split(" ");
+
+    for (int i = 0; i < splitStr.length; i++) {
+      splitStr[i] = splitStr[i][0].toUpperCase() + splitStr[i].substring(1);
+    }
+    return splitStr.join(' ');
+  }
+
   Widget contentBox(BuildContext context) {
-    return Stack(
+    return ListView(
       children: <Widget>[
         Container(
           padding: const EdgeInsets.symmetric(horizontal: edge, vertical: edge),
@@ -45,14 +60,17 @@ class SelectDiseaseDialog extends StatelessWidget {
               const SizedBox(height: 24),
               Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.selectedCorrection = "Covid 19",
+                  onTap: () {
+                    provider.selectedOption = 0;
+                    provider.selectedCorrection = "Covid 19";
+                  },
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: provider.selectedCorrection == "Covid 19"
+                      color: provider.selectedOption == 0
                           ? const Color(0xff767EBC)
                           : whiteColor,
                       boxShadow: [
@@ -69,7 +87,7 @@ class SelectDiseaseDialog extends StatelessWidget {
                         'Covid 19',
                         style: mediumFont.copyWith(
                           fontSize: 16,
-                          color: provider.selectedCorrection == "Covid 19"
+                          color: provider.selectedOption == 0
                               ? whiteColor
                               : blackColor,
                         ),
@@ -81,50 +99,17 @@ class SelectDiseaseDialog extends StatelessWidget {
               const SizedBox(height: 16),
               Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.selectedCorrection = "Pneumonia",
+                  onTap: () {
+                    provider.selectedOption = 1;
+                    provider.selectedCorrection = "Normal";
+                  },
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: edge),
                     height: 56,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: provider.selectedCorrection == "Pneumonia"
-                          ? const Color(0xff767EBC)
-                          : whiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xff7090B0).withOpacity(0.15),
-                          offset: const Offset(0, 4),
-                          blurRadius: 24,
-                        )
-                      ],
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Pneumonia',
-                        style: mediumFont.copyWith(
-                          fontSize: 16,
-                          color: provider.selectedCorrection == "Pneumonia"
-                              ? whiteColor
-                              : blackColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Consumer<DetailProvider>(
-                builder: (context, provider, _) => InkWell(
-                  onTap: () => provider.selectedCorrection = "Normal",
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: edge),
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: provider.selectedCorrection == "Normal"
+                      color: provider.selectedOption == 1
                           ? const Color(0xff767EBC)
                           : whiteColor,
                       boxShadow: [
@@ -141,7 +126,7 @@ class SelectDiseaseDialog extends StatelessWidget {
                         'Normal',
                         style: mediumFont.copyWith(
                           fontSize: 16,
-                          color: provider.selectedCorrection == "Normal"
+                          color: provider.selectedOption == 1
                               ? whiteColor
                               : blackColor,
                         ),
@@ -150,6 +135,121 @@ class SelectDiseaseDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
+              Consumer<DetailProvider>(
+                builder: (context, provider, _) => InkWell(
+                  onTap: () {
+                    provider.selectedOption = 2;
+                    provider.selectedCorrection = "Pneumonia";
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: edge),
+                    height: 56,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.selectedOption == 2
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Pneumonia',
+                        style: mediumFont.copyWith(
+                          fontSize: 16,
+                          color: provider.selectedOption == 2
+                              ? whiteColor
+                              : blackColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              //Lainnya
+              Consumer<DetailProvider>(
+                builder: (context, provider, _) => InkWell(
+                  onTap: () {
+                    provider.selectedOption = 3;
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 600),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: edge,
+                      vertical: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: provider.selectedOption == 3
+                          ? const Color(0xff767EBC)
+                          : whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff7090B0).withOpacity(0.15),
+                          offset: const Offset(0, 4),
+                          blurRadius: 24,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Other: ',
+                            style: mediumFont.copyWith(
+                              fontSize: 16,
+                              color: provider.selectedOption == 3
+                                  ? whiteColor
+                                  : blackColor,
+                            ),
+                          ),
+                        ),
+                        if (provider.selectedOption == 3)
+                          SizedBox(
+                            width: double.maxFinite,
+                            height: 40,
+                            child: TextField(
+                              onChanged: (value) =>
+                                  provider.selectedCorrection = value,
+                              controller: controller,
+                              style: regularFont.copyWith(
+                                color: whiteColor,
+                                fontSize: 14,
+                              ),
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: whiteColor,
+                                  ),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: whiteColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        else
+                          Container(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(
                 height: 24,
               ),
@@ -157,7 +257,8 @@ class SelectDiseaseDialog extends StatelessWidget {
                 onPressed: () {
                   final detailProvider =
                       Provider.of<DetailProvider>(context, listen: false);
-
+                  detailProvider.selectedCorrection =
+                      titleCase(detailProvider.selectedCorrection ?? "");
                   //TODO : update in db
                   Provider.of<DiagnoseProvider>(context, listen: false)
                       .updateDiagnoses(

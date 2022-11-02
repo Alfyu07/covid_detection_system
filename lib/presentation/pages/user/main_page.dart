@@ -63,19 +63,19 @@ class _MainPageState extends State<MainPage> {
           onTap: onChangeBottomNav,
           items: [
             BottomNavigationBarItem(
-              label: '',
+              label: 'Home',
               icon: index == 0
                   ? Image.asset('assets/home_active.png', width: 24)
                   : Image.asset('assets/home.png', width: 24),
             ),
             BottomNavigationBarItem(
-              label: '',
+              label: 'Diagnose',
               icon: index == 1
                   ? Image.asset('assets/add_active.png', width: 24)
                   : Image.asset('assets/add.png', width: 24),
             ),
             BottomNavigationBarItem(
-              label: '',
+              label: 'Settings',
               icon: index == 2
                   ? Image.asset('assets/setting_active.png', width: 24)
                   : Image.asset('assets/setting.png', width: 24),

@@ -20,7 +20,7 @@ class _ZoomPageState extends State<ZoomPage> with TickerProviderStateMixin {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 50),
     );
 
     _controller.addListener(() {

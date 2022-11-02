@@ -39,6 +39,7 @@ part 'sign_in_page.dart';
 part 'sign_up_page.dart';
 part 'user/zoom_page.dart';
 part 'user/send_saran_page.dart';
+part 'user/change_password_page.dart';
 part 'admin/admin_home_page.dart';
 part 'admin/admin_manage_users_page.dart';
 part 'admin/admin_feedback_management_page.dart';

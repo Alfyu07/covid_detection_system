@@ -29,6 +29,40 @@ class AuthenticationService {
     }
   }
 
+  Future<String?> changePassword(String currentPassword, String newPassword,
+      String newPasswordConfirmation) async {
+    final user = await FirebaseAuth.instance.currentUser;
+    if (user == null) return "You must login";
+
+    final cred = EmailAuthProvider.credential(
+      email: user.email ?? "",
+      password: currentPassword,
+    );
+
+    try {
+      await user.reauthenticateWithCredential(cred);
+      await user.updatePassword(newPassword);
+      return "success";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Email address is invalid";
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        case "wrong-password":
+          return "your current password is invalid.";
+        default:
+          return "Change password failed. Please try again.";
+      }
+    }
+  }
+
   Future<String?> signUp(
     String fullname,
     String email,
@@ -47,7 +81,7 @@ class AuthenticationService {
           .updateDisplayName(fullname)
           .whenComplete(() => user.updatePhotoURL(imgUrl));
       final userService = UserService();
-      await userService.updateUserData(user.uid, 'RS Unram');
+      await userService.updateUserData(user.uid);
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;

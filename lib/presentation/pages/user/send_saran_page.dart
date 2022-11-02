@@ -53,7 +53,7 @@ class _SendSaranPageState extends State<SendSaranPage> {
           children: [
             const Center(
               child: Text(
-                'FeedBack',
+                'Feedback',
                 style: TextStyle(
                   color: primaryColor,
                   fontSize: 24,

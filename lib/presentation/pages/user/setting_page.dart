@@ -162,27 +162,12 @@ class SettingPage extends StatelessWidget {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () {
-                    //Todo : Implement reset password
-                    final user = context.read<User?>();
-                    if (user != null) {
-                      final String? email = user.email;
-                      context
-                          .read<AuthenticationService>()
-                          .sendResetEmail(email!)
-                          .then((value) {
-                        if (value != "sent") {
-                          Utils.showSnackBar(context, value!, redColor);
-                        }
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const ResetEmailSent(),
-                          ),
-                        );
-                      });
-                    }
-                    return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChangePasswordPage(),
+                      ),
+                    );
                   },
                   child: Row(
                     children: [
@@ -191,7 +176,7 @@ class SettingPage extends StatelessWidget {
                         width: 24,
                       ),
                       const SizedBox(width: 8),
-                      Text('Reset Password', style: regularFont),
+                      Text('Change Password', style: regularFont),
                     ],
                   ),
                 ),

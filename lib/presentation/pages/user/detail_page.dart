@@ -340,6 +340,13 @@ class DetailPage extends StatelessWidget {
 
     detailProvider.selectedCorrection = detailProvider.diagnosis!.label;
 
+    if (!detailProvider.correctionOptions
+        .contains(detailProvider.selectedCorrection)) {
+      detailProvider.selectedOption = 3;
+    } else {
+      detailProvider.selectedOption = detailProvider.diagnosis!.index;
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

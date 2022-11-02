@@ -102,7 +102,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           color: secondaryColor,
                           width: 1.5,
                         ),
-
                         //borderSide: const BorderSide(),
                       ),
                       errorBorder: OutlineInputBorder(
