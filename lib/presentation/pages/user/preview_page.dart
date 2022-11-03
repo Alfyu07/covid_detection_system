@@ -85,21 +85,24 @@ class PreviewPage extends StatelessWidget {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                          horizontal: 6,
+                          vertical: 2,
                         ),
                         decoration: BoxDecoration(
                           color: whiteColor,
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 32,
-                              height: 32,
+                              width: 24,
+                              height: 24,
                               child: Center(
-                                child: Image.asset('assets/crop.png',
-                                    width: 24, color: blackColor),
+                                child: Image.asset(
+                                  'assets/crop.png',
+                                  width: 24,
+                                  color: blackColor,
+                                ),
                               ),
                             ),
                             const SizedBox(width: 4),
