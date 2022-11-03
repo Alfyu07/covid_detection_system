@@ -35,7 +35,10 @@ class _AdminFeedbackManagementPageState
         margin: const EdgeInsets.only(top: edge),
         child: Row(
           children: [
-            Image.asset('assets/arrow_back_black.png', height: 24),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset('assets/arrow_back_black.png', height: 24),
+            ),
             const SizedBox(width: 16),
             Text(
               "Feedbacks",

@@ -49,6 +49,7 @@ class SettingPage extends StatelessWidget {
                             : Image.network(
                                 snapshot.data!.photoURL!,
                                 width: 150,
+                                height: 150,
                                 fit: BoxFit.cover,
                               ),
                       ),

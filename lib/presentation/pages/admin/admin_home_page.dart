@@ -38,12 +38,43 @@ class _AdminHomePageState extends State<AdminHomePage> {
         margin: const EdgeInsets.only(top: edge),
         child: Row(
           children: [
-            const CircleAvatar(
-              radius: 24,
-              backgroundColor: ghostWhiteColor,
-              foregroundImage: NetworkImage(
-                "https://plus.unsplash.com/premium_photo-1661876567457-d9bd96f4b67f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-              ),
+            StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.userChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SkeletonContainer.circular(
+                    width: 40,
+                    height: 40,
+                  );
+                }
+                return CircleAvatar(
+                  radius: 20,
+                  backgroundColor: ghostWhiteColor,
+                  child: ClipOval(
+                    child: snapshot.data!.photoURL == "null" ||
+                            snapshot.data!.photoURL == null
+                        ? SvgPicture.network(
+                            "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                            width: 40,
+                            height: 40,
+                            placeholderBuilder: (context) {
+                              return Container(
+                                width: 40,
+                                height: 40,
+                                color: ghostWhiteColor,
+                              );
+                            },
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            snapshot.data!.photoURL!,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                );
+              },
             ),
             const SizedBox(width: 16),
             Text(
@@ -54,7 +85,20 @@ class _AdminHomePageState extends State<AdminHomePage> {
               ),
             ),
             const Spacer(),
-            Image.asset("assets/icon_logout.png", height: 24),
+            InkWell(
+              onTap: () {
+                context.read<AuthenticationService>().signOut().then((value) {
+                  if (value == "User logged out") {
+                    Provider.of<BottomNavProvider>(context, listen: false)
+                        .index = 0;
+                    Utils.showSnackBar(context, value!, blackColor);
+                  } else {
+                    Utils.showSnackBar(context, value!, redColor);
+                  }
+                });
+              },
+              child: Image.asset("assets/icon_logout.png", height: 24),
+            ),
           ],
         ),
       );

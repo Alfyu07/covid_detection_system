@@ -83,11 +83,33 @@ class PreviewPage extends StatelessWidget {
                             await cropImage(imgProvider.image);
                         imgProvider.image = imgFile;
                       },
-                      child: SizedBox(
-                        width: 32,
-                        height: 32,
-                        child: Center(
-                          child: Image.asset('assets/crop.png', width: 24),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 32,
+                              height: 32,
+                              child: Center(
+                                child: Image.asset('assets/crop.png',
+                                    width: 24, color: blackColor),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              "Crop",
+                              style: mediumFont.copyWith(
+                                color: blackColor,
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),

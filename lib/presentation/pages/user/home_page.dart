@@ -31,6 +31,7 @@ class HomePage extends StatelessWidget {
                             height: 40,
                           );
                         }
+
                         return CircleAvatar(
                           radius: 20,
                           backgroundColor: ghostWhiteColor,
@@ -43,6 +44,7 @@ class HomePage extends StatelessWidget {
                                     placeholderBuilder: (context) {
                                       return Container(
                                         width: 40,
+                                        height: 40,
                                         color: ghostWhiteColor,
                                       );
                                     },
@@ -51,6 +53,7 @@ class HomePage extends StatelessWidget {
                                 : Image.network(
                                     snapshot.data!.photoURL!,
                                     width: 40,
+                                    height: 40,
                                     fit: BoxFit.cover,
                                   ),
                           ),

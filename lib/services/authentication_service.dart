@@ -87,9 +87,9 @@ class AuthenticationService {
       final UserModel userModel = UserModel(
         uid: user.uid,
         date: DateTime.now(),
-        name: user.displayName,
+        name: fullname,
         email: user.email,
-        imgUrl: user.photoURL,
+        imgUrl: imgUrl,
         role: 1,
       );
 

@@ -27,6 +27,7 @@ class UserModel {
         'role': role,
         'createdTime': Utils.fromDateTimeToJson(date),
         'email': email,
+        'imgUrl': imgUrl,
         'nameToLowerCase': name?.toLowerCase(),
       };
 
