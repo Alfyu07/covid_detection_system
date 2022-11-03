@@ -7,3 +7,4 @@ part 'diagnosis.dart';
 part 'predict_result.dart';
 part 'models.g.dart';
 part 'saran.dart';
+part 'user_model.dart';

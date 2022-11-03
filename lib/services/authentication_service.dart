@@ -1,3 +1,4 @@
+import 'package:covidia/models/models.dart';
 import 'package:covidia/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -77,11 +78,23 @@ class AuthenticationService {
       final user = value.user;
       if (user == null) return "failed";
 
-      await user
-          .updateDisplayName(fullname)
-          .whenComplete(() => user.updatePhotoURL(imgUrl));
+      await user.updateDisplayName(fullname).whenComplete(
+            () => user.updatePhotoURL(imgUrl),
+          );
+
       final userService = UserService();
-      await userService.updateUserData(user.uid);
+
+      final UserModel userModel = UserModel(
+        uid: user.uid,
+        date: DateTime.now(),
+        name: user.displayName,
+        email: user.email,
+        imgUrl: user.photoURL,
+        role: 1,
+      );
+
+      await userService.updateUserData(user: userModel);
+
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;

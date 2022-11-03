@@ -1,8 +1,10 @@
 import 'package:covidia/presentation/pages/pages.dart';
+import 'package:covidia/providers/admin_provider.dart';
 import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
+import 'package:covidia/services/admin_services.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
 import 'package:covidia/services/saran_service.dart';
@@ -58,6 +60,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignUpProvider>(
           create: (BuildContext context) => SignUpProvider(),
         ),
+        ChangeNotifierProvider<AdminProvider>(
+          create: (BuildContext context) => AdminProvider(AdminServices()),
+        ),
       ],
       child: MaterialApp(
         title: 'covidia',
@@ -67,7 +72,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const AuthenticationWrapper(),
+        home: const AdminHomePage(),
       ),
     );
   }

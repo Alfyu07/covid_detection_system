@@ -9,6 +9,11 @@ class AdminManageUsersPage extends StatefulWidget {
 
 class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
@@ -32,7 +37,10 @@ class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
         margin: const EdgeInsets.only(top: edge),
         child: Row(
           children: [
-            Image.asset('assets/arrow_back_black.png', height: 24),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset('assets/arrow_back_black.png', height: 24),
+            ),
             const SizedBox(width: 16),
             Text(
               "Users",
@@ -45,58 +53,57 @@ class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
         ),
       );
 
-  Widget _searchBar() => Container(
-        margin: const EdgeInsets.only(top: edge),
-        height: 48,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: const Color(0xffF1F2F8),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16),
-              child: Image.asset(
-                'assets/search.png',
-                width: 24,
-              ),
+  Widget _searchBar() {
+    final provider = Provider.of<AdminProvider>(context, listen: false);
+
+    return Container(
+      margin: const EdgeInsets.only(top: edge),
+      height: 48,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xffF1F2F8),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16),
+            child: Image.asset(
+              'assets/search.png',
+              width: 24,
             ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: TextField(
-                  onTap: () {},
-                  style: regularFont.copyWith(
-                    fontSize: 15,
-                    color: const Color(0xff595B66),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: TextField(
+                onTap: () {},
+                onSubmitted: (value) {
+                  provider.getUsers(value);
+                },
+                style: regularFont.copyWith(
+                  fontSize: 15,
+                  color: const Color(0xff595B66),
+                ),
+                decoration: const InputDecoration(
+                  hintText: 'Search user',
+                  hintStyle: TextStyle(
+                    color: Color(0xffA0ABC0),
+                    fontSize: 14,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: 'Search user',
-                    hintStyle: TextStyle(
-                      color: Color(0xffA0ABC0),
-                      fontSize: 14,
-                    ),
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
               ),
             ),
-            // query.isEmpty
-            //     ? Container()
-            //     : Container(
-            //         padding: const EdgeInsets.only(right: 16),
-            //         child: Image.asset(
-            //           'assets/img/icon_delete.png',
-            //           width: 24,
-            //         ),
-            //       )
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _noData() => Container(
+        margin: const EdgeInsets.only(top: 24),
         height: 234,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -107,24 +114,38 @@ class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
         ),
       );
 
-  Widget _userList() => Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: 24),
-        child: _noData(),
-      );
+  Widget _userList() {
+    return Consumer<AdminProvider>(
+      builder: (context, provider, _) {
+        if (provider.isLoading) {
+          return Container(
+            margin: const EdgeInsets.only(top: edge),
+            child: Column(
+              children: [
+                Center(
+                  child: CircularProgressIndicator(color: primaryColor),
+                )
+              ],
+            ),
+          );
+        }
 
-  Widget _searchResults() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AdminUserItem(),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: AdminUserItem(),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: AdminUserItem(),
-          )
-        ],
-      );
+        if (provider.users.isEmpty) {
+          return _noData();
+        } else {
+          return Column(
+            children: provider.users.map((user) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: AdminUserItem(
+                  user: user,
+                  onTap: () {},
+                ),
+              );
+            }).toList(),
+          );
+        }
+      },
+    );
+  }
 }

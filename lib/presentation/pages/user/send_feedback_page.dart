@@ -158,6 +158,7 @@ class _SendSaranPageState extends State<SendSaranPage> {
                 final Saran saran = Saran(
                   idUser: user?.uid,
                   text: _controller.text,
+                  date: DateTime.now(),
                 );
 
                 if (!mounted) return;

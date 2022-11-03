@@ -14,6 +14,7 @@ class _AdminModelManagementPageState extends State<AdminModelManagementPage> {
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: edge),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +33,10 @@ class _AdminModelManagementPageState extends State<AdminModelManagementPage> {
         margin: const EdgeInsets.only(top: edge),
         child: Row(
           children: [
-            Image.asset('assets/arrow_back_black.png', height: 24),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset('assets/arrow_back_black.png', height: 24),
+            ),
             const SizedBox(width: 16),
             Text(
               "ML Engine Models",
@@ -57,7 +61,6 @@ class _AdminModelManagementPageState extends State<AdminModelManagementPage> {
                 color: blackColor,
               ),
             ),
-            const SizedBox(height: 16),
             AdminModelItem(
               iconUrl: "assets/icon_models_menu.png",
               title: "Inception Model v.1.0.1",
@@ -80,7 +83,6 @@ class _AdminModelManagementPageState extends State<AdminModelManagementPage> {
                 color: blackColor,
               ),
             ),
-            const SizedBox(height: 16),
 
             //models item
             AdminModelItem(
