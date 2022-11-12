@@ -144,7 +144,7 @@ class PreviewPage extends StatelessWidget {
                   }
                   // upload image ke firebase storage
                   final String? imgUrl =
-                      await StorageService().uploadFile(destination, image);
+                      await diagnosisProvider.uploadImage(destination, image);
                   if (imgUrl == "null") {
                     //TODO : snackbar
                     Fluttertoast.showToast(msg: 'Upload image Failed');

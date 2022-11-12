@@ -65,7 +65,7 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future<String?> uploadImage(String destination, File file) async {
-    final result = await storageService.uploadFile(destination, file);
+    final result = await storageService.uploadImage(destination, file);
     return result;
   }
 }

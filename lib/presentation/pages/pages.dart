@@ -12,7 +12,7 @@ import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
 import 'package:covidia/services/authentication_service.dart';
-import 'package:covidia/services/firebase_service.dart';
+import 'package:covidia/services/storage_service.dart';
 import 'package:covidia/shared/shared.dart';
 import 'package:covidia/util/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';

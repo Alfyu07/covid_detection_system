@@ -34,7 +34,10 @@ class MyApp extends StatelessWidget {
           initialData: null,
         ),
         ChangeNotifierProvider<DiagnoseProvider>(
-          create: (BuildContext context) => DiagnoseProvider(DiagnoseService()),
+          create: (BuildContext context) => DiagnoseProvider(
+            DiagnoseService(),
+            StorageService(),
+          ),
         ),
         ChangeNotifierProvider<SaranProvider>(
           create: (BuildContext context) => SaranProvider(SaranService()),

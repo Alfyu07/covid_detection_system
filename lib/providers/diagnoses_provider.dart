@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/services/diagnose_service.dart';
+import 'package:covidia/services/storage_service.dart';
 import 'package:flutter/widgets.dart';
 
 class DiagnoseProvider with ChangeNotifier {
   final DiagnoseService diagnoseService;
+  final StorageService storageService;
   File? _image;
   bool _isLoading = false;
 
-  DiagnoseProvider(this.diagnoseService);
+  DiagnoseProvider(this.diagnoseService, this.storageService);
 
   Stream<QuerySnapshot> readDiagnoses() => diagnoseService.readDiagnoses();
 
@@ -37,6 +39,11 @@ class DiagnoseProvider with ChangeNotifier {
     diagnosis.isCorrected = isCorrected;
 
     return diagnoseService.updateDiagnoses(diagnosis);
+  }
+
+  Future<String?> uploadImage(String destination, File file) async {
+    final result = await storageService.uploadImage(destination, file);
+    return result;
   }
 
   Future<String?> addDiagnoses(Diagnosis diagnosis) =>
