@@ -24,7 +24,7 @@ class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
   }
 
   String titleCase(String str) {
-    List<String> splitStr = str.toLowerCase().split(" ");
+    final List<String> splitStr = str.toLowerCase().split(" ");
 
     for (int i = 0; i < splitStr.length; i++) {
       splitStr[i] = splitStr[i][0].toUpperCase() + splitStr[i].substring(1);

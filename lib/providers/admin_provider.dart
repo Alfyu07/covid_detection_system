@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_final_fields
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/services/admin_services.dart';
 import 'package:flutter/cupertino.dart';

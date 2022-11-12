@@ -30,9 +30,12 @@ class AuthenticationService {
     }
   }
 
-  Future<String?> changePassword(String currentPassword, String newPassword,
-      String newPasswordConfirmation) async {
-    final user = await FirebaseAuth.instance.currentUser;
+  Future<String?> changePassword(
+    String currentPassword,
+    String newPassword,
+    String newPasswordConfirmation,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
     if (user == null) return "You must login";
 
     final cred = EmailAuthProvider.credential(

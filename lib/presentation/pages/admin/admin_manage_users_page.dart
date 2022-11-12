@@ -121,7 +121,7 @@ class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
           return Container(
             margin: const EdgeInsets.only(top: edge),
             child: Column(
-              children: [
+              children: const [
                 Center(
                   child: CircularProgressIndicator(color: primaryColor),
                 )
