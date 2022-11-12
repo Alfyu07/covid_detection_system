@@ -25,8 +25,9 @@ class PreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imgProvider = Provider.of<ImgProvider>(context, listen: false);
-    final previewProvider = Provider.of<PreviewProvider>(context);
+    // final imgProvider = Provider.of<ImgProvider>(context, listen: false);
+    // final previewProvider =
+    //     Provider.of<PreviewProvider>(context, listen: false);
     final diagnosisProvider =
         Provider.of<DiagnoseProvider>(context, listen: false);
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
@@ -36,18 +37,16 @@ class PreviewPage extends StatelessWidget {
       body: Stack(
         children: [
           /// Image
-          Consumer<ImgProvider>(
-            builder: (context, imgProvider, _) => InteractiveViewer(
+          Consumer<DiagnoseProvider>(
+            builder: (context, provider, _) => InteractiveViewer(
               minScale: 1.0,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: Image.file(imgProvider.image!, fit: BoxFit.contain),
+                child: Image.file(provider.image!, fit: BoxFit.contain),
               ),
             ),
           ),
-
-          /// Appbar
 
           Align(
             alignment: Alignment.topCenter,
@@ -80,8 +79,8 @@ class PreviewPage extends StatelessWidget {
                     InkWell(
                       onTap: () async {
                         final File? imgFile =
-                            await cropImage(imgProvider.image);
-                        imgProvider.image = imgFile;
+                            await cropImage(diagnosisProvider.image);
+                        diagnosisProvider.image = imgFile;
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -128,23 +127,24 @@ class PreviewPage extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: edge, vertical: 40),
               child: ButtonPrimary(
                 onPressed: () async {
-                  previewProvider.isLoading = true;
-                  if (imgProvider.image == null) return;
+                  diagnosisProvider.isLoading = true;
 
-                  final image = imgProvider.image!;
+                  if (diagnosisProvider.image == null) return;
+
+                  final image = diagnosisProvider.image!;
                   final filename = path.basename(image.path);
                   final destination = 'images/predicted_image/$filename';
 
                   //* predict
-                  final output = await EngineService.classifyImage(image);
+                  final output = await diagnosisProvider.classifyImage(image);
                   if (output.message != "success") {
                     Fluttertoast.showToast(msg: 'something went wrong');
-                    previewProvider.isLoading = false;
+                    diagnosisProvider.isLoading = false;
                     return;
                   }
                   // upload image ke firebase storage
                   final String? imgUrl =
-                      await FirebaseApi().uploadFile(destination, image);
+                      await StorageService().uploadFile(destination, image);
                   if (imgUrl == "null") {
                     //TODO : snackbar
                     Fluttertoast.showToast(msg: 'Upload image Failed');
@@ -169,7 +169,7 @@ class PreviewPage extends StatelessWidget {
 
                   diagnosisProvider.addDiagnoses(diagnosis).then((value) {
                     diagnosis.id = value;
-                    previewProvider.isLoading = false;
+                    diagnosisProvider.isLoading = false;
                     detailProvider.diagnosis = diagnosis;
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -183,7 +183,7 @@ class PreviewPage extends StatelessWidget {
               ),
             ),
           ),
-          if (previewProvider.isLoading == true)
+          if (diagnosisProvider.isLoading == true)
             Container(
               color: blackColor.withOpacity(0.4),
               width: MediaQuery.of(context).size.width,

@@ -179,8 +179,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
                         color: whiteColor.withOpacity(0.5),
                       ),
                       child: Center(
-                        child: Image.asset("assets/icon_stethoscope.png",
-                            height: 12),
+                        child: Image.asset(
+                          "assets/icon_stethoscope.png",
+                          height: 12,
+                        ),
                       ),
                     ),
                     const Spacer(),
@@ -338,8 +340,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
                         color: whiteColor.withOpacity(0.5),
                       ),
                       child: Center(
-                        child: Image.asset("assets/icon_send_filled.png",
-                            height: 12),
+                        child: Image.asset(
+                          "assets/icon_send_filled.png",
+                          height: 12,
+                        ),
                       ),
                     ),
                     const Spacer(),

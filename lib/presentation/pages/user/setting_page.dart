@@ -142,6 +142,27 @@ class SettingPage extends StatelessWidget {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const SendSaranPage(),
+                    //   ),
+                    // );
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/icon_profile.png',
+                        width: 24,
+                      ),
+                      const SizedBox(width: 8),
+                      Text('Edit Profile', style: regularFont),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                InkWell(
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

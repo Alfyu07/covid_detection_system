@@ -338,8 +338,6 @@ class DetailPage extends StatelessWidget {
   void _showSelectDiagnoseDialog(BuildContext context) {
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
-    detailProvider.selectedCorrection = detailProvider.diagnosis!.label;
-
     if (!detailProvider.correctionOptions
         .contains(detailProvider.selectedCorrection)) {
       detailProvider.selectedOption = 3;

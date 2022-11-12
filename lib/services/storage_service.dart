@@ -3,9 +3,8 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
-// ignore: avoid_classes_with_only_static_members
-class FirebaseApi {
-  static Future<String?> uploadFile(String destination, File file) async {
+class StorageService {
+  Future<String?> uploadFile(String destination, File file) async {
     try {
       final ref = FirebaseStorage.instance.ref(destination);
       final result = await ref.putFile(file);

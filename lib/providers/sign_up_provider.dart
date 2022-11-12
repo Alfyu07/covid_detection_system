@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:covidia/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpProvider extends ChangeNotifier {
+  final StorageService storageService;
+
+  SignUpProvider(this.storageService);
+
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -57,5 +62,10 @@ class SignUpProvider extends ChangeNotifier {
     if (image == null) return;
     _image = File(image.path);
     notifyListeners();
+  }
+
+  Future<String?> uploadImage(String destination, File file) async {
+    final result = await storageService.uploadFile(destination, file);
+    return result;
   }
 }

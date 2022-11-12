@@ -21,9 +21,12 @@ class _MainPageState extends State<MainPage> {
       if (image == null) return;
 
       final tempImg = File(image.path);
-      // ignore: use_build_context_synchronously
-      Provider.of<ImgProvider>(context, listen: false).image = tempImg;
-      // ignore: use_build_context_synchronously
+
+      if (!mounted) {
+        return;
+      }
+      Provider.of<DiagnoseProvider>(context, listen: false).image = tempImg;
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const PreviewPage()),
@@ -56,8 +59,13 @@ class _MainPageState extends State<MainPage> {
           top: Radius.circular(16),
         ),
         child: BottomNavigationBar(
+          backgroundColor: const Color(0xffF5FAFF),
           showSelectedLabels: false,
           showUnselectedLabels: false,
+          selectedLabelStyle: mediumFont.copyWith(color: primaryColor),
+          unselectedLabelStyle: lightFont.copyWith(
+            color: const Color(0xff989ECD),
+          ),
           type: BottomNavigationBarType.fixed,
           currentIndex: index,
           onTap: onChangeBottomNav,
@@ -71,8 +79,11 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               label: 'Diagnose',
               icon: index == 1
-                  ? Image.asset('assets/add_active.png', width: 24)
-                  : Image.asset('assets/add.png', width: 24),
+                  ? Image.asset('assets/icon_stethoscope_black.png', width: 24)
+                  : Image.asset(
+                      'assets/icon_stethoscope_black.png',
+                      width: 24,
+                    ),
             ),
             BottomNavigationBarItem(
               label: 'Settings',

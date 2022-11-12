@@ -1,6 +1,5 @@
 import 'package:covidia/presentation/pages/pages.dart';
 import 'package:covidia/providers/admin_provider.dart';
-import 'package:covidia/providers/preview_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
@@ -8,6 +7,7 @@ import 'package:covidia/services/admin_services.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
 import 'package:covidia/services/saran_service.dart';
+import 'package:covidia/services/storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,14 +51,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AiModelProvider>(
           create: (BuildContext context) => AiModelProvider(),
         ),
-        ChangeNotifierProvider<ImgProvider>(
-          create: (BuildContext context) => ImgProvider(),
-        ),
-        ChangeNotifierProvider<PreviewProvider>(
-          create: (BuildContext context) => PreviewProvider(),
-        ),
         ChangeNotifierProvider<SignUpProvider>(
-          create: (BuildContext context) => SignUpProvider(),
+          create: (BuildContext context) => SignUpProvider(StorageService()),
         ),
         ChangeNotifierProvider<AdminProvider>(
           create: (BuildContext context) => AdminProvider(AdminServices()),
@@ -68,7 +62,7 @@ class MyApp extends StatelessWidget {
         title: 'covidia',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),

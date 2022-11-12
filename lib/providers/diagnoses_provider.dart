@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/services/diagnose_service.dart';
@@ -5,6 +7,9 @@ import 'package:flutter/widgets.dart';
 
 class DiagnoseProvider with ChangeNotifier {
   final DiagnoseService diagnoseService;
+  File? _image;
+  bool _isLoading = false;
+
   DiagnoseProvider(this.diagnoseService);
 
   Stream<QuerySnapshot> readDiagnoses() => diagnoseService.readDiagnoses();
@@ -17,6 +22,11 @@ class DiagnoseProvider with ChangeNotifier {
 
   Stream<QuerySnapshot> readCovidDiagnoses() =>
       diagnoseService.readCovidDiagnoses();
+
+  Future<ApiReturnValue<PredictResult>> classifyImage(File imageFile) async {
+    final output = await diagnoseService.classifyImage(imageFile);
+    return output;
+  }
 
   Future<String?> updateDiagnoses({
     required Diagnosis diagnosis,
@@ -31,4 +41,17 @@ class DiagnoseProvider with ChangeNotifier {
 
   Future<String?> addDiagnoses(Diagnosis diagnosis) =>
       diagnoseService.createDiagnosis(diagnosis);
+
+  File? get image => _image;
+  bool get isLoading => _isLoading;
+
+  set image(File? newImage) {
+    _image = newImage;
+    notifyListeners();
+  }
+
+  set isLoading(bool newValue) {
+    _isLoading = !_isLoading;
+    notifyListeners();
+  }
 }

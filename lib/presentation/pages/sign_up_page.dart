@@ -324,8 +324,10 @@ class SignUpPage extends StatelessWidget {
                                   path.basename(provider.image!.path);
 
                               final destination = 'images/users/$filename';
-                              imgUrl = await FirebaseApi()
-                                  .uploadFile(destination, provider.image!);
+                              imgUrl = await provider.uploadImage(
+                                destination,
+                                provider.image!,
+                              );
                             }
 
                             final resultSignUp = await authProvider.signUp(
