@@ -17,7 +17,7 @@ class PreviewPage extends StatelessWidget {
   static IOSUiSettings iosUiSettings() => const IOSUiSettings();
   static AndroidUiSettings androidUiSettings() => const AndroidUiSettings(
         lockAspectRatio: false,
-        hideBottomControls: true,
+        hideBottomControls: false,
         toolbarTitle: 'Crop Image',
         toolbarColor: Color(0xff767EBC),
         toolbarWidgetColor: Colors.white,

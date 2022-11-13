@@ -58,7 +58,7 @@ class DiagnoseProvider with ChangeNotifier {
   }
 
   set isLoading(bool newValue) {
-    _isLoading = !_isLoading;
+    _isLoading = newValue;
     notifyListeners();
   }
 }
