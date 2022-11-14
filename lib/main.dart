@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/presentation/pages/pages.dart';
 import 'package:covidia/providers/admin_provider.dart';
 import 'package:covidia/providers/providers.dart';
@@ -35,12 +36,14 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<DiagnoseProvider>(
           create: (BuildContext context) => DiagnoseProvider(
-            DiagnoseService(),
+            DiagnoseService(FirebaseFirestore.instance),
             StorageService(),
           ),
         ),
         ChangeNotifierProvider<SaranProvider>(
-          create: (BuildContext context) => SaranProvider(SaranService()),
+          create: (BuildContext context) => SaranProvider(
+            SaranService(FirebaseFirestore.instance),
+          ),
         ),
         ChangeNotifierProvider<DetailProvider>(
           create: (BuildContext context) => DetailProvider(),
@@ -58,7 +61,11 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => SignUpProvider(StorageService()),
         ),
         ChangeNotifierProvider<AdminProvider>(
-          create: (BuildContext context) => AdminProvider(AdminServices()),
+          create: (BuildContext context) => AdminProvider(
+            AdminServices(
+              FirebaseFirestore.instance,
+            ),
+          ),
         ),
       ],
       child: MaterialApp(

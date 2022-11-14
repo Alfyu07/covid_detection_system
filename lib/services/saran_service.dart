@@ -4,8 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
 
 class SaranService {
+  final FirebaseFirestore firestore;
+
+  SaranService(this.firestore);
+
   Future<String?> createSaran(Saran saran) async {
-    final docSaran = FirebaseFirestore.instance.collection('saran');
+    final docSaran = firestore.collection('saran');
 
     final docref = await docSaran.add(saran.toJson());
 
@@ -18,8 +22,7 @@ class SaranService {
 
   Future<String?> updateSaran(Saran saran) async {
     try {
-      final docDiagnosis =
-          FirebaseFirestore.instance.collection('saran').doc(saran.id);
+      final docDiagnosis = firestore.collection('saran').doc(saran.id);
 
       await docDiagnosis.update(saran.toJson());
 

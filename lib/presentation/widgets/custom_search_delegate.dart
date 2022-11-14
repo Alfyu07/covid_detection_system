@@ -1,7 +1,7 @@
 part of 'widgets.dart';
 
 class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
-  DiagnoseService diagnoseService = DiagnoseService();
+  DiagnoseService diagnoseService = DiagnoseService(FirebaseFirestore.instance);
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -83,11 +83,17 @@ class CustomSearchDelegate extends SearchDelegate<Diagnosis> {
           future: diagnoseService.queryData(query),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(color: primaryColor)
-                ],
+              return Container(
+                margin: const EdgeInsets.only(top: 64),
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    )
+                  ],
+                ),
               );
             }
 

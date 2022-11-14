@@ -60,8 +60,8 @@ class _MainPageState extends State<MainPage> {
         ),
         child: BottomNavigationBar(
           backgroundColor: const Color(0xffF5FAFF),
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           selectedLabelStyle: mediumFont.copyWith(color: primaryColor),
           unselectedLabelStyle: lightFont.copyWith(
             color: const Color(0xff989ECD),

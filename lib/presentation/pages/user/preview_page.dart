@@ -7,29 +7,24 @@ class PreviewPage extends StatelessWidget {
     if (image == null) return null;
     final tempFile = await ImageCropper().cropImage(
       sourcePath: image.path,
-      androidUiSettings: androidUiSettings(),
-      iosUiSettings: iosUiSettings(),
+      uiSettings: [androidUiSettings(), iosUiSettings()],
     );
     if (tempFile == null) return image;
-    return tempFile;
+    return File(tempFile.path);
   }
 
-  static IOSUiSettings iosUiSettings() => const IOSUiSettings();
-  static AndroidUiSettings androidUiSettings() => const AndroidUiSettings(
+  static IOSUiSettings iosUiSettings() => IOSUiSettings();
+  static AndroidUiSettings androidUiSettings() => AndroidUiSettings(
         lockAspectRatio: false,
         hideBottomControls: false,
         toolbarTitle: 'Crop Image',
-        toolbarColor: Color(0xff767EBC),
+        toolbarColor: const Color(0xff767EBC),
         toolbarWidgetColor: Colors.white,
       );
 
   @override
   Widget build(BuildContext context) {
-    // final imgProvider = Provider.of<ImgProvider>(context, listen: false);
-    // final previewProvider =
-    //     Provider.of<PreviewProvider>(context, listen: false);
-    final diagnosisProvider =
-        Provider.of<DiagnoseProvider>(context, listen: false);
+    final diagnosisProvider = Provider.of<DiagnoseProvider>(context);
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
     return Scaffold(
@@ -183,7 +178,7 @@ class PreviewPage extends StatelessWidget {
               ),
             ),
           ),
-          if (diagnosisProvider.isLoading == true)
+          if (diagnosisProvider.isLoading)
             Container(
               color: blackColor.withOpacity(0.4),
               width: MediaQuery.of(context).size.width,
