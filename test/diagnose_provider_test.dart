@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+
+import 'mock_path_provider_paltform.dart';
 
 class MockStorageService extends Mock implements StorageService {}
 
@@ -28,24 +31,22 @@ void main() {
         ApiReturnValue(value: fakePredictResult, message: "success");
 
     setUp(() async {
+      PathProviderPlatform.instance = FakePathProviderPlatform();
       mockStorageService = MockStorageService();
       mockDiagnoseService = MockDiagnoseService();
       sut = DiagnoseProvider(mockDiagnoseService, mockStorageService);
       testImage = await getImageFileFromAssets('ct_covid1.png');
     });
 
-    test(
-      "add image to diagnose",
-      () async {
-        when(() async => mockDiagnoseService.classifyImage(testImage))
-            .thenAnswer(
-          (_) async => Future.value(fakeResponse),
-        );
-
-        final result = await sut.classifyImage(testImage);
-        expect(result, equals(fakeResponse));
-      },
-    );
+    test("add image to diagnose", () async {
+      //arrange
+      when(() => mockDiagnoseService.classifyImage(testImage))
+          .thenAnswer((_) async => fakeResponse);
+      //act
+      final result = await sut.classifyImage(testImage);
+      //assets
+      expect(result, fakeResponse);
+    });
   });
 }
 
