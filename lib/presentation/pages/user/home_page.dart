@@ -146,27 +146,31 @@ class _HomePageState extends State<HomePage> {
   Padding buildCarousel() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: edge),
-      child: CarouselSlider(
-        carouselController: _carouselController,
-        items: const [
-          CarouselItem(
-            image: AssetImage('assets/banner 1.png'),
-            title: 'Wear a mask - saves life',
-            subtitle:
-                'Did you know that wearing a mask can actually saves life?',
+      child: SizedBox(
+        width: double.infinity,
+        height: 110,
+        child: CarouselSlider(
+          carouselController: _carouselController,
+          items: const [
+            CarouselItem(
+              image: AssetImage('assets/banner 1.png'),
+              title: 'Wear a mask - saves life',
+              subtitle:
+                  'Did you know that wearing a mask can actually saves life?',
+            ),
+            CarouselItem(
+              image: AssetImage('assets/banner 2.png'),
+              title: 'Diagnose with AI',
+              subtitle:
+                  'Detect your desease quickly using artificial intelligence model',
+            )
+          ],
+          options: CarouselOptions(
+            height: 110,
+            viewportFraction: 1,
+            enlargeCenterPage: true,
+            autoPlay: true,
           ),
-          CarouselItem(
-            image: AssetImage('assets/banner 2.png'),
-            title: 'Diagnose with AI',
-            subtitle:
-                'Detect your desease quickly using artificial intelligence model',
-          )
-        ],
-        options: CarouselOptions(
-          height: 110,
-          viewportFraction: 1,
-          enlargeCenterPage: true,
-          autoPlay: true,
         ),
       ),
     );
