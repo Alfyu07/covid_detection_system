@@ -11,8 +11,8 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SignUpProvider>(context, listen: false);
-    final authProvider = Provider.of<AuthenticationService>(context);
+    final provider = Provider.of<SignUpProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -61,32 +61,27 @@ class SignUpPage extends StatelessWidget {
                         SizedBox(
                           width: 120,
                           height: 120,
-                          child: Consumer<SignUpProvider>(
-                            builder: (context, provider, _) {
-                              if (provider.image != null) {
-                                return ClipOval(
+                          child: provider.image != null
+                              ? ClipOval(
                                   child: Image.file(
                                     provider.image!,
                                     fit: BoxFit.cover,
                                   ),
-                                );
-                              }
-                              return Image.asset(
-                                'assets/user_default_avatar.png',
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
+                                )
+                              : Image.asset(
+                                  'assets/user_default_avatar.png',
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             onTap: () {
-                              provider.pickImage(ImageSource.gallery);
-
-                              //upload jika belum ada
-
-                              //delete dan upload jika sudah ada
+                              Provider.of<SignUpProvider>(context,
+                                      listen: false)
+                                  .pickImage(
+                                ImageSource.gallery,
+                              );
                             },
                             child: Image.asset('assets/camera2.png', width: 40),
                           ),
@@ -239,58 +234,56 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 8),
 
                 // * Password TextField
-                Consumer<SignUpProvider>(
-                  builder: (context, provider, _) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: edge),
-                    child: TextFormField(
-                      onChanged: (value) => provider.passwordValue = value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Password can't be empty";
-                        }
-                        return null;
-                      },
-                      obscureText: provider.hidePassword,
-                      decoration: InputDecoration(
-                        fillColor: ghostWhiteColor,
-                        filled: true,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            provider.hidePassword = !provider.hidePassword;
-                          },
-                          icon: provider.hidePassword
-                              ? const Icon(Icons.visibility_off_outlined)
-                              : const Icon(Icons.visibility),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: edge),
+                  child: TextFormField(
+                    onChanged: (value) => provider.passwordValue = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Password can't be empty";
+                      }
+                      return null;
+                    },
+                    obscureText: provider.hidePassword,
+                    decoration: InputDecoration(
+                      fillColor: ghostWhiteColor,
+                      filled: true,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          provider.hidePassword = !provider.hidePassword;
+                        },
+                        icon: provider.hidePassword
+                            ? const Icon(Icons.visibility_off_outlined)
+                            : const Icon(Icons.visibility),
+                      ),
+                      hintText: 'Enter your password',
+                      hintStyle: const TextStyle(
+                        color: blueGreyColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                        //borderSide: const BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: secondaryColor,
+                          width: 1.5,
                         ),
-                        hintText: 'Enter your password',
-                        hintStyle: const TextStyle(
-                          color: blueGreyColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        border: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                          //borderSide: const BorderSide(),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: secondaryColor,
-                            width: 1.5,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: redColor, width: 1.5),
-                        ),
-                        contentPadding: const EdgeInsets.only(
-                          left: 16,
-                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            const BorderSide(color: redColor, width: 1.5),
+                      ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 16,
                       ),
                     ),
                   ),
@@ -300,74 +293,67 @@ class SignUpPage extends StatelessWidget {
                   height: 32,
                 ),
 
-                Consumer<SignUpProvider>(
-                  builder: (context, provider, _) {
-                    if (provider.isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(color: primaryColor),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: edge),
-                        child: ButtonPrimary(
-                          onPressed: () async {
-                            final navigator = Navigator.of(context);
-                            final scaffoldMessenger =
-                                ScaffoldMessenger.of(context);
-                            if (!provider.formKey.currentState!.validate()) {
-                              return;
-                            }
-                            provider.isLoading = true;
-                            String? imgUrl = "null";
-                            if (provider.image != null) {
-                              final filename =
-                                  path.basename(provider.image!.path);
+                if (authProvider.isLoading)
+                  const Center(
+                    child: CircularProgressIndicator(color: primaryColor),
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: edge),
+                    child: ButtonPrimary(
+                      onPressed: () async {
+                        final navigator = Navigator.of(context);
+                        final scaffoldMessenger = ScaffoldMessenger.of(context);
+                        if (!provider.formKey.currentState!.validate()) {
+                          return;
+                        }
+                        authProvider.isLoading = true;
+                        String? imgUrl = "null";
+                        if (provider.image != null) {
+                          final filename = path.basename(provider.image!.path);
 
-                              final destination = 'images/users/$filename';
-                              imgUrl = await provider.uploadImage(
-                                destination,
-                                provider.image!,
-                              );
-                            }
+                          final destination = 'images/users/$filename';
+                          imgUrl = await provider.uploadImage(
+                            destination,
+                            provider.image!,
+                          );
+                        }
 
-                            final resultSignUp = await authProvider.signUp(
-                              provider.fullNameValue!,
-                              provider.emailValue!,
-                              provider.passwordValue!,
-                              imgUrl ?? "null",
+                        final resultSignUp = await authProvider.signUp(
+                          fullname: provider.fullNameValue!,
+                          email: provider.emailValue!,
+                          password: provider.passwordValue!,
+                          imgUrl: imgUrl ?? "null",
+                        );
+
+                        if (resultSignUp == "Successfully signed up") {
+                          scaffoldMessenger
+                            ..removeCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Text(resultSignUp!),
+                                backgroundColor: blackColor,
+                              ),
                             );
 
-                            if (resultSignUp == "Successfully signed up") {
-                              scaffoldMessenger
-                                ..removeCurrentSnackBar()
-                                ..showSnackBar(
-                                  SnackBar(
-                                    content: Text(resultSignUp!),
-                                    backgroundColor: blackColor,
-                                  ),
-                                );
+                          authProvider.isLoading = false;
 
-                              provider.isLoading = true;
-
-                              navigator.popUntil((route) => route.isFirst);
-                            } else {
-                              provider.isLoading = true;
-                              scaffoldMessenger
-                                ..removeCurrentSnackBar()
-                                ..showSnackBar(
-                                  SnackBar(
-                                    content: Text(resultSignUp!),
-                                    backgroundColor: blackColor,
-                                  ),
-                                );
-                            }
-                          },
-                          text: "Sign Up",
-                        ),
-                      );
-                    }
-                  },
-                ),
+                          navigator.popUntil((route) => route.isFirst);
+                        } else {
+                          provider.isLoading = false;
+                          scaffoldMessenger
+                            ..removeCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Text(resultSignUp!),
+                                backgroundColor: blackColor,
+                              ),
+                            );
+                        }
+                      },
+                      text: "Sign Up",
+                    ),
+                  ),
 
                 const SizedBox(
                   height: 16,

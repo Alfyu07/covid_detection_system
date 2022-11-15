@@ -61,7 +61,7 @@ class DiagnoseService {
       .orderBy(DiagnosisField.createdTime, descending: true)
       .snapshots();
 
-  Future<QuerySnapshot> queryData(String query) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> queryData(String query) async {
     return firestore
         .collection('diagnosis')
         .where('id', isGreaterThanOrEqualTo: query)
@@ -87,7 +87,7 @@ class DiagnoseService {
     final response = await request.send();
 
     if (response.statusCode != 200) {
-      return ApiReturnValue(message: "Add item failed, please try again");
+      return const ApiReturnValue(message: "Add item failed, please try again");
     }
 
     final String responseBody = await response.stream.bytesToString();

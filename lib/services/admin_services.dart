@@ -62,7 +62,7 @@ class AdminServices {
       final UserModel user = UserModel.fromJson(data);
       return ApiReturnValue(value: user);
     } catch (e) {
-      return ApiReturnValue(message: "there's something wrong");
+      return const ApiReturnValue(message: "there's something wrong");
     }
   }
 
@@ -78,7 +78,7 @@ class AdminServices {
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       final Map<String, dynamic> data =
           querySnapshot.docs[i].data() as Map<String, dynamic>;
-      Saran saran = Saran.fromJson(data);
+      final Saran saran = Saran.fromJson(data);
 
       final returnValue = await getUser(saran.idUser!);
 

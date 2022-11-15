@@ -4,7 +4,7 @@ class DiagnosisField {
   static const createdTime = 'createdTime';
 }
 
-class Diagnosis {
+class Diagnosis extends Equatable {
   String? id;
   String? imgUrl;
   String? label;
@@ -65,4 +65,16 @@ class Diagnosis {
         ),
         index: data['index'] as int,
       );
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        imgUrl,
+        label,
+        confidence,
+        isCorrected,
+        date,
+        index,
+      ];
 }

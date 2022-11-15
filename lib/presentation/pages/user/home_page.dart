@@ -1,7 +1,19 @@
 part of '../pages.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late CarouselController _carouselController;
+  @override
+  void initState() {
+    super.initState();
+    _carouselController = CarouselController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +147,7 @@ class HomePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: edge),
       child: CarouselSlider(
+        carouselController: _carouselController,
         items: const [
           CarouselItem(
             image: AssetImage('assets/banner 1.png'),

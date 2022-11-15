@@ -8,6 +8,7 @@ import 'package:covidia/models/disease.dart';
 import 'package:covidia/models/models.dart';
 import 'package:covidia/presentation/widgets/widgets.dart';
 import 'package:covidia/providers/admin_provider.dart';
+import 'package:covidia/providers/authentication_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';

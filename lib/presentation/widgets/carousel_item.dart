@@ -36,30 +36,29 @@ class CarouselItem extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Text(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
                     title,
                     style: whiteMediumFont.copyWith(fontSize: 16),
                   ),
-                ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  width: 200,
-                  child: Text(
-                    subtitle,
-                    style: whiteLightFont.copyWith(
-                      fontSize: 12,
-                      letterSpacing: -0.24,
-                      height: 1.8,
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      subtitle,
+                      style: whiteLightFont.copyWith(
+                        fontSize: 12,
+                        letterSpacing: -0.24,
+                        height: 1.8,
+                      ),
+                      maxLines: 2,
                     ),
-                    maxLines: 2,
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             )
           ].reversed.toList(),
         ),

@@ -25,10 +25,22 @@ void main() {
 
     late File testImage;
 
-    const fakePredictResult = PredictResult([0.2, 0.7, 0.1], 'normal', 1);
+    final fakePredictResult = PredictResult(
+      confidence: [0.2, 0.7, 0.1],
+      prediction: 'normal',
+      index: 1,
+    );
 
-    const fakeResponse =
+    final fakeResponse =
         ApiReturnValue(value: fakePredictResult, message: "success");
+
+    final fakeDiagnose = Diagnosis(
+      id: "diagnoseId",
+      date: DateTime.now(),
+      index: 1,
+      confidence: const [0.2, 0.7, 0.1],
+      label: "normal",
+    );
 
     setUp(() async {
       PathProviderPlatform.instance = FakePathProviderPlatform();
@@ -47,6 +59,30 @@ void main() {
       //assets
       expect(result, fakeResponse);
     });
+
+    test('add Diagnosis data to database', () async {
+      when(() => mockDiagnoseService.createDiagnosis(fakeDiagnose)).thenAnswer(
+        (_) async => fakeDiagnose.id,
+      );
+
+      final result = await sut.addDiagnoses(fakeDiagnose);
+      expect(result, fakeDiagnose.id);
+    });
+
+    test('upload image to storage', () async {
+      const path = 'images/predicted_image/image1.png';
+      when(
+        () => mockStorageService.uploadImage(
+          path,
+          testImage,
+        ),
+      ).thenAnswer(
+        (_) async => path,
+      );
+
+      final result = await sut.uploadImage(path, testImage);
+      expect(result, path);
+    });
   });
 }
 
@@ -54,8 +90,9 @@ Future<File> getImageFileFromAssets(String path) async {
   final byteData = await rootBundle.load('assets/$path');
 
   final file = File('${(await getTemporaryDirectory()).path}/$path');
-  await file.writeAsBytes(byteData.buffer
-      .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  await file.writeAsBytes(
+    byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
+  );
 
   return file;
 }

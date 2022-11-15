@@ -12,10 +12,10 @@ class _SigninPageState extends State<SigninPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _hidePassword = true;
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: whiteColor,
@@ -123,7 +123,7 @@ class _SigninPageState extends State<SigninPage> {
                 height: 40,
               ),
 
-              if (_isLoading)
+              if (authProvider.isLoading)
                 const Center(
                   child: CircularProgressIndicator(color: primaryColor),
                 )
@@ -302,30 +302,20 @@ class _SigninPageState extends State<SigninPage> {
 
   void signIn() {
     final messenger = ScaffoldMessenger.of(context);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final navProvider = Provider.of<BottomNavProvider>(context, listen: false);
     if (_formKey.currentState!.validate()) {
-      if (mounted) {
-        setState(() {
-          _isLoading = true;
-        });
-      }
-      final navProvider = Provider.of<BottomNavProvider>(
-        context,
-        listen: false,
-      );
+      authProvider.isLoading = true;
+
       navProvider.index = 0;
-      context
-          .read<AuthenticationService>()
+      authProvider
           .signIn(
-            _emailController.text,
-            _passwordController.text,
-          )
+        email: _emailController.text,
+        password: _passwordController.text,
+      )
           .then(
         (value) {
-          if (mounted) {
-            setState(() {
-              _isLoading = false;
-            });
-          }
+          authProvider.isLoading = false;
 
           if (value == "signed in") {
             messenger

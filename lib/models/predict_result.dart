@@ -1,23 +1,27 @@
 part of 'models.dart';
 
-@JsonSerializable()
-class PredictResult extends Equatable {
-  final List<double> confidence;
-  final String prediction;
-  final int index;
+class PredictResult {
+  PredictResult({
+    required this.confidence,
+    required this.index,
+    required this.prediction,
+  });
 
-  const PredictResult(this.confidence, this.prediction, this.index);
+  List<double> confidence;
+  int index;
+  String prediction;
 
-  factory PredictResult.fromJson(Map<String, dynamic> json) =>
-      _$PredictResultFromJson(json);
-  Map<String, dynamic> toJson() => _$PredictResultToJson(this);
+  factory PredictResult.fromJson(Map<String, dynamic> json) => PredictResult(
+        confidence: (json['confidence'] as List<dynamic>)
+            .map((e) => (e as num).toDouble())
+            .toList(),
+        index: json["index"] as int,
+        prediction: json["prediction"] as String,
+      );
 
-  @override
-  String toString() {
-    return 'PredictResult(confidence: $confidence, predictio: $prediction, index: $index)';
-  }
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [confidence, prediction, index];
+  Map<String, dynamic> toJson() => {
+        "confidence": List<dynamic>.from(confidence.map((x) => x)),
+        "index": index,
+        "prediction": prediction,
+      };
 }

@@ -67,12 +67,12 @@ class AuthenticationService {
     }
   }
 
-  Future<String?> signUp(
-    String fullname,
-    String email,
-    String password,
-    String imgUrl,
-  ) async {
+  Future<String?> signUp({
+    required String fullname,
+    required String email,
+    required String password,
+    String? imgUrl,
+  }) async {
     try {
       final value = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -100,7 +100,22 @@ class AuthenticationService {
 
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      switch (e.code) {
+        case "invalid-email":
+          return "Email address is invalid";
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        case "wrong-password":
+          return "your current password is invalid.";
+        default:
+          return e.code;
+      }
     }
   }
 

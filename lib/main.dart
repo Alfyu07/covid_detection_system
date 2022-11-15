@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/presentation/pages/pages.dart';
 import 'package:covidia/providers/admin_provider.dart';
+import 'package:covidia/providers/authentication_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SaranProvider>(
           create: (BuildContext context) => SaranProvider(
             SaranService(FirebaseFirestore.instance),
+          ),
+        ),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (BuildContext context) => AuthProvider(
+            AuthenticationService(FirebaseAuth.instance),
           ),
         ),
         ChangeNotifierProvider<DetailProvider>(
