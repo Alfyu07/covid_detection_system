@@ -38,6 +38,7 @@ class AuthenticationService {
     String newPasswordConfirmation,
   ) async {
     final user = FirebaseAuth.instance.currentUser;
+
     if (user == null) return "You must login";
 
     final cred = EmailAuthProvider.credential(
@@ -96,8 +97,8 @@ class AuthenticationService {
         role: 1,
       );
 
-      await updateUserData(user: userModel);
-
+      final userCollection = FirebaseFirestore.instance.collection('users');
+      await userCollection.doc(user.uid).set(userModel.toJson());
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -130,12 +131,31 @@ class AuthenticationService {
     }
   }
 
-  Future updateUserData({
-    required UserModel user,
+  Future<String> editProfile({
+    required UserModel userModel,
   }) async {
-    final userCollection = FirebaseFirestore.instance.collection('users');
-
-    return userCollection.doc(user.uid).set(user.toJson());
+    try {
+      final userCollection = FirebaseFirestore.instance.collection('users');
+      await userCollection.doc(userModel.uid).set(userModel.toJson());
+      return "success";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+          return "No user found with this email.";
+        case "invalid-email":
+          return "Email address is invalid";
+        case "wrong-password":
+          return "Wrong email/password combination.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        default:
+          return "Login failed. Please try again.";
+      }
+    }
   }
 
   Future<User?> getCurrentUser() async {
@@ -187,6 +207,40 @@ class AuthenticationService {
           return "User disabled.";
         default:
           return "Log out. Please try again.";
+      }
+    }
+  }
+
+  Future<String?> changeEmailAddress(
+    String password,
+    String newEmail,
+  ) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return "You must login";
+    final cred = EmailAuthProvider.credential(
+      email: user.email ?? "",
+      password: password,
+    );
+    try {
+      await user.reauthenticateWithCredential(cred);
+      await user.updateEmail(newEmail);
+      return "success";
+    } on FirebaseException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Email address is invalid";
+        case "user-not-found":
+          return "No user found with this email.";
+        case "too-many-requests":
+          return "Too many requests to log into this account.";
+        case "operation-not-allowed":
+          return "Server error, please try again later.";
+        case "user-disabled":
+          return "User disabled.";
+        case "wrong-password":
+          return "your current password is invalid.";
+        default:
+          return "Change password failed. Please try again.";
       }
     }
   }

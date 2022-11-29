@@ -67,6 +67,7 @@ class _SettingPageState extends State<SettingPage> {
                             onTap: () async {
                               final image = await ImagePicker().pickImage(
                                 source: ImageSource.gallery,
+                                imageQuality: 25,
                               );
                             },
                             child: Image.asset('assets/camera2.png', width: 40),
@@ -121,14 +122,16 @@ class _SettingPageState extends State<SettingPage> {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () {
-                    final user = context.read<User?>();
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditProfilePage(user: user),
-                      ),
-                    );
+                    if (userProvider.currentUser != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfilePage(
+                            currentUser: userProvider.currentUser!,
+                          ),
+                        ),
+                      );
+                    }
                   },
                   child: Row(
                     children: [

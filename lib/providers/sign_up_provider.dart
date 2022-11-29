@@ -58,7 +58,8 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future<void> pickImage(ImageSource source) async {
-    final image = await ImagePicker().pickImage(source: source);
+    final image =
+        await ImagePicker().pickImage(source: source, imageQuality: 25);
     if (image == null) return;
     _image = File(image.path);
     notifyListeners();

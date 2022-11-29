@@ -189,6 +189,7 @@ class SignUpPage extends StatelessWidget {
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Enter your email',
                       fillColor: ghostWhiteColor,

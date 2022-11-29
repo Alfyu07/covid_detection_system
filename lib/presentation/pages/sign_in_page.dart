@@ -244,6 +244,7 @@ class _SigninPageState extends State<SigninPage> {
       child: TextFormField(
         controller: _emailController,
         validator: emailValidator,
+        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           hintText: 'Enter your email',
           fillColor: ghostWhiteColor,

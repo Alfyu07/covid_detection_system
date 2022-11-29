@@ -41,4 +41,21 @@ class UserModel {
           data['createdTime'] as Timestamp,
         ),
       );
+
+  UserModel copyWith({
+    String? uid,
+    String? name,
+    String? email,
+    String? imgUrl,
+    int? role,
+    DateTime? date,
+  }) =>
+      UserModel(
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        imgUrl: imgUrl ?? this.imgUrl,
+        email: email ?? this.email,
+        role: role ?? this.role,
+        date: date ?? this.date,
+      );
 }

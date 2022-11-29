@@ -1,6 +1,7 @@
 import 'package:covidia/models/models.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class UserProvider extends ChangeNotifier {
   final AuthenticationService _authService;
@@ -58,5 +59,33 @@ class UserProvider extends ChangeNotifier {
     }
     isLoading = false;
     notifyListeners();
+  }
+
+  Future<String> editProfile({
+    required String newName,
+    required String newEmail,
+    required String password,
+  }) async {
+    isLoading = true;
+    notifyListeners();
+
+    if (currentUser == null) {
+      return "You must login";
+    }
+
+    if (newEmail != currentUser!.email) {
+      final changeEmailResult =
+          await _authService.changeEmailAddress(password, newEmail);
+      if (changeEmailResult != "success") return changeEmailResult!;
+    }
+    final UserModel newUserModel =
+        currentUser!.copyWith(email: newEmail, name: newName);
+    final editResult = await _authService.editProfile(
+      userModel: newUserModel,
+    );
+    currentUser = newUserModel;
+    isLoading = false;
+    notifyListeners();
+    return editResult;
   }
 }
