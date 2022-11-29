@@ -1,13 +1,20 @@
 part of '../pages.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  final User? user;
+  const EditProfilePage({Key? key, this.user}) : super(key: key);
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  late UserModel user;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

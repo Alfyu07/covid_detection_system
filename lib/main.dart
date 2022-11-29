@@ -6,6 +6,7 @@ import 'package:covidia/providers/engine_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
+import 'package:covidia/providers/user_provider.dart';
 import 'package:covidia/services/admin_services.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
@@ -30,7 +31,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
+          create: (_) => AuthenticationService(
+            FirebaseAuth.instance,
+            FirebaseFirestore.instance,
+          ),
         ),
         StreamProvider(
           create: (context) =>
@@ -50,7 +54,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AuthProvider>(
           create: (BuildContext context) => AuthProvider(
-            AuthenticationService(FirebaseAuth.instance),
+            AuthenticationService(
+                FirebaseAuth.instance, FirebaseFirestore.instance),
           ),
         ),
         ChangeNotifierProvider<DetailProvider>(
@@ -80,6 +85,14 @@ class MyApp extends StatelessWidget {
             EngineService(),
           ),
         ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (BuildContext context) => UserProvider(
+            AuthenticationService(
+              FirebaseAuth.instance,
+              FirebaseFirestore.instance,
+            ),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'covidia',
@@ -89,7 +102,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const AdminHomePage(),
+        home: const AuthenticationWrapper(),
       ),
     );
   }

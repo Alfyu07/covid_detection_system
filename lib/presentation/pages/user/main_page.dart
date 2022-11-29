@@ -9,6 +9,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+      () => Provider.of<UserProvider>(context, listen: false)..getCurrentUser(),
+    );
+  }
+
   final _pageNavigation = [
     const HomePage(),
     Container(),

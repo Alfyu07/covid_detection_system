@@ -18,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context);
+
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: SafeArea(
@@ -33,45 +35,39 @@ class _HomePageState extends State<HomePage> {
                     onTap: () =>
                         Provider.of<BottomNavProvider>(context, listen: false)
                             .index = 2,
-                    child: StreamBuilder<User?>(
-                      stream: FirebaseAuth.instance.userChanges(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const SkeletonContainer.circular(
+                    child: userProvider.isLoading ||
+                            userProvider.currentUser == null
+                        ? const SkeletonContainer.circular(
                             width: 40,
                             height: 40,
-                          );
-                        }
-
-                        return CircleAvatar(
-                          radius: 20,
-                          backgroundColor: ghostWhiteColor,
-                          child: ClipOval(
-                            child: snapshot.data!.photoURL == "null" ||
-                                    snapshot.data!.photoURL == null
-                                ? SvgPicture.network(
-                                    "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                                    width: 40,
-                                    placeholderBuilder: (context) {
-                                      return Container(
-                                        width: 40,
-                                        height: 40,
-                                        color: ghostWhiteColor,
-                                      );
-                                    },
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.network(
-                                    snapshot.data!.photoURL!,
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                  ),
+                          )
+                        : CircleAvatar(
+                            radius: 20,
+                            backgroundColor: ghostWhiteColor,
+                            child: ClipOval(
+                              child: userProvider.currentUser!.imgUrl ==
+                                          "null" ||
+                                      userProvider.currentUser!.imgUrl == null
+                                  ? SvgPicture.network(
+                                      "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                                      width: 40,
+                                      placeholderBuilder: (context) {
+                                        return Container(
+                                          width: 40,
+                                          height: 40,
+                                          color: ghostWhiteColor,
+                                        );
+                                      },
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      userProvider.currentUser!.imgUrl!,
+                                      width: 40,
+                                      height: 40,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
                           ),
-                        );
-                      },
-                    ),
                   ),
                   const Spacer(),
                   GestureDetector(
@@ -242,12 +238,12 @@ class _HomePageState extends State<HomePage> {
 
     return StreamBuilder<QuerySnapshot>(
       stream: sortProvider.sortValue == 'Terbaru'
-          ? diagnoseProvider.readDiagnoses(10)
+          ? diagnoseProvider.readDiagnoses(5)
           : sortProvider.sortValue == 'Normal'
-              ? diagnoseProvider.readNormalDiagnoses(10)
+              ? diagnoseProvider.readNormalDiagnoses(5)
               : sortProvider.sortValue == 'Covid 19'
-                  ? diagnoseProvider.readCovidDiagnoses(10)
-                  : diagnoseProvider.readPneumoniaDiagnoses(10),
+                  ? diagnoseProvider.readCovidDiagnoses(5)
+                  : diagnoseProvider.readPneumoniaDiagnoses(5),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -327,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                       sortProvider.index = sortProvider.sortBy.indexOf(e),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: e == sortProvider.sortBy.first ? 24 : 0,
+                      left: e == sortProvider.sortBy.first ? 32 : 0,
                     ),
                     child: SortItem(
                       title: e,

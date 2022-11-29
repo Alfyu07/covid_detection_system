@@ -153,8 +153,9 @@ class _SendSaranPageState extends State<SendSaranPage> {
                   _isLoading = true;
                 });
 
-                final user =
-                    await context.read<AuthenticationService>().getLoggedUser();
+                final user = await context
+                    .read<AuthenticationService>()
+                    .getCurrentUser();
 
                 final Saran saran = Saran(
                   idUser: user?.uid,

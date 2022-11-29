@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/models/models.dart';
-import 'package:covidia/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
-  AuthenticationService(this._firebaseAuth);
+  final FirebaseFirestore firestore;
+
+  AuthenticationService(this._firebaseAuth, this.firestore);
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
@@ -85,8 +87,6 @@ class AuthenticationService {
             () => user.updatePhotoURL(imgUrl),
           );
 
-      final userService = UserService();
-
       final UserModel userModel = UserModel(
         uid: user.uid,
         date: DateTime.now(),
@@ -96,7 +96,7 @@ class AuthenticationService {
         role: 1,
       );
 
-      await userService.updateUserData(user: userModel);
+      await updateUserData(user: userModel);
 
       return "Successfully signed up";
     } on FirebaseAuthException catch (e) {
@@ -119,7 +119,26 @@ class AuthenticationService {
     }
   }
 
-  Future<User?> getLoggedUser() async {
+  Future<ApiReturnValue<UserModel>> getUserData(String uid) async {
+    try {
+      final doc = await firestore.collection('users').doc(uid).get();
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      final UserModel user = UserModel.fromJson(data);
+      return ApiReturnValue(value: user);
+    } catch (e) {
+      return const ApiReturnValue(message: "there's something wrong");
+    }
+  }
+
+  Future updateUserData({
+    required UserModel user,
+  }) async {
+    final userCollection = FirebaseFirestore.instance.collection('users');
+
+    return userCollection.doc(user.uid).set(user.toJson());
+  }
+
+  Future<User?> getCurrentUser() async {
     await _firebaseAuth.currentUser!.reload();
     return _firebaseAuth.currentUser;
   }

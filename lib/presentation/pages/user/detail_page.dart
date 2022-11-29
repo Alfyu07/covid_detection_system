@@ -219,7 +219,7 @@ class DetailPage extends StatelessWidget {
               color: redColor,
             ),
             SizedBox(
-              width: 28,
+              width: 32,
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![0]) * 100).round()}%'
@@ -247,7 +247,7 @@ class DetailPage extends StatelessWidget {
               color: yellowColor,
             ),
             SizedBox(
-              width: 23,
+              width: 32,
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![2]) * 100).round()}%'
@@ -275,7 +275,7 @@ class DetailPage extends StatelessWidget {
               color: greenColor,
             ),
             SizedBox(
-              width: 23,
+              width: 32,
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![1]) * 100).round()}%'
