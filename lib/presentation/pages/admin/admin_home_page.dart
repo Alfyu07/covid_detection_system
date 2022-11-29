@@ -27,7 +27,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_header(), _summaries(), _menus()],
+            children: [
+              _header(),
+              _summaries(),
+              _menus(),
+              const SizedBox(height: 40)
+            ],
           ),
         ),
       ),

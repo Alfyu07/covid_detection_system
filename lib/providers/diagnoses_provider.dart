@@ -14,16 +14,17 @@ class DiagnoseProvider with ChangeNotifier {
 
   DiagnoseProvider(this.diagnoseService, this.storageService);
 
-  Stream<QuerySnapshot> readDiagnoses() => diagnoseService.readDiagnoses();
+  Stream<QuerySnapshot> readDiagnoses(int limit) =>
+      diagnoseService.readDiagnoses(limit);
 
-  Stream<QuerySnapshot> readNormalDiagnoses() =>
-      diagnoseService.readNormalDiagnoses();
+  Stream<QuerySnapshot> readNormalDiagnoses(int limit) =>
+      diagnoseService.readNormalDiagnoses(limit);
 
-  Stream<QuerySnapshot> readPneumoniaDiagnoses() =>
-      diagnoseService.readPneumoniaDiagnoses();
+  Stream<QuerySnapshot> readPneumoniaDiagnoses(int limit) =>
+      diagnoseService.readPneumoniaDiagnoses(limit);
 
-  Stream<QuerySnapshot> readCovidDiagnoses() =>
-      diagnoseService.readCovidDiagnoses();
+  Stream<QuerySnapshot> readCovidDiagnoses(int limit) =>
+      diagnoseService.readCovidDiagnoses(limit);
 
   Future<ApiReturnValue<PredictResult>> classifyImage(File imageFile) async {
     final output = await diagnoseService.classifyImage(imageFile);

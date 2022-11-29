@@ -77,9 +77,10 @@ class SignUpPage extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             onTap: () {
-                              Provider.of<SignUpProvider>(context,
-                                      listen: false)
-                                  .pickImage(
+                              Provider.of<SignUpProvider>(
+                                context,
+                                listen: false,
+                              ).pickImage(
                                 ImageSource.gallery,
                               );
                             },

@@ -1,17 +1,13 @@
 part of '../widgets.dart';
 
 class AdminModelItem extends StatelessWidget {
-  final String iconUrl;
-  final String title;
-  final String date;
+  final EngineModel engineModel;
   final VoidCallback onTap;
 
   const AdminModelItem({
     Key? key,
-    required this.iconUrl,
-    required this.title,
-    required this.date,
     required this.onTap,
+    required this.engineModel,
   }) : super(key: key);
 
   @override
@@ -21,8 +17,7 @@ class AdminModelItem extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 80,
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           color: whiteColor,
           boxShadow: [
@@ -37,7 +32,7 @@ class AdminModelItem extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(
-              iconUrl,
+              "assets/icon_models_menu.png",
               width: 40,
             ),
             const SizedBox(width: 20),
@@ -45,14 +40,17 @@ class AdminModelItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  engineModel.name,
                   style: mediumFont.copyWith(
                     fontSize: 16,
                     color: blackColor,
                   ),
                 ),
+                const SizedBox(height: 4),
                 Text(
-                  date,
+                  DateFormat.yMMMd().format(
+                    DateFormat("dd/MM/yyyy").parse(engineModel.createdDate),
+                  ),
                   style: lightFont.copyWith(
                     fontSize: 12,
                     color: blueGreyColor,

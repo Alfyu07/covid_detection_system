@@ -38,28 +38,57 @@ class DiagnoseService {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> readDiagnoses() => firestore
-      .collection('diagnosis')
-      .orderBy(DiagnosisField.createdTime, descending: true)
-      .snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> readDiagnoses(
+    int limit,
+  ) =>
+      limit != 0
+          ? firestore
+              .collection('diagnosis')
+              .orderBy(DiagnosisField.createdTime, descending: true)
+              .limit(limit)
+              .snapshots()
+          : firestore
+              .collection('diagnosis')
+              .orderBy(DiagnosisField.createdTime, descending: true)
+              .snapshots();
+  Stream<QuerySnapshot> readNormalDiagnoses(int limit) => limit != 0
+      ? firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Normal')
+          .limit(limit)
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots()
+      : firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Normal')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
 
-  Stream<QuerySnapshot> readNormalDiagnoses() => firestore
-      .collection('diagnosis')
-      .where('label', isEqualTo: 'Normal')
-      .orderBy(DiagnosisField.createdTime, descending: true)
-      .snapshots();
+  Stream<QuerySnapshot> readPneumoniaDiagnoses(int limit) => limit != 0
+      ? firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Pneumonia')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .limit(limit)
+          .snapshots()
+      : firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Pneumonia')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
 
-  Stream<QuerySnapshot> readPneumoniaDiagnoses() => firestore
-      .collection('diagnosis')
-      .where('label', isEqualTo: 'Pneumonia')
-      .orderBy(DiagnosisField.createdTime, descending: true)
-      .snapshots();
-
-  Stream<QuerySnapshot> readCovidDiagnoses() => firestore
-      .collection('diagnosis')
-      .where('label', isEqualTo: 'Covid 19')
-      .orderBy(DiagnosisField.createdTime, descending: true)
-      .snapshots();
+  Stream<QuerySnapshot> readCovidDiagnoses(int limit) => limit != 0
+      ? firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Covid 19')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .limit(limit)
+          .snapshots()
+      : firestore
+          .collection('diagnosis')
+          .where('label', isEqualTo: 'Covid 19')
+          .orderBy(DiagnosisField.createdTime, descending: true)
+          .snapshots();
 
   Future<QuerySnapshot<Map<String, dynamic>>> queryData(String query) async {
     return firestore

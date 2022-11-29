@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covidia/presentation/pages/pages.dart';
 import 'package:covidia/providers/admin_provider.dart';
 import 'package:covidia/providers/authentication_provider.dart';
+import 'package:covidia/providers/engine_provider.dart';
 import 'package:covidia/providers/providers.dart';
 import 'package:covidia/providers/saran_provider.dart';
 import 'package:covidia/providers/sign_up_provider.dart';
 import 'package:covidia/services/admin_services.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:covidia/services/diagnose_service.dart';
+import 'package:covidia/services/engine_service.dart';
 import 'package:covidia/services/saran_service.dart';
 import 'package:covidia/services/storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -73,6 +75,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        ChangeNotifierProvider<EngineProvider>(
+          create: (BuildContext context) => EngineProvider(
+            EngineService(),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'covidia',
@@ -82,7 +89,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const AuthenticationWrapper(),
+        home: const AdminHomePage(),
       ),
     );
   }

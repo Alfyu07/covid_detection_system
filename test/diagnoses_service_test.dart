@@ -77,7 +77,7 @@ void main() {
       final Stream<QuerySnapshot<Map<String, dynamic>>> expectedSnapshotStream =
           collectionReference.snapshots();
 
-      final actualSnapshotStream = diagnoseService.readDiagnoses();
+      final actualSnapshotStream = diagnoseService.readDiagnoses(10);
 
       final QuerySnapshot<Map<String, dynamic>> expectedQuerySnapshot =
           await expectedSnapshotStream.first;

@@ -119,7 +119,30 @@ class _HomePageState extends State<HomePage> {
             //! Diagnose
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: edge),
-              child: Text('Diagnose', style: mediumFont.copyWith(fontSize: 18)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Diagnose', style: mediumFont.copyWith(fontSize: 18)),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DiagnoseHistoryPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Show all',
+                      style: mediumFont.copyWith(
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             buildSort(),
@@ -219,12 +242,12 @@ class _HomePageState extends State<HomePage> {
 
     return StreamBuilder<QuerySnapshot>(
       stream: sortProvider.sortValue == 'Terbaru'
-          ? diagnoseProvider.readDiagnoses()
+          ? diagnoseProvider.readDiagnoses(10)
           : sortProvider.sortValue == 'Normal'
-              ? diagnoseProvider.readNormalDiagnoses()
+              ? diagnoseProvider.readNormalDiagnoses(10)
               : sortProvider.sortValue == 'Covid 19'
-                  ? diagnoseProvider.readCovidDiagnoses()
-                  : diagnoseProvider.readPneumoniaDiagnoses(),
+                  ? diagnoseProvider.readCovidDiagnoses(10)
+                  : diagnoseProvider.readPneumoniaDiagnoses(10),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

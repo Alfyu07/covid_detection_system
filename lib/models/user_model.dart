@@ -34,7 +34,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> data) => UserModel(
         uid: data['uid'] as String,
         name: data['name'] as String,
-        imgUrl: data['imgUrl'] as String,
+        imgUrl: data['imgUrl'] == null ? "null" : data['imgUrl'] as String,
         email: data['email'] as String,
         role: data['role'] as int,
         date: Utils.toDateTime(
