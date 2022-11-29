@@ -6,6 +6,7 @@ import 'package:covidia/services/diagnose_service.dart';
 import 'package:covidia/shared/shared.dart';
 import 'package:covidia/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skeleton_text/skeleton_text.dart';

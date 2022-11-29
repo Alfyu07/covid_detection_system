@@ -139,7 +139,15 @@ class _AdminManageUsersPageState extends State<AdminManageUsersPage> {
                 padding: const EdgeInsets.only(top: 16),
                 child: AdminUserItem(
                   user: user,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AdminEditUserProfilePage(user: user),
+                      ),
+                    );
+                  },
                 ),
               );
             }).toList(),

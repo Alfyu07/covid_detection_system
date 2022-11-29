@@ -1,7 +1,6 @@
 import 'package:covidia/models/models.dart';
 import 'package:covidia/services/authentication_service.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class UserProvider extends ChangeNotifier {
   final AuthenticationService _authService;

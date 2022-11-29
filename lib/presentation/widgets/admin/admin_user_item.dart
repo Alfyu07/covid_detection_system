@@ -28,22 +28,21 @@ class AdminUserItem extends StatelessWidget {
         child: Row(
           children: [
             if (user.imgUrl == null || user.imgUrl == "null")
-              CachedNetworkImage(
-                imageUrl:
-                    "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c3RldGhvc2NvcGV8ZW58MHx8MHx8&w=1000&q=80",
-                imageBuilder: (context, imgProvider) => CircleAvatar(
-                  radius: 24,
-                  backgroundColor: ghostWhiteColor,
-                  foregroundImage: imgProvider,
-                ),
-                placeholder: (context, url) => const SkeletonContainer.circular(
-                  height: 48,
-                  width: 48,
-                ),
-                errorWidget: (context, url, _) =>
-                    const SkeletonContainer.circular(
-                  height: 48,
-                  width: 48,
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: ClipOval(
+                  child: SvgPicture.network(
+                    "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                    width: 48,
+                    placeholderBuilder: (context) {
+                      return Container(
+                        width: 48,
+                        color: ghostWhiteColor,
+                      );
+                    },
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             else
