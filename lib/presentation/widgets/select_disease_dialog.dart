@@ -58,11 +58,12 @@ class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
+
               Consumer<DetailProvider>(
                 builder: (context, provider, _) => InkWell(
                   onTap: () {
                     provider.selectedOption = 0;
-                    provider.selectedCorrection = "Covid 19";
+                    provider.selectedCorrection = "Normal";
                   },
                   child: Container(
                     width: double.infinity,
@@ -84,7 +85,7 @@ class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Covid 19',
+                        'Normal',
                         style: mediumFont.copyWith(
                           fontSize: 16,
                           color: provider.selectedOption == 0
@@ -101,7 +102,7 @@ class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
                 builder: (context, provider, _) => InkWell(
                   onTap: () {
                     provider.selectedOption = 1;
-                    provider.selectedCorrection = "Normal";
+                    provider.selectedCorrection = "Covid 19";
                   },
                   child: Container(
                     width: double.infinity,
@@ -123,7 +124,7 @@ class _SelectDiseaseDialogState extends State<SelectDiseaseDialog> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Normal',
+                        'Covid 19',
                         style: mediumFont.copyWith(
                           fontSize: 16,
                           color: provider.selectedOption == 1

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class DiagnoseService {
   final FirebaseFirestore firestore;
-
+  final String baseUrl = "https://covidia-flask-be.azurewebsites.net/";
   DiagnoseService(this.firestore);
 
   Future<String?> createDiagnosis(Diagnosis diagnosis) async {
@@ -102,7 +102,7 @@ class DiagnoseService {
     File imageFile, {
     http.MultipartRequest? request,
   }) async {
-    const String url = 'https://covidia-be.azurewebsites.net/predict';
+    final String url = "${baseUrl}predict";
     final uri = Uri.parse(url);
     request ??= http.MultipartRequest(
       "POST",

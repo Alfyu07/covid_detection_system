@@ -14,7 +14,7 @@ class _SigninPageState extends State<SigninPage> {
   bool _hidePassword = true;
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: true);
+    final userProvider = Provider.of<UserProvider>(context);
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -123,7 +123,7 @@ class _SigninPageState extends State<SigninPage> {
                 height: 40,
               ),
 
-              if (authProvider.isLoading)
+              if (userProvider.isLoading)
                 const Center(
                   child: CircularProgressIndicator(color: primaryColor),
                 )
@@ -303,22 +303,24 @@ class _SigninPageState extends State<SigninPage> {
 
   void signIn() {
     final messenger = ScaffoldMessenger.of(context);
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     final navProvider = Provider.of<BottomNavProvider>(context, listen: false);
     if (_formKey.currentState!.validate()) {
-      authProvider.isLoading = true;
+      userProvider.isLoading = true;
 
       navProvider.index = 0;
-      authProvider
+      userProvider
           .signIn(
         email: _emailController.text,
         password: _passwordController.text,
       )
           .then(
-        (value) {
-          authProvider.isLoading = false;
+        (value) async {
+          userProvider.isLoading = false;
 
           if (value == "signed in") {
+            await userProvider.getCurrentUser();
+
             messenger
               ..removeCurrentSnackBar()
               ..showSnackBar(

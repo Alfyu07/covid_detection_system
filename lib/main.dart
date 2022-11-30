@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           canvasColor: Colors.white,
         ),
-        home: const AdminHomePage(),
+        home: const AuthenticationWrapper(),
       ),
     );
   }

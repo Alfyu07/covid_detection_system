@@ -34,6 +34,9 @@ class UserProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     final result = await _authService.signIn(email, password);
+
+    // final cUser = await getCurrentUser();
+
     isLoading = false;
     notifyListeners();
     return result;
@@ -44,6 +47,7 @@ class UserProvider extends ChangeNotifier {
     if (result == "User logged out") {
       currentUser = null;
     }
+    notifyListeners();
     return result;
   }
 

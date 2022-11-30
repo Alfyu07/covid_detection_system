@@ -150,7 +150,7 @@ class PreviewPage extends StatelessWidget {
                   final diagnosis = Diagnosis(
                     id: DateTime.now().toString(),
                     imgUrl: imgUrl,
-                    label: output.value!.prediction == "covid"
+                    label: output.value!.prediction == "covid-19"
                         ? "Covid 19"
                         : output.value!.prediction == "pneumonia"
                             ? "Pneumonia"

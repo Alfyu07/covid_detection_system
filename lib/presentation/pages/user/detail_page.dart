@@ -208,7 +208,7 @@ class DetailPage extends StatelessWidget {
             SizedBox(
               width: 70,
               child: Text(
-                'Covid 19',
+                'Normal',
                 style: lightFont.copyWith(fontSize: 12),
               ),
             ),
@@ -216,13 +216,41 @@ class DetailPage extends StatelessWidget {
               value: detailProvider.diagnosis!.confidence != null
                   ? detailProvider.diagnosis!.confidence![0]
                   : 0,
-              color: redColor,
+              color: greenColor,
             ),
             SizedBox(
               width: 32,
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![0]) * 100).round()}%'
+                    : 'null',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 70,
+              child: Text(
+                'Covid-19',
+                style: lightFont.copyWith(fontSize: 12),
+              ),
+            ),
+            ProgressBar(
+              value: detailProvider.diagnosis!.confidence != null
+                  ? detailProvider.diagnosis!.confidence![1]
+                  : 0,
+              color: redColor,
+            ),
+            SizedBox(
+              width: 32,
+              child: Text(
+                detailProvider.diagnosis!.confidence != null
+                    ? '${((detailProvider.diagnosis!.confidence![1]) * 100).round()}%'
                     : 'null',
                 style: lightFont.copyWith(fontSize: 12),
               ),
@@ -251,34 +279,6 @@ class DetailPage extends StatelessWidget {
               child: Text(
                 detailProvider.diagnosis!.confidence != null
                     ? '${((detailProvider.diagnosis!.confidence![2]) * 100).round()}%'
-                    : 'null',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 70,
-              child: Text(
-                'Normal',
-                style: lightFont.copyWith(fontSize: 12),
-              ),
-            ),
-            ProgressBar(
-              value: detailProvider.diagnosis!.confidence != null
-                  ? detailProvider.diagnosis!.confidence![1]
-                  : 0,
-              color: greenColor,
-            ),
-            SizedBox(
-              width: 32,
-              child: Text(
-                detailProvider.diagnosis!.confidence != null
-                    ? '${((detailProvider.diagnosis!.confidence![1]) * 100).round()}%'
                     : 'null',
                 style: lightFont.copyWith(fontSize: 12),
               ),
@@ -338,11 +338,13 @@ class DetailPage extends StatelessWidget {
   void _showSelectDiagnoseDialog(BuildContext context) {
     final detailProvider = Provider.of<DetailProvider>(context, listen: false);
 
-    if (!detailProvider.correctionOptions
-        .contains(detailProvider.selectedCorrection)) {
-      detailProvider.selectedOption = 3;
-    } else {
+    if (detailProvider.selectedCorrection == null) {
       detailProvider.selectedOption = detailProvider.diagnosis!.index;
+    } else if (detailProvider.correctionOptions
+        .contains(detailProvider.selectedCorrection)) {
+      detailProvider.selectedOption = detailProvider.diagnosis!.index;
+    } else {
+      detailProvider.selectedOption = 3;
     }
 
     showDialog(

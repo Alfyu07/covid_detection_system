@@ -20,6 +20,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -28,7 +29,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _header(),
+              _header(userProvider),
               _summaries(),
               _menus(),
               const SizedBox(height: 40)
@@ -39,48 +40,42 @@ class _AdminHomePageState extends State<AdminHomePage> {
     );
   }
 
-  Widget _header() => Container(
+  Widget _header(UserProvider userProvider) => Container(
         margin: const EdgeInsets.only(top: edge),
         child: Row(
           children: [
-            StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.userChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const SkeletonContainer.circular(
-                    width: 40,
-                    height: 40,
-                  );
-                }
-                return CircleAvatar(
-                  radius: 20,
-                  backgroundColor: ghostWhiteColor,
-                  child: ClipOval(
-                    child: snapshot.data!.photoURL == "null" ||
-                            snapshot.data!.photoURL == null
-                        ? SvgPicture.network(
-                            "https://avatars.dicebear.com/api/jdenticon/default.svg",
-                            width: 40,
-                            height: 40,
-                            placeholderBuilder: (context) {
-                              return Container(
-                                width: 40,
-                                height: 40,
-                                color: ghostWhiteColor,
-                              );
-                            },
-                            fit: BoxFit.cover,
-                          )
-                        : Image.network(
-                            snapshot.data!.photoURL!,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                );
-              },
-            ),
+            if (userProvider.isLoading || userProvider.currentUser == null)
+              const SkeletonContainer.circular(
+                width: 40,
+                height: 40,
+              )
+            else
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: ghostWhiteColor,
+                child: ClipOval(
+                  child: userProvider.currentUser!.imgUrl == "null" ||
+                          userProvider.currentUser!.imgUrl == null
+                      ? SvgPicture.network(
+                          "https://avatars.dicebear.com/api/jdenticon/default.svg",
+                          width: 40,
+                          placeholderBuilder: (context) {
+                            return Container(
+                              width: 40,
+                              height: 40,
+                              color: ghostWhiteColor,
+                            );
+                          },
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          userProvider.currentUser!.imgUrl!,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ),
             const SizedBox(width: 16),
             Text(
               "Hello, Admin",
@@ -92,7 +87,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             const Spacer(),
             InkWell(
               onTap: () {
-                context.read<AuthenticationService>().signOut().then((value) {
+                userProvider.signOut().then((value) {
                   if (value == "User logged out") {
                     Provider.of<BottomNavProvider>(context, listen: false)
                         .index = 0;
