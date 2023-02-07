@@ -4,7 +4,7 @@ import 'package:covidia/models/models.dart';
 import 'package:http/http.dart' as http;
 
 class EngineService {
-  final String baseUrl = "https://covidia-flask-be.azurewebsites.net/";
+  final String baseUrl = "hhttp://srv01-if.unram.ac.id:5000/";
 
   Future<ApiReturnValue<EngineModel>> getModel({http.Client? client}) async {
     client ??= http.Client();
@@ -50,7 +50,7 @@ class EngineService {
     client ??= http.Client();
 
     final url =
-        "https://covidia-flask-be.azurewebsites.net/set-model?index=${model.index}";
+        "http://srv01-if.unram.ac.id:5000/set-model?index=${model.index}";
 
     final uri = Uri.parse(url);
     final response = await client.get(

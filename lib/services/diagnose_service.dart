@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class DiagnoseService {
   final FirebaseFirestore firestore;
-  final String baseUrl = "https://covidia-flask-be.azurewebsites.net/";
+  final String baseUrl = "http://srv01-if.unram.ac.id:5000/";
   DiagnoseService(this.firestore);
 
   Future<String?> createDiagnosis(Diagnosis diagnosis) async {

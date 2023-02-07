@@ -61,27 +61,27 @@ class _SettingPageState extends State<SettingPage> {
                                   ),
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            onTap: () async {
-                              final image = await ImagePicker().pickImage(
-                                source: ImageSource.gallery,
-                                imageQuality: 25,
-                              );
-                              if (image == null) return;
-                              // final File file = File(image.path);
-                              // final filename = path.basename(file.path);
-                              // final destination = 'images/users/$filename';
+                        // Align(
+                        //   alignment: Alignment.bottomRight,
+                        //   child: InkWell(
+                        //     onTap: () async {
+                        //       final image = await ImagePicker().pickImage(
+                        //         source: ImageSource.gallery,
+                        //         imageQuality: 25,
+                        //       );
+                        //       if (image == null) return;
+                        //       // final File file = File(image.path);
+                        //       // final filename = path.basename(file.path);
+                        //       // final destination = 'images/users/$filename';
 
-                              // userProvider.updateProfileImage(
-                              //   destination,
-                              //   file,
-                              // );
-                            },
-                            child: Image.asset('assets/camera2.png', width: 40),
-                          ),
-                        )
+                        //       // userProvider.updateProfileImage(
+                        //       //   destination,
+                        //       //   file,
+                        //       // );
+                        //     },
+                        //     child: Image.asset('assets/camera2.png', width: 40),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

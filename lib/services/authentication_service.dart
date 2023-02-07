@@ -159,7 +159,6 @@ class AuthenticationService {
   }
 
   Future<User?> getCurrentUser() async {
-    await _firebaseAuth.currentUser!.reload();
     return _firebaseAuth.currentUser;
   }
 

@@ -83,10 +83,11 @@ void main() {
 
       expect(sut.isLoading, false);
       final future = sut.signUp(
-          fullname: fullname,
-          email: registeredEmail,
-          password: password,
-          imgUrl: imgUrl,);
+        fullname: fullname,
+        email: registeredEmail,
+        password: password,
+        imgUrl: imgUrl,
+      );
       expect(sut.isLoading, true);
       final result = await future;
       expect(sut.isLoading, false);
@@ -105,10 +106,11 @@ void main() {
 
       expect(sut.isLoading, false);
       final future = sut.signUp(
-          fullname: fullname,
-          email: unregisteredEmail,
-          password: password,
-          imgUrl: imgUrl,);
+        fullname: fullname,
+        email: unregisteredEmail,
+        password: password,
+        imgUrl: imgUrl,
+      );
       expect(sut.isLoading, true);
       final result = await future;
       expect(sut.isLoading, false);
