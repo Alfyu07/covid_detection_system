@@ -257,24 +257,24 @@ class _AdminEditUserProfilePageState extends State<AdminEditUserProfilePage> {
                   height: 32,
                 ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ButtonPrimary(
-                      width: 100,
-                      height: 48,
-                      color: Colors.red[400],
-                      text: "Delete",
-                      onPressed: () {},
-                    ),
-                    ButtonPrimary(
-                      width: 100,
-                      height: 48,
-                      text: "Edit",
-                      onPressed: () {},
-                    ),
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     ButtonPrimary(
+                //       width: 100,
+                //       height: 48,
+                //       color: Colors.red[400],
+                //       text: "Delete",
+                //       onPressed: () {},
+                //     ),
+                //     ButtonPrimary(
+                //       width: 100,
+                //       height: 48,
+                //       text: "Edit",
+                //       onPressed: () {},
+                //     ),
+                //   ],
+                // )
               ],
             ),
           ),

@@ -130,9 +130,8 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       'Show all',
-                      style: mediumFont.copyWith(
+                      style: boldFont.copyWith(
                         fontSize: 14,
-                        decoration: TextDecoration.underline,
                         color: primaryColor,
                       ),
                     ),
